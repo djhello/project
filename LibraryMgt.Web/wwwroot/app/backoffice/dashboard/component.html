@@ -1,0 +1,102 @@
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card bg-white">
+            <div class="card-content">
+                <div class="row row-group m-0">
+                    <div class="col-12 col-lg-6 col-xl-3">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 class="text-info">{{totalEquipment}}</h3>
+                                    <span>Cihaz Sayısı</span>
+                                </div>
+                                <div class="w-icon">
+                                    <i class="icon-book-open text-info"></i>
+                                </div>
+                            </div>
+                            <div class="progress mt-2 mb-0" style="height: 7px;">
+                                <div class="progress-bar gradient-scooter" role="progressbar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-xl-3">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 class="text-danger">{{totalIssued}}</h3>
+                                    <span>Ödünç Sayısı</span>
+                                </div>
+                                <div class="w-icon">
+                                    <i class="icon-check text-danger"></i>
+                                </div>
+                            </div>
+                            <div class="progress mt-2" style="height: 7px;">
+                                <div class="progress-bar gradient-bloody" role="progressbar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl-3">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 class="text-success">{{totalReturned}}</h3>
+                                    <span>İade Sayısı</span>
+                                </div>
+                                <div class="w-icon">
+                                    <i class="icon-clock text-success"></i>
+                                </div>
+                            </div>
+                            <div class="progress mt-2" style="height: 7px;">
+                                <div class="progress-bar gradient-quepal" role="progressbar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl-3">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body">
+                                    <h3 class="text-warning">{{totalMember}}</h3>
+                                    <span>Üye Sayısı</span>
+                                </div>
+                                <div class="w-icon">
+                                    <i class="icon-people text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="progress mt-2" style="height: 7px;">
+                                <div class="progress-bar gradient-blooker" role="progressbar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--End row-->
+<!--End Row-->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-cube"></i> Ödünç verilen Cihazlar
+                <div class="card-action">
+                </div>
+            </div>
+            <div class="card-body">
+                <div [chart]="eqchart"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-cube"></i> Ödünç alınan Üyeler
+                <div class="card-action">
+                </div>
+            </div>
+            <div class="card-body">
+                <div [chart]="mkchart"></div>
+            </div>
+        </div>
+    </div>
+</div><!--End Row-->

@@ -1,0 +1,213 @@
+﻿<!-- Breadcrumb-->
+<div class="row pt-2 pb-2">
+    <div class="col-sm-6">
+        <h4 class="page-title"><i class="fa fa-cube"></i>  Envanter Takip Sistemi</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="JavaScript:Void(0);" [routerLink]="['/backoffice']">Dashboard</a></li>
+            <li class="breadcrumb-item">Equipment</li>
+            <li class="breadcrumb-item active" aria-current="page">Equipments</li>
+        </ol>
+        <div class="col-sm-4">
+            <form class="search-bar">
+                <input type="text" id="searchText" name="searchText" class="form-control" placeholder="Enter keywords" (change)="onChangeSearchText($event)">
+                <a href="javascript:void();"><i class="icon-magnifier"></i></a>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="btn-group group-round m-1 float-right">
+            <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="addNew()">
+                <i class="fa fa-plus-circle">
+                </i> Add New Equipment
+            </button>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumb-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="float-left"><i class="fa fa-cube"></i> List Equipments</h5>
+            </div>
+            <div class="card-body p-0">
+                <!--<h5 class="card-title"><i class="fa fa-cube"></i> Categories</h5>-->
+                <div class="table-responsive" style="max-height:480px; overflow:auto;">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Cover Image</th>
+                                <th scope="col">Equipment Model</th>
+                                <th scope="col">Equipment Id</th>
+                                <th scope="col">Calibration Name</th>
+                                <th scope="col">Equipment Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Serial Port USB</th>
+                                <th scope="col">Permanent Location</th>
+                                <th scope="col">Current Location</th>
+                                <th scope="col">Equipment Model Description</th>
+                                <th scope="col">eDocWebAddress</th>
+                                <th scope="col">eDocLocalAddress</th>
+                                <th class="text-right">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of equipments;let sl = index">
+                                <th scope="row">{{sl+1}}</th>
+                                <td><img src="{{item.coverimage}}" class="product-img" alt="cover img"></td>
+                                <td>{{item.equipmentModel}}</td>
+                                <td>{{item.equipmentId}}</td>
+                                <td>{{item.calibrationName}}</td>
+                                <td>{{item.equipmentName}}</td>
+                                <td>{{item.description}}</td>
+                                <td>{{item.serialPortUSB}}</td>
+                                <td>{{item.permanentLocation}}</td>
+                                <td>{{item.currentLocation}}</td>
+                                <td>{{item.equipmentModelDescription}}</td>
+                                <td>{{item.eDocWebAddress}}</td>
+                                <td>{{item.eDocLocalAddress}}</td>
+
+                                <td>
+                                    <div class="pull-right">
+                                        <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                        <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                                            <i class="fa fa-trash-o"></i> Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End Row-->
+<!-- Modal -->
+<div class="modal fade" id="largesizemodal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-plus-circle"></i> Add Equipment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="equipmentForm" [formGroup]="equipmentForm" #f="ngForm" (ngSubmit)="onSubmit()">
+                    <!--<h4 class="form-header text-uppercase">
+        <i class="fa fa-user-circle-o"></i>
+        Personal Info
+    </h4>-->
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="position-relative has-icon-left">
+                                <label for="equipmentId" class="sr-only">Equipment Id</label>
+                                <input type="text" id="equipmentId" name="equipmentId" formControlName="equipmentId" class="form-control" placeholder="Equipment Id" required
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='Equipment Id'" autocomplete="off" tabindex="1" />
+                                <div class="form-control-position">
+                                    <i class="icon-info"></i><em class="text-danger">*</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="position-relative has-icon-left">
+                                <label for="equipmentName" class="sr-only">Equipment Name</label>
+                                <input type="text" id="equipmentName" name="equipmentName" formControlName="equipmentName" class="form-control" placeholder="Equipment Name" required
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='Equipment Name'" autocomplete="off" tabindex="1" />
+                                <div class="form-control-position">
+                                    <i class="icon-info"></i><em class="text-danger">*</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="position-relative has-icon-left">
+                                <label for="description" class="sr-only">Description</label>
+                                <input type="text" id="description" name="description" formControlName="description" class="form-control" placeholder="Description" required
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='Description'" autocomplete="off" tabindex="1" />
+                                <div class="form-control-position">
+                                    <i class="icon-info"></i><em class="text-danger">*</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="position-relative has-icon-left">
+                                <label for="serialPortUSB" class="sr-only">Serial Port USB</label>
+                                <input type="text" id="serialPortUSB" name="serialPortUSB" formControlName="serialPortUSB" class="form-control" placeholder="Serial Port USB" required
+                                       onfocus="this.placeholder=''" onblur="this.placeholder='serialPortUSB'" autocomplete="off" tabindex="1" />
+                                <div class="form-control-position">
+                                    <i class="icon-info"></i><em class="text-danger">*</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="equipmentModelId">Equipment Model</label><em class="text-danger">*</em>
+                            <select class="form-control" id="equipmentModelId" name="equipmentModelId" formControlName="equipmentModelId" required tabindex="2">
+                                <option value="">--Select Equipment Model--</option>
+                                <option *ngFor="let equipmentModel of equipmentModels" value={{equipmentModel.id}}>
+                                    {{equipmentModel.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="calibrationId">Calibration</label><em class="text-danger">*</em>
+                            <select class="form-control" id="calibrationId" name="calibrationId" formControlName="calibrationId" required tabindex="2">
+                                <option value="">--Select Calibration--</option>
+                                <option *ngFor="let calibration of calibrations" value={{calibration.id}}>
+                                    {{calibration.calibrationName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="permanentLocationId">Permanent Location</label><em class="text-danger">*</em>
+                            <select class="form-control" id="permanentLocationId" name="permanentLocationId" formControlName="permanentLocationId" required tabindex="2">
+                                <option value="">--Select Permanent Location--</option>
+                                <option *ngFor="let location of locations" value={{location.id}}>
+                                    {{location.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="currentUserId">Permanent Users</label><em class="text-danger">*</em>
+                            <select class="form-control" id="currentUserId" name="currentUserId" formControlName="currentUserId" required tabindex="2">
+                                <option value="">--Select Permanent Users--</option>
+                                <option *ngFor="let user of users" value={{user.id}}>
+                                    {{user.firstname}}   {{user.lastname}}
+                                </option>
+                            </select>
+                        </div>
+                        <!--<div class="form-group col-md-6">
+        <label for="category">Category</label><em class="text-danger">*</em>
+        <select class="form-control" id="category" name="category" formControlName="category" required tabindex="3">
+            <option value="">--Select Category--</option>
+            <option *ngFor="let category of categories" value={{category.id}}>
+                {{category.categoryname}}
+            </option>
+        </select>
+    </div>-->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="reset()" tabindex="5">
+                    <i class="fa fa-refresh"></i> Reset
+                </button>
+                <button type="submit" class="btn btn-primary" form="equipmentForm" [disabled]="!f.valid" tabindex="4">
+                    <i class="fa fa-check-square-o"></i> Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
