@@ -60,3 +60,11 @@ C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-ma
 C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-master\LibrarySystem\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.dll
 C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-master\LibrarySystem\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.pdb
 C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-master\LibrarySystem\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.csprojAssemblyReference.cache
+C:\Users\Uyanık\Documents\Projects\DataUtilities\bin\Debug\netstandard2.0\DataUtilities.deps.json
+C:\Users\Uyanık\Documents\Projects\DataUtilities\bin\Debug\netstandard2.0\DataUtilities.dll
+C:\Users\Uyanık\Documents\Projects\DataUtilities\bin\Debug\netstandard2.0\DataUtilities.pdb
+C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.csprojAssemblyReference.cache
+C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.AssemblyInfoInputs.cache
+C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.AssemblyInfo.cs
+C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.dll
+C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.pdb

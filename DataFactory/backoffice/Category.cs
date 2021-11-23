@@ -10,11 +10,11 @@ namespace DataFactory.backoffice
 {
     public class Categories
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public Categories()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         public async Task<List<Category>> getall()

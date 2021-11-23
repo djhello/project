@@ -23,6 +23,6 @@
     <ProjectReference Include="..\DataUtilities\DataUtilities.csproj" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties tsconfig_1json__JsonSchema="https://gitpod.io/schemas/gitpod-schema.json" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties tsconfig_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

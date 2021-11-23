@@ -11,11 +11,11 @@ namespace DataFactory.backoffice
 {
     public class EquipmentModels
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public EquipmentModels()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         public async Task<List<vmEquipmentModel>> getall()

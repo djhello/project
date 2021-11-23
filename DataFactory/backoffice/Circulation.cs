@@ -11,11 +11,11 @@ namespace DataFactory.backoffice
 {
     public class Circulation
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public Circulation()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         #region --Return

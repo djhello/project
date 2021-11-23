@@ -11,11 +11,11 @@ namespace DataFactory.backoffice
 {
     public class Calibrations
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public Calibrations()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         public async Task<List<Calibration>> getall()

@@ -10,11 +10,11 @@ namespace DataFactory.account
 {
     public class AuthUsers
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public AuthUsers()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         public async Task<string> regusers(User model)

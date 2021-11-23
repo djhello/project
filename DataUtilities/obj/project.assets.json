@@ -182,11 +182,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj",
+      "projectUniqueName": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj",
       "projectName": "DataUtilities",
-      "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj",
+      "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj",
       "packagesPath": "C:\\Users\\Uyanık\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\obj\\",
+      "outputPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

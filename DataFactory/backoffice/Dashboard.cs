@@ -9,11 +9,11 @@ namespace DataFactory.backoffice
 {
     public class Dashboard
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public Dashboard()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         public async Task<vmSummary> getallsummary()

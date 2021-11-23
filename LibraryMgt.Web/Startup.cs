@@ -28,7 +28,7 @@ namespace LibraryMgt.Web
             }));
            
 
-            services.AddDbContext<LibraryDBContext>(options => options.UseSqlServer(StaticInfos.conString));
+            services.AddDbContext<EquipmentDBContext>(options => options.UseSqlServer(StaticInfos.conString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

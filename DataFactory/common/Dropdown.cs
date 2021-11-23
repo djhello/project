@@ -9,11 +9,11 @@ namespace DataFactory.common
 {
     public class Dropdown
     {
-        private LibraryDBContext _ctx = null;
+        private EquipmentDBContext _ctx = null;
 
         public Dropdown()
         {
-            _ctx = new LibraryDBContext();
+            _ctx = new EquipmentDBContext();
         }
 
         public async Task<List<Calibration>> getallcalibration()

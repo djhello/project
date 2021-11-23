@@ -93,3 +93,16 @@ C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-ma
 C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-master\LibrarySystem\DataFactory\obj\Debug\netstandard2.0\DataFactory.csproj.CopyComplete
 C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-master\LibrarySystem\DataFactory\obj\Debug\netstandard2.0\DataFactory.dll
 C:\Users\Uyanık\Downloads\LibrarySystem-Core2\LibrarySystem-Core2.1-Angular6-master\LibrarySystem\DataFactory\obj\Debug\netstandard2.0\DataFactory.pdb
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataFactory.deps.json
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataFactory.dll
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataFactory.pdb
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataModels.dll
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataUtilities.dll
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataModels.pdb
+C:\Users\Uyanık\Documents\Projects\DataFactory\bin\Debug\netstandard2.0\DataUtilities.pdb
+C:\Users\Uyanık\Documents\Projects\DataFactory\obj\Debug\netstandard2.0\DataFactory.csprojAssemblyReference.cache
+C:\Users\Uyanık\Documents\Projects\DataFactory\obj\Debug\netstandard2.0\DataFactory.AssemblyInfoInputs.cache
+C:\Users\Uyanık\Documents\Projects\DataFactory\obj\Debug\netstandard2.0\DataFactory.AssemblyInfo.cs
+C:\Users\Uyanık\Documents\Projects\DataFactory\obj\Debug\netstandard2.0\DataFactory.csproj.CopyComplete
+C:\Users\Uyanık\Documents\Projects\DataFactory\obj\Debug\netstandard2.0\DataFactory.dll
+C:\Users\Uyanık\Documents\Projects\DataFactory\obj\Debug\netstandard2.0\DataFactory.pdb

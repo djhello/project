@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\LibraryMgt.Web\\EquipmentMgt.Web.csproj": {}
+    "C:\\Users\\Uyanık\\Documents\\Projects\\LibraryMgt.Web\\EquipmentMgt.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataFactory\\DataFactory.csproj": {
+    "C:\\Users\\Uyanık\\Documents\\Projects\\DataFactory\\DataFactory.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataFactory\\DataFactory.csproj",
+        "projectUniqueName": "C:\\Users\\Uyanık\\Documents\\Projects\\DataFactory\\DataFactory.csproj",
         "projectName": "DataFactory",
-        "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataFactory\\DataFactory.csproj",
+        "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataFactory\\DataFactory.csproj",
         "packagesPath": "C:\\Users\\Uyanık\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataFactory\\obj\\",
+        "outputPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataFactory\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -31,11 +31,11 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj": {
-                "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj"
+              "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj": {
+                "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj"
               },
-              "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj": {
-                "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj"
+              "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj": {
+                "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj"
               }
             }
           }
@@ -70,14 +70,14 @@
         }
       }
     },
-    "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj": {
+    "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj",
+        "projectUniqueName": "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj",
         "projectName": "DataModels",
-        "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj",
+        "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj",
         "packagesPath": "C:\\Users\\Uyanık\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\obj\\",
+        "outputPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -97,8 +97,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj": {
-                "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj"
+              "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj": {
+                "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj"
               }
             }
           }
@@ -141,14 +141,14 @@
         }
       }
     },
-    "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj": {
+    "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj",
+        "projectUniqueName": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj",
         "projectName": "DataUtilities",
-        "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj",
+        "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj",
         "packagesPath": "C:\\Users\\Uyanık\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\obj\\",
+        "outputPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -200,14 +200,14 @@
         }
       }
     },
-    "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\LibraryMgt.Web\\EquipmentMgt.Web.csproj": {
+    "C:\\Users\\Uyanık\\Documents\\Projects\\LibraryMgt.Web\\EquipmentMgt.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\LibraryMgt.Web\\EquipmentMgt.Web.csproj",
+        "projectUniqueName": "C:\\Users\\Uyanık\\Documents\\Projects\\LibraryMgt.Web\\EquipmentMgt.Web.csproj",
         "projectName": "EquipmentMgt.Web",
-        "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\LibraryMgt.Web\\EquipmentMgt.Web.csproj",
+        "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\LibraryMgt.Web\\EquipmentMgt.Web.csproj",
         "packagesPath": "C:\\Users\\Uyanık\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\LibraryMgt.Web\\obj\\",
+        "outputPath": "C:\\Users\\Uyanık\\Documents\\Projects\\LibraryMgt.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -227,14 +227,14 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataFactory\\DataFactory.csproj": {
-                "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataFactory\\DataFactory.csproj"
+              "C:\\Users\\Uyanık\\Documents\\Projects\\DataFactory\\DataFactory.csproj": {
+                "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataFactory\\DataFactory.csproj"
               },
-              "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj": {
-                "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataModels\\DataModels.csproj"
+              "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj": {
+                "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataModels\\DataModels.csproj"
               },
-              "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj": {
-                "projectPath": "C:\\Users\\Uyanık\\Downloads\\LibrarySystem-Core2\\LibrarySystem-Core2.1-Angular6-master\\LibrarySystem\\DataUtilities\\DataUtilities.csproj"
+              "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj": {
+                "projectPath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj"
               }
             }
           }
