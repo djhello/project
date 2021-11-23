@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EquipmentMgt.Web", "LibraryMgt.Web\EquipmentMgt.Web.csproj", "{F55F0775-9EBE-4CD2-BEE6-7019B988FDB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EquipmentMgt.Web", "EquipmentMgt.Web\EquipmentMgt.Web.csproj", "{F55F0775-9EBE-4CD2-BEE6-7019B988FDB6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{AEF535B6-96D2-4D2D-B9DE-85ABC4B0D78D}"
 EndProject

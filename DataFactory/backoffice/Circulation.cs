@@ -58,7 +58,7 @@ namespace DataFactory.backoffice
                                               UserId = ed.UserId,
                                               OduncAlanAdi = ed.FirstName,
                                               OduncAlanSoyadi = ed.LastName,
-                                              DueDate = ed.DueDate,//.ToString(StaticInfos.GlobalDateFormat)
+                                              DueDate = ed.DueDate,
 
                                           }).ToListAsync();
                 }
@@ -135,7 +135,6 @@ namespace DataFactory.backoffice
                     {
                         if (model.UserId > 0)
                         {
-                            //Save Master
                             foreach (var item in model.Equipments)
                             {
                                 var entityUpdate = _ctx.EquipmentIssueReturn.FirstOrDefault(x => x.Id == item.Id && x.Status == false);
@@ -147,11 +146,7 @@ namespace DataFactory.backoffice
                                 }
                                
                             }
-
-                            //Update Author
-                           
                         }
-
                         _ctxTransaction.Commit();
                         message = MessageConstants.Saved;
                     }

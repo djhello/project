@@ -37,28 +37,5 @@ namespace DataFactory.common
             }
             return calibrations;
         }
-
-
-        public async Task<List<Category>> getallcategory()
-        {
-            List<Category> categories = null;
-            try
-            {
-                using (_ctx)
-                {
-                    categories = await (from ct in _ctx.Category
-                                        select new Category
-                                        {
-                                         Id = ct.Id,
-                                         Categoryname = ct.Categoryname
-                                        }).ToListAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-            }
-            return categories;
-        }
     }
 }
