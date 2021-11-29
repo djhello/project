@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -12,6 +12,7 @@ import { DataService } from '../../shared/service';
 
 export class LoginComponent implements OnInit {
     public userForm: FormGroup;
+    public loading: boolean = false;
     public resmessage: string;
     public alertmessage: string;
     public _saveUrl: string = '/api/auth/loginusers';
@@ -25,7 +26,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/backoffice']);
         }
     }
-
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi | Login");
         this.createForm();
@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
         if (this.userForm.invalid) {
             return;
         }
-
+        this.loading = true;
         //debugger
         this._dataService.save(this.userForm.value, this._saveUrl)
             .subscribe(response => {
-                //console.log(response);
+                this.loading = false;
                 var loggeduser = response.loggeduser;
                 if (loggeduser != null) {
                     localStorage.setItem('isLoggedin', 'true');

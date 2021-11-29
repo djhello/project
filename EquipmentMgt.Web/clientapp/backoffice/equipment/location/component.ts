@@ -88,16 +88,16 @@ export class LocationsComponent implements OnInit {
 
         this.reset();
         this.getcalibration();
-        this.getcategory();
     }
 
-    //Get LOcations 
+    //Get Locations 
     getAll() {
         //debugger
+        this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
-                    //console.log(response)
+                    this.loading = false;
                     this.locations = response;
                 }, error => {
                     console.log(error);
@@ -107,13 +107,11 @@ export class LocationsComponent implements OnInit {
 
     //Get by ID
     edit(e, m) {
-        //debugger
         e.preventDefault();
-        this.getcategory();
-
+        this.loading = true;
         this._dataService.getbyid(m.id, this._getbyIdUrl)
             .subscribe(response => {
-                //console.log(response);
+                this.loading = false;
                 this.location = response;
                 this.locationForm.setValue({
                     id: this.location.id,
@@ -133,7 +131,7 @@ export class LocationsComponent implements OnInit {
 
     //Create
     onSubmit() {
-
+        this.loading = true;
         if (this.locationForm.invalid) {
             return;
         }
@@ -145,7 +143,7 @@ export class LocationsComponent implements OnInit {
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(response => {
-                //console.log(response);
+                this.loading = false;
                 this.resmessage = response.message;
                 this.alertmessage = "alert-outline-info";
                 this.getAll();
@@ -159,13 +157,13 @@ export class LocationsComponent implements OnInit {
 
     //Delete
     delete(e, m) {
-        //debugger
+        this.loading = true;
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.bookname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.locationName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(response => {
-                    //console.log(response)
+                    this.loading = false;
                     this.resmessage = response;
                     this.getAll();
                 }, error => {
@@ -174,13 +172,12 @@ export class LocationsComponent implements OnInit {
         }
     }
 
-    //Get Author 
     getcalibration() {
-        //debugger
+        this.loading = true;
         this._dataService.getall(this._getcalibrationUrl)
             .subscribe(
                 response => {
-                    //console.log(response)
+                    this.loading = false;
                     this.calibrations = response;
                 }, error => {
                     console.log(error);
@@ -188,20 +185,7 @@ export class LocationsComponent implements OnInit {
             );
     }
 
-    //Get Category 
-    getcategory() {
-        //debugger
-        this._dataService.getall(this._getcategoryUrl)
-            .subscribe(
-                response => {
-                    console.log(response)
-                    this.categories = response;
-                }, error => {
-                    console.log(error);
-                }
-            );
-    }
-
+   
     reset() {
         this.locationForm.setValue({
             id: 0,
@@ -213,8 +197,4 @@ export class LocationsComponent implements OnInit {
         $('#bookName').focus();
     }
 
-    //clearFile() {
-    //    this.bookForm.get('fileupload').setValue(null);
-    //    this.fileInput.nativeElement.value = '';
-    //}
 }

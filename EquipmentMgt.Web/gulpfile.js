@@ -41,6 +41,12 @@ gulp.task('copy-lib-js', function () {
 
     gulp.src('./node_modules/highcharts/**.js')
         .pipe(gulp.dest(root_path.package_lib + 'highcharts'));
+
+    gulp.src('./node_modules/xlsx/**.js')
+        .pipe(gulp.dest(root_path.package_lib + 'xlsx'));
+
+    gulp.src('./node_modules/file-saver/**/**.js')
+        .pipe(gulp.dest(root_path.package_lib + 'file-saver'));
 });
 
 gulp.task("copy-all", ["copy-lib-js"]);

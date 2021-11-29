@@ -12,6 +12,8 @@ C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\login\com
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\login\component.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\login\module.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\login\module.js.map
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\shared\confirmed.validator.js
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\shared\confirmed.validator.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\register\component.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\register\component.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\account\register\module.js
@@ -32,8 +34,12 @@ C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\circul
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\circulation\issue\component.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\circulation\return\component.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\circulation\return\component.js.map
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\settings\component.js
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\settings\component.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\users\component.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\users\component.js.map
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\shared\tableUtil.js
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\shared\tableUtil.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\reports\equipment\component.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\reports\equipment\component.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\equipment\location\component.js
@@ -56,5 +62,7 @@ C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\equipm
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\equipment\location\module.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\reports\equipment\module.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\reports\equipment\module.js.map
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\settings\module.js
+C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\settings\module.js.map
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\users\module.js
 C:\Users\Uyanık\Documents\Projects\EquipmentMgt.Web\clientapp\backoffice\system\users\module.js.map

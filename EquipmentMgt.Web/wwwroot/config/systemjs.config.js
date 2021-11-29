@@ -30,7 +30,12 @@
             // other libraries
             'rxjs': 'npm:rxjs',
             'rxjs-compat': 'npm:rxjs-compat',
-            'rxjs/operators': 'npm:rxjs/operators'
+            'rxjs/operators': 'npm:rxjs/operators',
+
+            //xlsx
+            'xlsx': 'npm:xlsx/xlsx.js',
+
+            'file-saver': 'npm:file-saver/src/Filesaver.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

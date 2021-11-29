@@ -27,21 +27,12 @@ var EquipmentModelsComponent = /** @class */ (function () {
         this._getbyIdUrl = '/api/equipmentmodel/getbyid';
         this._saveUrl = '/api/equipmentmodel/save';
         this._deleteUrl = '/api/equipmentmodel/deletebyid';
-        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
     }
     EquipmentModelsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Equipment Model");
         this.loadScripts();
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
     };
     EquipmentModelsComponent.prototype.loadScripts = function () {
         var libScripts = [
@@ -81,26 +72,26 @@ var EquipmentModelsComponent = /** @class */ (function () {
             $(this).find('#name').focus();
         });
         this.reset();
-        //this.getcalibration();
-        //this.getcategory();
     };
     //Get LOcations 
     EquipmentModelsComponent.prototype.getAll = function () {
         var _this = this;
         //debugger
+        this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
             _this.equipmentModels = response;
         }, function (error) {
             console.log(error);
         });
+        this.loading = false;
     };
     //Get by ID
     EquipmentModelsComponent.prototype.edit = function (e, m) {
         var _this = this;
         //debugger
         e.preventDefault();
-        //this.getcategory();
+        this.loading = true;
         this._dataService.getbyid(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             console.log(response);
@@ -118,6 +109,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
             $("#largesizemodal").on('shown.bs.modal', function () {
                 $(this).find('#name').focus();
             });
+            _this.loading = false;
         }, function (error) {
             console.log(error);
         });
@@ -125,11 +117,11 @@ var EquipmentModelsComponent = /** @class */ (function () {
     //Create
     EquipmentModelsComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.loading = true;
         if (this.equipmentModelForm.invalid) {
             return;
         }
         var formModel = new FormData();
-        console.log(this.equipmentModelForm);
         formModel.append('id', this.equipmentModelForm.value.id);
         formModel.append('name', this.equipmentModelForm.value.name);
         formModel.append('quantity', this.equipmentModelForm.value.quantity);
@@ -140,12 +132,12 @@ var EquipmentModelsComponent = /** @class */ (function () {
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(function (response) {
-            //console.log(response);
             _this.resmessage = response.message;
             _this.alertmessage = "alert-outline-info";
             _this.getAll();
             $('#largesizemodal').modal('hide');
             _this.reset();
+            _this.loading = false;
         }, function (error) {
             console.log(error);
         });
@@ -153,46 +145,21 @@ var EquipmentModelsComponent = /** @class */ (function () {
     //Delete
     EquipmentModelsComponent.prototype.delete = function (e, m) {
         var _this = this;
+        this.loading = true;
         //debugger
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.bookname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.equipmentModelName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(function (response) {
-                //console.log(response)
                 _this.resmessage = response;
                 _this.getAll();
+                _this.loading = false;
             }, function (error) {
                 console.log(error);
             });
         }
     };
-    //Get Author 
-    //getcalibration() {
-    //    //debugger
-    //    this._dataService.getall(this._getcalibrationUrl)
-    //        .subscribe(
-    //            response => {
-    //                //console.log(response)
-    //                this.calibrations = response;
-    //            }, error => {
-    //                console.log(error);
-    //            }
-    //        );
-    //}
-    ////Get Category 
-    //getcategory() {
-    //    //debugger
-    //    this._dataService.getall(this._getcategoryUrl)
-    //        .subscribe(
-    //            response => {
-    //                console.log(response)
-    //                this.categories = response;
-    //            }, error => {
-    //                console.log(error);
-    //            }
-    //        );
-    //}
     EquipmentModelsComponent.prototype.reset = function () {
         this.equipmentModelForm.setValue({
             id: 0,
@@ -205,7 +172,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
         });
         this.fileInput.nativeElement.value = '';
         this.resmessage = null;
-        $('#bookName').focus();
+        $('#name').focus();
     };
     __decorate([
         core_1.ViewChild('fileInput'),

@@ -1,6 +1,7 @@
 ﻿<!-- Breadcrumb-->
 <div class="row pt-2 pb-2">
     <div class="col-sm-6">
+        <div id="cover-spin" *ngIf="loading"></div>
         <h4 class="page-title"><i class="fa fa-cube"></i> Equipment Issue</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="JavaScript:Void(0);" [routerLink]="['/backoffice']">Dashboard</a></li>
@@ -27,7 +28,7 @@
                         Issue Info
                     </h4>
 
-                    <div class="alert alert-outline-info alert-dismissible" role="alert">
+                    <div class="alert alert-outline-info alert-dismissible" role="alert" *ngIf="showSearchMemberDiv">
                         <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
                         <div class="alert-icon">
                             <i class="icon-info"></i>
@@ -37,14 +38,14 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
+                    <div class="form-row" >
+                        <div class="form-group col-md-6" *ngIf="showSearchMemberDiv">
                             <label for="memberName">Member Search</label>
                             <div class="position-relative has-icon-left">
                                 <input type="text" id="memberSearch" name="memberSearch" formControlName="memberSearch" (change)="onChange($event, $event.target.value)"
                                        class="form-control" placeholder="Search Member"
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Search Member'" autocomplete="off" tabindex="1" maxlength="15" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-10px;">
                                     <i class="fa fa-search text-info"></i>
                                 </div>
                             </div>
@@ -53,7 +54,7 @@
                             <label>Due Date</label>
                             <div class="position-relative has-icon-left">
                                 <input type="text" id="issueDate" name="dueDate" formControlName="dueDate" class="form-control" tabindex="3" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-10px;">
                                     <i class="fa fa-calendar text-info"></i>
                                 </div>
                             </div>
@@ -111,7 +112,7 @@
 
                     <table class="table table-sm">
                         <tbody>
-                            <tr *ngFor="let item of availableequipmentlist;let sl = index">
+                            <tr *ngFor="let item of availableEquipmentList;let sl = index">
                                 <td>
                                     <div class="demo-checkbox">
                                         <input type="checkbox" id="user-checkbox{{sl+1}}" class="filled-in chk-col-primary"
@@ -123,7 +124,7 @@
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr *ngIf="availableequipmentlist.length === 0">
+                            <tr *ngIf="availableEquipmentList.length === 0">
                                 <td>
                                     <p style="color:red;">No records found</p>
                                 </td>
@@ -142,7 +143,7 @@
                 <div class="table-responsive" style="height:105px; max-height:105px; overflow:auto;">
                     <table class="table table-sm">
                         <tbody>
-                            <tr *ngFor="let item of equipmentissueedlist;let sl = index">
+                            <tr *ngFor="let item of equipmentByUserIssueedList;let sl = index">
                                 <th scope="row">{{sl+1}}</th>
                                 <td>{{item.equipmentModel}}</td>
                                 <td>{{item.equipmentId}}</td>
@@ -151,7 +152,7 @@
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr *ngIf="equipmentissueedlist.length === 0">
+                            <tr *ngIf="equipmentByUserIssueedList.length === 0">
                                 <td>
                                     <p style="color:red;">No records found</p>
                                 </td>
@@ -187,7 +188,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of equipmentissueed;let sl = index">
+                            <tr *ngFor="let item of equipmentIssueedList;let sl = index">
                                 <th scope="row">{{sl+1}}</th>
                                 <td>{{item.equipmentModel}} - {{item.equipmentId}}</td>
                                 <td>{{item.oduncAlanAdi}} -{{item.oduncAlanSoyadi}}</td>

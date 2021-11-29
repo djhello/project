@@ -1,0 +1,1 @@
+"use strict";function ConfirmedValidator(e,t){return function(r){var o=r.controls[e],r=r.controls[t];r.errors&&!r.errors.confirmedValidator||(o.value!==r.value?r.setErrors({confirmedValidator:!0}):r.setErrors(null))}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.ConfirmedValidator=ConfirmedValidator;

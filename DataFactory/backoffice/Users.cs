@@ -1,4 +1,5 @@
 ﻿using DataModels.EntityModels;
+using DataModels.ViewModels;
 using DataUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,7 +54,7 @@ namespace DataFactory.backoffice
             return user;
         }
 
-        public async Task<string> create(User model)
+        public async Task<string> create(vmUser model)
         {
             string message = string.Empty;
             using (_ctx)
@@ -64,13 +65,12 @@ namespace DataFactory.backoffice
                     {
                         if (model.Id > 0)
                         {
-                            //Update Author
                             var entityUpdate = _ctx.User.FirstOrDefault(x => x.Id == model.Id);
                             if (entityUpdate != null)
                             {
                                 entityUpdate.Firstname = model.Firstname;
                                 entityUpdate.Lastname = model.Lastname;
-                                entityUpdate.Contact = model.Contact;
+                                entityUpdate.Email = model.Email;
                                 await _ctx.SaveChangesAsync();
                             }
                         }
@@ -79,27 +79,23 @@ namespace DataFactory.backoffice
                             var ifExist = _ctx.User.SingleOrDefault(x => x.Email == model.Email);
                             if (ifExist == null)
                             {
-                                //Save User
-                                var maxUser = _ctx.User.DefaultIfEmpty().Max(x => x == null ? 0 : x.Id) + 1;
                                 var UserModel = new User
                                 {
-                                    Id = maxUser,
-                                    UserId = maxUser,
+                                    UserId = model.UserId,
+                                    Usertype = (int) MemberType.Member,
                                     Firstname = model.Firstname,
                                     Lastname = model.Lastname,
-                                    Email = model.Email,
-                                    Contact = model.Contact
+                                    Email = model.Email
                                 };
                                 _ctx.User.Add(UserModel);
 
+
                                 //Save UserAuth
-                                var maxAuth = _ctx.UserAuthentication.DefaultIfEmpty().Max(x => x == null ? 0 : x.Id) + 1;
                                 var UserAuthModel = new UserAuthentication
                                 {
-                                    Id = maxAuth,
-                                    Userid = maxAuth,
+                                    Userid = model.UserId,
                                     Username = model.Email,
-                                    Userpass = model.Contact,
+                                    Userpass = model.Password,
                                     Joindate = Extension.Today
                                 };
                                 _ctx.UserAuthentication.Add(UserAuthModel);
@@ -126,7 +122,40 @@ namespace DataFactory.backoffice
 
             return message;
         }
+        public async Task<string> updateUserInfos(vmUser model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.UserId > 0)
+                        {
+                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
+                            if (entityUpdate != null)
+                            {
+                                entityUpdate.Firstname = model.Firstname;
+                                entityUpdate.Lastname = model.Lastname;
+                                entityUpdate.Email = model.Email;
+                                await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
 
+            return message;
+        }
         public async Task<string> deletebyid(int id)
         {
             string message = string.Empty;

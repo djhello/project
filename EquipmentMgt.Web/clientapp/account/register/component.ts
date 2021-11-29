@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../../shared/service';
+import { ConfirmedValidator } from '../../shared/confirmed.validator';
 
 @Component({
     selector: 'app-register',
@@ -12,6 +13,7 @@ import { DataService } from '../../shared/service';
 
 export class RegisterComponent implements OnInit {
     public userForm: FormGroup;
+    public loading: boolean = false;
     public resmessage: string;
     public alertmessage: string;
     public _saveUrl: string = '/api/auth/regusers';
@@ -27,34 +29,41 @@ export class RegisterComponent implements OnInit {
         this.titleService.setTitle("Envanter Takip Sistemi | Register");
         this.createForm();
     }
-
+   
     createForm() {
         this.userForm = this.formBuilder.group({
+            userId: new FormControl('', Validators.required),
             firstName: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
             email: new FormControl('', Validators.compose([
                 Validators.required,
-                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+                Validators.pattern('^[a-zA-Z0-9_.+-]+@tei.com.tr+$')
             ])),
-            contact: new FormControl('', Validators.required)
+            password: new FormControl('', Validators.required),
+            confirmPassword: new FormControl('', Validators.required)
+        },{
+            validator: ConfirmedValidator('password', 'confirmPassword')
         });
 
-        $("#firstName").focus();
+        $("#userId").focus();
     }
 
     onSubmit() {
         if (this.userForm.invalid) {
             return;
         }
-
+        this.loading = true;
         //debugger
         this._dataService.save(this.userForm.value, this._saveUrl)
             .subscribe(response => {
-                //console.log(response);
+                this.loading = false;
                 this.resmessage = response.message;
                 this.alertmessage = "alert-outline-info";
+                if (this.resmessage == "Saved Successfully.") {
+                    this.reset();
+                    //this.router.navigate(['/login']);
+                }
             }, error => {
-                //console.log(error);
             });
     }
 
@@ -62,10 +71,12 @@ export class RegisterComponent implements OnInit {
         this.userForm.setValue({
             firstName: null,
             lastName: null,
+            userId:null,
             email: null,
-            contact: null
+            password: null,
+            confirmPassword:null
         });
 
-        this.resmessage = null;
+        //this.resmessage = null;
     }
 }

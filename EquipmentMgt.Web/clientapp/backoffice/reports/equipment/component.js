@@ -14,6 +14,7 @@ var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var angular_highcharts_1 = require("angular-highcharts");
 var service_1 = require("../../../shared/service");
+var tableUtil_1 = require("../../../shared/tableUtil");
 var EquipmentReportsComponent = /** @class */ (function () {
     function EquipmentReportsComponent(router, titleService, _dataService) {
         this.router = router;
@@ -21,6 +22,7 @@ var EquipmentReportsComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.equipmentreturned = [];
         this.equipmentissued = [];
+        this.loading = false;
         this._getUrl = '/api/report/getequipmentchart';
         this._getRUrl = '/api/circulation/getreturnall';
         this._getIUrl = '/api/circulation/getissueall';
@@ -33,6 +35,7 @@ var EquipmentReportsComponent = /** @class */ (function () {
     //Get Chart 
     EquipmentReportsComponent.prototype.getChart = function () {
         var _this = this;
+        this.loading = true;
         //debugger
         this._dataService.getall(this._getUrl).subscribe(function (response) {
             _this.echart = response;
@@ -86,10 +89,12 @@ var EquipmentReportsComponent = /** @class */ (function () {
         }, function (error) {
             //console.log(error);
         });
+        this.loading = false;
     };
     //Issue/Return
     EquipmentReportsComponent.prototype.returnedList = function () {
         var _this = this;
+        this.loading = true;
         this._dataService.getall(this._getRUrl)
             .subscribe(function (response) {
             console.log(response);
@@ -101,9 +106,16 @@ var EquipmentReportsComponent = /** @class */ (function () {
             .subscribe(function (response) {
             console.log(response);
             _this.equipmentissued = response;
+            _this.loading = false;
         }, function (error) {
             //console.log(error);
         });
+    };
+    EquipmentReportsComponent.prototype.exportReturnedTable = function () {
+        tableUtil_1.TableUtil.exportArrayToExcel(this.equipmentreturned, "ExampleArray");
+    };
+    EquipmentReportsComponent.prototype.exportIssuedTable = function () {
+        tableUtil_1.TableUtil.exportArrayToExcel(this.equipmentissued, "ExampleArray");
     };
     EquipmentReportsComponent = __decorate([
         core_1.Component({

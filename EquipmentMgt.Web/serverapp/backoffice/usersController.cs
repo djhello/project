@@ -1,5 +1,6 @@
 ﻿using DataFactory.backoffice;
 using DataModels.EntityModels;
+using DataModels.ViewModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -50,7 +51,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
         // POST: api/users/save
         [HttpPost("[action]")]
-        public async Task<object> save([FromBody]User model)
+        public async Task<object> save([FromBody]vmUser model)
         {
             object result = null; string message = string.Empty;
             try
@@ -76,7 +77,33 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        [HttpPost("[action]")]
+        public async Task<object> updateUserInfos([FromBody]vmUser model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
 
+                //Save
+                _objusers = new Users();
+                message = await _objusers.updateUserInfos(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
         // DELETE api/users/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)

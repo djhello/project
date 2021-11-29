@@ -11,15 +11,12 @@ import { DataService } from '../../../shared/service';
 })
 
 export class CalibrationsComponent implements OnInit {
-    public loggedUsername: string;
-    public loggedUsertype: number;
-    public loggedemail: string;
-
     public calibrations: any[];
     public calibration: any;
     public calibrationForm: FormGroup;
     public resmessage: string;
     public alertmessage: string;
+    public loading: boolean = false; 
 
     public _getUrl: string = '/api/calibration/getall';
     public _getbyIdUrl: string = '/api/calibration/getbyid';
@@ -31,11 +28,6 @@ export class CalibrationsComponent implements OnInit {
         private titleService: Title,
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
-
-            var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-            this.loggedUsername = loggedUser.displayname;
-            this.loggedemail = loggedUser.email;
-            this.loggedUsertype = loggedUser.usertype;
     }
 
   
@@ -44,11 +36,6 @@ export class CalibrationsComponent implements OnInit {
         this.titleService.setTitle("Envanter Takip Sistemi | Calibrations");
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
     }
 
     createForm() {
@@ -72,6 +59,7 @@ export class CalibrationsComponent implements OnInit {
     //Get All 
     getAll() {
         //debugger
+        this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
@@ -79,12 +67,14 @@ export class CalibrationsComponent implements OnInit {
                 }, error => {
                     console.log(error);
                 }
-            );
+        );
+        this.loading = false;
     }
 
     //Get by ID
     edit(e, m) {
         //debugger
+        this.loading = true;
         e.preventDefault();
         this._dataService.getbyid(m.id, this._getbyIdUrl)
             .subscribe(response => {
@@ -100,6 +90,7 @@ export class CalibrationsComponent implements OnInit {
                 $("#defaultsizemodal").on('shown.bs.modal', function () {
                     $(this).find('#calibrationName').focus();
                 });
+                this.loading = false;
             }, error => {
                 console.log(error);
             });
@@ -107,7 +98,7 @@ export class CalibrationsComponent implements OnInit {
 
     //Create
     onSubmit() {
-
+        this.loading = true;
         if (this.calibrationForm.invalid) {
             return;
         }
@@ -121,6 +112,7 @@ export class CalibrationsComponent implements OnInit {
                 this.getAll();
                 this.reset();
                 $('#defaultsizemodal').modal('hide');
+                this.loading = false;
             }, error => {
                 console.log(error);
             });
@@ -129,6 +121,7 @@ export class CalibrationsComponent implements OnInit {
 
     //Delete
     delete(e, m) {
+        this.loading = true;
         //debugger
         e.preventDefault();
         var IsConf = confirm('You are about to delete ' + m.calibrationname + '. Are you sure?');
@@ -138,6 +131,7 @@ export class CalibrationsComponent implements OnInit {
                     //console.log(response)
                     this.resmessage = response;
                     this.getAll();
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 });

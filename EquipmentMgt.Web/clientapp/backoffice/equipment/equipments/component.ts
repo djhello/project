@@ -87,21 +87,20 @@ export class EquipmentsComponent implements OnInit {
         $("#largesizemodal").on('shown.bs.modal', function () {
             $(this).find('#equipmentId').focus();
         });
-        //this.reset();
         this.getCalibration();
         this.getLocations();
         this.getEquipmentModels();
         this.getUserAll();
-       // this.getcategory();
     }
 
     getAll() {
+        this.loading = true;
         //debugger
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
-                    //console.log(response)
                     this.equipments = response;
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 }
@@ -110,6 +109,7 @@ export class EquipmentsComponent implements OnInit {
 
     //Get by ID
     edit(e, m) {
+        this.loading = true;
         //debugger
         e.preventDefault();
         this.getCalibration();
@@ -131,7 +131,7 @@ export class EquipmentsComponent implements OnInit {
                     permanentLocationId: this.equipment.permanentLocationId,
                     currentUserId: this.equipment.currentUserId
                 });
-
+                this.loading = false;
                 $('#largesizemodal').modal('show');
                 $("#largesizemodal").on('shown.bs.modal', function () {
                     $(this).find('#equipmentId').focus();
@@ -147,12 +147,12 @@ export class EquipmentsComponent implements OnInit {
         }
     }
     getEquipments(e, m) {
-        console.log(m);
+        this.loading = true;
         this._dataService.getbytext(m, this._getbyEquipmentIdUrl)
             .subscribe(
                 response => {
-                    console.log(response)
                     this.equipments = response;
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 }
@@ -160,7 +160,7 @@ export class EquipmentsComponent implements OnInit {
     }
     //Create
     onSubmit() {
-
+        this.loading = true;
         if (this.equipmentForm.invalid) {
             return;
         }
@@ -179,11 +179,11 @@ export class EquipmentsComponent implements OnInit {
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(response => {
-                //console.log(response);
                 this.resmessage = response.message;
                 this.alertmessage = "alert-outline-info";
                 this.getAll();
                 this.reset();
+                this.loading = false;
             }, error => {
                 console.log(error);
             });
@@ -192,13 +192,14 @@ export class EquipmentsComponent implements OnInit {
 
     //Delete
     delete(e, m) {
+        this.loading = true;
         //debugger
         e.preventDefault();
         var IsConf = confirm('You are about to delete ' + m.bookname + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(response => {
-                    //console.log(response)
+                    this.loading = false;
                     this.resmessage = response;
                     this.getAll();
                 }, error => {
@@ -206,64 +207,53 @@ export class EquipmentsComponent implements OnInit {
                 });
         }
     }
-
-    //Get Author 
     getCalibration() {
+        this.loading = true;
         //debugger
         this._dataService.getall(this._getCalibrationUrl)
             .subscribe(
                 response => {
-                    console.log(response)
                     this.calibrations = response;
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 }
             );
     }
     getEquipmentModels() {
+        this.loading = true;
         //debugger
         this._dataService.getall(this._getEquipmentModelUrl)
             .subscribe(
                 response => {
-                    //console.log(response)
                     this.equipmentModels = response;
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 }
             );
     }
     getLocations() {
+        this.loading = true;
         //debugger
         this._dataService.getall(this._getLocationUrl)
             .subscribe(
                 response => {
-                    //console.log(response)
                     this.locations = response;
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 }
             );
     }
-    //Get Category 
-    getcategory() {
-        //debugger
-        this._dataService.getall(this._getcategoryUrl)
-            .subscribe(
-                response => {
-                    console.log(response)
-                    this.categories = response;
-                }, error => {
-                    console.log(error);
-                }
-            );
-    }
+   
     getUserAll() {
-        //debugger
+        this.loading = true;
         this._dataService.getall(this._getUserUrl)
             .subscribe(
                 response => {
-                    //console.log(response)
                     this.users = response;
+                    this.loading = false;
                 }, error => {
                     console.log(error);
                 }

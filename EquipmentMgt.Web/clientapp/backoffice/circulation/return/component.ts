@@ -11,17 +11,20 @@ import { DataService } from '../../../shared/service';
 })
 
 export class ReturnComponent implements OnInit {
+    public loggedUser: any;
     public returnForm: FormGroup;
-    public keypress: number;
+    public keyPress: number;
     public user: any;
     public searchTerm: any;
-    public equipmentissue: any;
-    public equipmentreturned: any[] = [];
-    public equipmentreturnedlist: any[] = [];
-    public equipmentissueedlist: any[] = [];
-    public equipmentchoosed: any[] = [];
-    public resmessage: string;
-    public alertmessage: string;
+    public equipmentIssue: any;
+    public equipmentReturned: any[] = [];
+    public equipmentReturnedList: any[] = [];
+    public equipmentIssueedList: any[] = [];
+    public equipmentChoosed: any[] = [];
+    public resMessage: string;
+    public alertMessage: string;
+    public loading: boolean = false;
+    public showSearchMemberDiv: boolean = false;
 
     public _getUrl: string = '/api/circulation/getreturnall';
     public _getbyIdUrl: string = '/api/circulation/getreturnbyid';
@@ -30,9 +33,9 @@ export class ReturnComponent implements OnInit {
 
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        this.keypress = event.keyCode;
-        if (this.keypress == 32) {
-            this.resmessage = null;
+        this.keyPress = event.keyCode;
+        if (this.keyPress == 32) {
+            this.resMessage = null;
             this.reset();
             this.focus();
         }
@@ -43,12 +46,16 @@ export class ReturnComponent implements OnInit {
         private titleService: Title,
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
+
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+
     }
 
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi | İade");
         this.loadScripts();
         this.createForm();
+        this.setUser();
     }
 
     public loadScripts() {
@@ -78,13 +85,41 @@ export class ReturnComponent implements OnInit {
         this.focus();
     }
 
+    setUser() {
+        if (this.loggedUser.usertype != 1) {
+            this.showSearchMemberDiv = false;
+            this.returnForm.setValue({
+                id: 0,
+                userId: this.loggedUser.userid,
+                memberName: this.loggedUser.displayname,
+                email: this.loggedUser.email,
+                memberSearch: null,
+                equipments: []
+            });
+            this.loading = true;
+            this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl)
+                .subscribe(response => {
+                    this.loading = false;
+                    if (response != null) {
+                        this.equipmentIssueedList = response;
+                    }
+                    this.resMessage = null;
+                }, error => {
+                    //console.log(error);
+                });
+        }
+        else {
+            this.showSearchMemberDiv = true;
+        }
+    }
     //Search Member
     onChange(e, searchValue) {
+        this.loading = true;
         this.reset();
         e.preventDefault();
         this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
             .subscribe(response => {
-                console.log(response);
+                this.loading = false;
                 this.user = response;
                 this.returnForm.setValue({
                     id: 0,
@@ -99,58 +134,35 @@ export class ReturnComponent implements OnInit {
             }, error => {
                 //console.log(error);
             });
-
+        this.loading = true;
         this._dataService.getbyid(searchValue, this._getbyIdUrl)
             .subscribe(response => {
-                console.log(response);
+                this.loading = false;
                 if (response != null) {
-                    this.equipmentissueedlist = response;
+                    this.equipmentIssueedList = response;
                 }
-                console.log(this.equipmentissueedlist);
-                //this.focus();
-                this.resmessage = null;
+                this.resMessage = null;
             }, error => {
                 //console.log(error);
             });
-        //e.preventDefault();
-        //this._dataService.getbyid(searchValue, this._getbyIdUrl)
-        //    .subscribe(response => {
-        //        if (response != null) {
-        //            this.equipmentissue = response;
-        //            this.equipmentreturnedlist = response.equipments;
-        //            this.returnForm.setValue({
-        //                id: this.equipmentissue.id,
-        //                memberName: this.equipmentissue.membername,
-        //                dueDate: this.equipmentissue.duedate,
-        //                memberSearch: null
-        //            });
-
-        //        }
-        //        else {
-        //            this.reset();
-        //        }
-        //        this.focus();
-        //        this.resmessage = null;
-        //    }, error => {
-        //        //console.log(error);
-        //    });
+       
     }
 
     //Create
     onSubmit() {
+        this.loading = true;
         this.returnForm.patchValue({
-            equipments: this.equipmentchoosed
+            equipments: this.equipmentChoosed
         });
-        console.log(this.equipmentchoosed);
         if (this.returnForm.invalid) {
             return;
         }
-        console.log(this.returnForm.value.id);
         if (this.returnForm.value.userId > 0) {
             this._dataService.save(this.returnForm.value, this._saveUrl)
                 .subscribe(response => {
-                    this.resmessage = response.message;
-                    this.alertmessage = "alert-outline-info";
+                    this.loading = false;
+                    this.resMessage = response.message;
+                    this.alertMessage = "alert-outline-info";
                     this.reset();
                     this.focus();
                 }, error => {
@@ -161,11 +173,13 @@ export class ReturnComponent implements OnInit {
 
     //Pop Modal
     returnedList() {
+        this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
-                    this.equipmentreturned = response;
+                    this.loading = false;
+                    this.equipmentReturned = response;
                 }, error => {
                     //console.log(error);
                 }
@@ -178,31 +192,44 @@ export class ReturnComponent implements OnInit {
     }
     onSearch(): void {
         let term = this.searchTerm;
-        this.equipmentissueedlist = this.equipmentissueedlist.filter(function (tag) {
-            return tag.equipmentId.indexOf(term) >= 0;
+        this.equipmentIssueedList = this.equipmentIssueedList.filter(function (tag) {
+            return tag.equipmentId.toLowerCase().indexOf(term.toLowerCase()) >= 0;
         });
     }
     oncheckChange(e, i) {
         e.preventDefault();
         if (e.currentTarget.checked) {
-            this.equipmentchoosed.push({
+            this.equipmentChoosed.push({
                 id: i
             });
         }
+        else {
+            this.removeArrayList(this.equipmentChoosed, i);
+        }
+    }
+    removeArrayList(array, item) {
+        array.forEach((element, index) => {
+            if (element.id == item) {
+                array.splice(index, 1)
+            }
+        });
+        return array;
     }
     //Reset Form
     reset() {
-        this.returnForm.setValue({
-            id: 0,
-            userId: 0,
-            memberSearch: null,
-            memberName: null,
-            email: null,
-            equipments: []
-        });
+        if (this.loggedUser.usertype == 1) {
+            this.returnForm.setValue({
+                id: 0,
+                userId: 0,
+                memberSearch: null,
+                memberName: null,
+                email: null,
+                equipments: []
+            });
+        }
         this.searchTerm = "";
-        this.equipmentreturnedlist = [];
-        this.equipmentissueedlist = [];
+        this.equipmentReturnedList = [];
+        this.equipmentIssueedList = [];
     }
 
     //Focus input

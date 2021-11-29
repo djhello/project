@@ -20,24 +20,16 @@ var CalibrationsComponent = /** @class */ (function () {
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
+        this.loading = false;
         this._getUrl = '/api/calibration/getall';
         this._getbyIdUrl = '/api/calibration/getbyid';
         this._saveUrl = '/api/calibration/save';
         this._deleteUrl = '/api/calibration/deletebyid';
-        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
     }
     CalibrationsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Calibrations");
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
     };
     CalibrationsComponent.prototype.createForm = function () {
         this.calibrationForm = this.formBuilder.group({
@@ -58,17 +50,20 @@ var CalibrationsComponent = /** @class */ (function () {
     CalibrationsComponent.prototype.getAll = function () {
         var _this = this;
         //debugger
+        this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
             _this.calibrations = response;
         }, function (error) {
             console.log(error);
         });
+        this.loading = false;
     };
     //Get by ID
     CalibrationsComponent.prototype.edit = function (e, m) {
         var _this = this;
         //debugger
+        this.loading = true;
         e.preventDefault();
         this._dataService.getbyid(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
@@ -82,6 +77,7 @@ var CalibrationsComponent = /** @class */ (function () {
             $("#defaultsizemodal").on('shown.bs.modal', function () {
                 $(this).find('#calibrationName').focus();
             });
+            _this.loading = false;
         }, function (error) {
             console.log(error);
         });
@@ -89,6 +85,7 @@ var CalibrationsComponent = /** @class */ (function () {
     //Create
     CalibrationsComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.loading = true;
         if (this.calibrationForm.invalid) {
             return;
         }
@@ -101,6 +98,7 @@ var CalibrationsComponent = /** @class */ (function () {
             _this.getAll();
             _this.reset();
             $('#defaultsizemodal').modal('hide');
+            _this.loading = false;
         }, function (error) {
             console.log(error);
         });
@@ -108,6 +106,7 @@ var CalibrationsComponent = /** @class */ (function () {
     //Delete
     CalibrationsComponent.prototype.delete = function (e, m) {
         var _this = this;
+        this.loading = true;
         //debugger
         e.preventDefault();
         var IsConf = confirm('You are about to delete ' + m.calibrationname + '. Are you sure?');
@@ -117,6 +116,7 @@ var CalibrationsComponent = /** @class */ (function () {
                 //console.log(response)
                 _this.resmessage = response;
                 _this.getAll();
+                _this.loading = false;
             }, function (error) {
                 console.log(error);
             });

@@ -20,6 +20,7 @@ var LoginComponent = /** @class */ (function () {
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
+        this.loading = false;
         this._saveUrl = '/api/auth/loginusers';
         if (localStorage.getItem('isLoggedin')) {
             this.router.navigate(['/backoffice']);
@@ -41,10 +42,11 @@ var LoginComponent = /** @class */ (function () {
         if (this.userForm.invalid) {
             return;
         }
+        this.loading = true;
         //debugger
         this._dataService.save(this.userForm.value, this._saveUrl)
             .subscribe(function (response) {
-            //console.log(response);
+            _this.loading = false;
             var loggeduser = response.loggeduser;
             if (loggeduser != null) {
                 localStorage.setItem('isLoggedin', 'true');

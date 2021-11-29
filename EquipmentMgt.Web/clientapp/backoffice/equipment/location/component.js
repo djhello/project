@@ -73,15 +73,15 @@ var LocationsComponent = /** @class */ (function () {
         });
         this.reset();
         this.getcalibration();
-        this.getcategory();
     };
-    //Get LOcations 
+    //Get Locations 
     LocationsComponent.prototype.getAll = function () {
         var _this = this;
         //debugger
+        this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
-            //console.log(response)
+            _this.loading = false;
             _this.locations = response;
         }, function (error) {
             console.log(error);
@@ -90,12 +90,11 @@ var LocationsComponent = /** @class */ (function () {
     //Get by ID
     LocationsComponent.prototype.edit = function (e, m) {
         var _this = this;
-        //debugger
         e.preventDefault();
-        this.getcategory();
+        this.loading = true;
         this._dataService.getbyid(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
-            //console.log(response);
+            _this.loading = false;
             _this.location = response;
             _this.locationForm.setValue({
                 id: _this.location.id,
@@ -112,6 +111,7 @@ var LocationsComponent = /** @class */ (function () {
     //Create
     LocationsComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.loading = true;
         if (this.locationForm.invalid) {
             return;
         }
@@ -121,7 +121,7 @@ var LocationsComponent = /** @class */ (function () {
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(function (response) {
-            //console.log(response);
+            _this.loading = false;
             _this.resmessage = response.message;
             _this.alertmessage = "alert-outline-info";
             _this.getAll();
@@ -134,13 +134,13 @@ var LocationsComponent = /** @class */ (function () {
     //Delete
     LocationsComponent.prototype.delete = function (e, m) {
         var _this = this;
-        //debugger
+        this.loading = true;
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.bookname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.locationName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(function (response) {
-                //console.log(response)
+                _this.loading = false;
                 _this.resmessage = response;
                 _this.getAll();
             }, function (error) {
@@ -148,26 +148,13 @@ var LocationsComponent = /** @class */ (function () {
             });
         }
     };
-    //Get Author 
     LocationsComponent.prototype.getcalibration = function () {
         var _this = this;
-        //debugger
+        this.loading = true;
         this._dataService.getall(this._getcalibrationUrl)
             .subscribe(function (response) {
-            //console.log(response)
+            _this.loading = false;
             _this.calibrations = response;
-        }, function (error) {
-            console.log(error);
-        });
-    };
-    //Get Category 
-    LocationsComponent.prototype.getcategory = function () {
-        var _this = this;
-        //debugger
-        this._dataService.getall(this._getcategoryUrl)
-            .subscribe(function (response) {
-            console.log(response);
-            _this.categories = response;
         }, function (error) {
             console.log(error);
         });

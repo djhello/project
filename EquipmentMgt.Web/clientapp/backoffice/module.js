@@ -21,9 +21,10 @@ var component_4 = require("./equipment/equipmentModel/component");
 var component_5 = require("./equipment/calibration/component");
 var component_6 = require("./circulation/issue/component");
 var component_7 = require("./circulation/return/component");
-var component_8 = require("./system/users/component");
-var component_9 = require("./reports/equipment/component");
-var component_10 = require("./equipment/location/component");
+var component_8 = require("./system/settings/component");
+var component_9 = require("./system/users/component");
+var component_10 = require("./reports/equipment/component");
+var component_11 = require("./equipment/location/component");
 var routes = [
     {
         path: '',
@@ -31,14 +32,15 @@ var routes = [
         children: [
             { path: '', redirectTo: 'dashboard' },
             { path: 'dashboard', component: component_2.DashboardComponent },
-            { path: 'equipment/equipments', component: component_3.EquipmentsComponent },
-            { path: 'equipment/equipmentModel', component: component_4.EquipmentModelsComponent },
-            { path: 'equipment/location', component: component_10.LocationsComponent },
-            { path: 'equipment/calibration', component: component_5.CalibrationsComponent },
+            { path: 'equipment/equipments', component: component_3.EquipmentsComponent, canActivate: [access_guard_1.AccessPermission] },
+            { path: 'equipment/equipmentModel', component: component_4.EquipmentModelsComponent, canActivate: [access_guard_1.AccessPermission] },
+            { path: 'equipment/location', component: component_11.LocationsComponent, canActivate: [access_guard_1.AccessPermission] },
+            { path: 'equipment/calibration', component: component_5.CalibrationsComponent, canActivate: [access_guard_1.AccessPermission] },
             { path: 'circulation/issue', component: component_6.IssueComponent },
             { path: 'circulation/return', component: component_7.ReturnComponent },
-            { path: 'system/users', component: component_8.UsersComponent, canActivate: [access_guard_1.AccessPermission] },
-            { path: 'reports/equipment', component: component_9.EquipmentReportsComponent }
+            { path: 'system/users', component: component_9.UsersComponent, canActivate: [access_guard_1.AccessPermission] },
+            { path: 'system/settings', component: component_8.UserSettingsComponent, canActivate: [access_guard_1.AccessPermission] },
+            { path: 'reports/equipment', component: component_10.EquipmentReportsComponent }
         ]
     }
 ];
@@ -53,12 +55,13 @@ var BackofficeModule = /** @class */ (function () {
                 component_2.DashboardComponent,
                 component_3.EquipmentsComponent,
                 component_4.EquipmentModelsComponent,
-                component_10.LocationsComponent,
+                component_11.LocationsComponent,
                 component_5.CalibrationsComponent,
                 component_6.IssueComponent,
                 component_7.ReturnComponent,
-                component_8.UsersComponent,
-                component_9.EquipmentReportsComponent
+                component_9.UsersComponent,
+                component_8.UserSettingsComponent,
+                component_10.EquipmentReportsComponent
             ],
             providers: [access_guard_1.AccessPermission],
             bootstrap: [component_1.BackofficeComponent]

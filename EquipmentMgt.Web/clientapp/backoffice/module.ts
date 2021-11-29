@@ -15,6 +15,7 @@ import { EquipmentModelsComponent } from './equipment/equipmentModel/component';
 import { CalibrationsComponent } from './equipment/calibration/component';
 import { IssueComponent } from './circulation/issue/component';
 import { ReturnComponent } from './circulation/return/component';
+import { UserSettingsComponent } from './system/settings/component';
 import { UsersComponent } from './system/users/component';
 import { EquipmentReportsComponent } from './reports/equipment/component';
 import { LocationsComponent } from './equipment/location/component';
@@ -26,17 +27,14 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard' },
             { path: 'dashboard', component: DashboardComponent },
-
-            { path: 'equipment/equipments', component: EquipmentsComponent },
-            { path: 'equipment/equipmentModel', component: EquipmentModelsComponent },
-            { path: 'equipment/location', component: LocationsComponent },
-            { path: 'equipment/calibration', component: CalibrationsComponent },
-            
+            { path: 'equipment/equipments', component: EquipmentsComponent, canActivate: [AccessPermission]  },
+            { path: 'equipment/equipmentModel', component: EquipmentModelsComponent, canActivate: [AccessPermission] },
+            { path: 'equipment/location', component: LocationsComponent, canActivate: [AccessPermission] },
+            { path: 'equipment/calibration', component: CalibrationsComponent, canActivate: [AccessPermission] },
             { path: 'circulation/issue', component: IssueComponent },
             { path: 'circulation/return', component: ReturnComponent },
-
             { path: 'system/users', component: UsersComponent, canActivate: [AccessPermission] },
-
+            { path: 'system/settings', component: UserSettingsComponent, canActivate: [AccessPermission] },
             { path: 'reports/equipment', component: EquipmentReportsComponent }
         ]
     }
@@ -54,6 +52,7 @@ const routes: Routes = [
         IssueComponent,
         ReturnComponent,
         UsersComponent,
+        UserSettingsComponent,
         EquipmentReportsComponent
     ],
     providers: [AccessPermission],

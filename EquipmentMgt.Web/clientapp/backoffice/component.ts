@@ -8,15 +8,17 @@ import { DataService } from '../shared/service';
     templateUrl: './app/backoffice/component.html',
     providers: [DataService]
 })
-export class BackofficeComponent implements OnInit {
+export class BackofficeComponent implements OnInit{
+    
     public loggedUsername: string;
     public loggedUsertype: number;
     public loggedemail: string;
     
-
     constructor(
         private _dataService: DataService,
-        private router: Router) {
+        private router: Router
+        
+    ) {
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUsername = loggedUser.displayname;
         this.loggedemail = loggedUser.email;

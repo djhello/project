@@ -17,7 +17,7 @@ namespace DataFactory.account
             _ctx = new EquipmentDBContext();
         }
 
-        public async Task<string> regusers(User model)
+        public async Task<string> regusers(vmUser model)
         {
             string message = string.Empty;
 
@@ -25,32 +25,30 @@ namespace DataFactory.account
             {
                 using (var _ctxTransaction = _ctx.Database.BeginTransaction())
                 {
+                   
                     try
                     {
-                        var ifExist = _ctx.User.SingleOrDefault(x => x.Email == model.Email);
-                        if (ifExist == null)
+                        var ifEMailExist = _ctx.User.SingleOrDefault(x => x.Email == model.Email);
+                        var ifUserIdExist = _ctx.User.SingleOrDefault(x => x.UserId == model.UserId);
+                        if (ifEMailExist == null && ifUserIdExist == null)
                         {
-                            var maxUser = _ctx.User.DefaultIfEmpty().Max(x => x == null ? 0 : x.Id) + 1;
-                            //Save User
                             var UserModel = new User
                             {
-                                Id = maxUser,
-                                UserId = maxUser,
+                                UserId = model.UserId,
+                                Usertype = (int) MemberType.Member,
                                 Firstname = model.Firstname,
                                 Lastname = model.Lastname,
-                                Email = model.Email,
-                                Contact = model.Contact
+                                Email = model.Email
                             };
                             _ctx.User.Add(UserModel);
 
-                            var maxAuth = _ctx.UserAuthentication.DefaultIfEmpty().Max(x => x == null ? 0 : x.Id) + 1;
+                           
                             //Save UserAuth
                             var UserAuthModel = new UserAuthentication
                             {
-                                Id = maxAuth,
-                                Userid = maxAuth,
+                                Userid = model.UserId,
                                 Username = model.Email,
-                                Userpass = model.Contact,
+                                Userpass = model.Password,
                                 Joindate = Extension.Today
                             };
                             _ctx.UserAuthentication.Add(UserAuthModel);
@@ -98,7 +96,7 @@ namespace DataFactory.account
                                                 Userid = ua.Userid,
                                                 Username = ua.Username,
                                                 Usertype = ur.Usertype,
-                                                Displayname = ur.Firstname,
+                                                Displayname = ur.Firstname+" "+ur.Lastname,
                                                 Email = ur.Email
                                             }).FirstOrDefaultAsync();
                     }

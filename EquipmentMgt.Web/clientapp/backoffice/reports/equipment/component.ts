@@ -3,6 +3,15 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Chart } from 'angular-highcharts';
 import { DataService } from '../../../shared/service';
+import { TableUtil } from "../../../shared/tableUtil";
+import * as XLSX from "xlsx";
+
+export interface PeriodicElement {
+    name: string;
+    position: number;
+    weight: number;
+    symbol: string;
+}
 
 @Component({
     selector: 'chart',
@@ -14,6 +23,7 @@ export class EquipmentReportsComponent implements OnInit {
     public echart: any[];
     public equipmentreturned: any[] = [];
     public equipmentissued: any[] = [];
+    public loading: boolean = false; 
 
     public _getUrl: string = '/api/report/getequipmentchart';
     public _getRUrl: string = '/api/circulation/getreturnall';
@@ -22,7 +32,8 @@ export class EquipmentReportsComponent implements OnInit {
     constructor(
         private router: Router,
         private titleService: Title,
-        private _dataService: DataService) {
+        private _dataService: DataService
+       ) {
     }
 
     ngOnInit() {
@@ -33,7 +44,7 @@ export class EquipmentReportsComponent implements OnInit {
 
     //Get Chart 
     getChart() {
-
+        this.loading = true;
         //debugger
         this._dataService.getall(this._getUrl).subscribe(
             response => {
@@ -91,10 +102,12 @@ export class EquipmentReportsComponent implements OnInit {
                 //console.log(error);
             }
         );
+        this.loading = false;
     }
 
     //Issue/Return
     returnedList() {
+        this.loading = true;
         this._dataService.getall(this._getRUrl)
             .subscribe(
                 response => {
@@ -110,10 +123,16 @@ export class EquipmentReportsComponent implements OnInit {
                 response => {
                     console.log(response);
                     this.equipmentissued = response;
+                    this.loading = false;
                 }, error => {
                     //console.log(error);
                 }
             );
     }
-
+    exportReturnedTable() {
+        TableUtil.exportArrayToExcel(this.equipmentreturned, "ExampleArray");
+    }
+    exportIssuedTable() {
+        TableUtil.exportArrayToExcel(this.equipmentissued, "ExampleArray");
+    }
 }

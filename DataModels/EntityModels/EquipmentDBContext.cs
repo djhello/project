@@ -292,38 +292,31 @@ namespace DataModels.EntityModels
             {
                 entity.ToTable("user");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Contact)
-                    .HasColumnName("contact")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Firstname)
-                    .HasColumnName("firstname")
+                    .HasColumnName("firstName")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Lastname)
-                    .HasColumnName("lastname")
+                    .HasColumnName("lastName")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
-                entity.Property(e => e.Usertype).HasColumnName("usertype");
+                entity.Property(e => e.Usertype).HasColumnName("userType");
+
             });
 
             modelBuilder.Entity<UserAuthentication>(entity =>
             {
                 entity.ToTable("user_authentication");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Joindate)
                     .HasColumnName("joindate")

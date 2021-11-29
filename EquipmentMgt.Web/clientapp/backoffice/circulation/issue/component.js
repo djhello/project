@@ -20,22 +20,26 @@ var IssueComponent = /** @class */ (function () {
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
-        this.equipmentlist = [];
-        this.availableequipmentlist = [];
-        this.equipmentchoosed = [];
-        this.equipmentissueed = [];
-        this.equipmentissueedlist = [];
+        this.equipmentsList = [];
+        this.availableEquipmentList = [];
+        this.availableEquipmentListCopy = [];
+        this.equipmentChoosed = [];
+        this.equipmentIssueedList = [];
+        this.equipmentByUserIssueedList = [];
+        this.loading = false;
+        this.showSearchMemberDiv = false;
         this._getUrl = '/api/circulation/getissueall';
         this._getbyIdUrl = '/api/circulation/getissuebyid';
         this._saveUrl = '/api/circulation/issueequipment';
-        this._getequipmentUrl = '/api/circulation/getallequipment';
-        this._getavailableallequipmentUrl = '/api/equipment/getavailableallequipment';
+        this._getEquipmentUrl = '/api/circulation/getallequipment';
+        this._getAvailableallEquipmentUrl = '/api/equipment/getavailableallequipment';
         this._getbyUserIdUrl = '/api/users/getbyid';
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     IssueComponent.prototype.handleKeyboardEvent = function (event) {
-        this.keypress = event.keyCode;
-        if (this.keypress == 32) {
-            this.resmessage = null;
+        this.keyPress = event.keyCode;
+        if (this.keyPress == 32) {
+            this.resMessage = null;
             this.reset();
             this.focus();
         }
@@ -44,8 +48,8 @@ var IssueComponent = /** @class */ (function () {
         this.titleService.setTitle("Envanter Takip Sistemi| Ödünç");
         this.loadScripts();
         this.createForm();
-        //this.equipmentList();
-        this.availableequipmentList();
+        this.getAvailableEquipmentList();
+        this.setUser();
     };
     IssueComponent.prototype.loadScripts = function () {
         var libScripts = [
@@ -72,9 +76,29 @@ var IssueComponent = /** @class */ (function () {
         });
         this.focus();
     };
+    IssueComponent.prototype.setUser = function () {
+        if (this.loggedUser.usertype != 1) {
+            this.showSearchMemberDiv = false;
+            var dt = new Date();
+            dt.setDate(dt.getDate() + 15);
+            this.issueForm.setValue({
+                id: 0,
+                userId: this.loggedUser.userid,
+                memberName: this.loggedUser.displayname,
+                email: this.loggedUser.email,
+                dueDate: dt.toLocaleDateString('en-US'),
+                memberSearch: null,
+                equipments: []
+            });
+        }
+        else {
+            this.showSearchMemberDiv = true;
+        }
+    };
     //Search Member
     IssueComponent.prototype.onChange = function (e, searchValue) {
         var _this = this;
+        this.loading = true;
         this.reset();
         e.preventDefault();
         this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
@@ -96,12 +120,11 @@ var IssueComponent = /** @class */ (function () {
         });
         this._dataService.getbyid(searchValue, this._getbyIdUrl)
             .subscribe(function (response) {
-            console.log(response);
+            _this.loading = false;
             if (response != null) {
-                _this.equipmentissueedlist = response;
+                _this.equipmentByUserIssueedList = response;
             }
-            //this.focus();
-            _this.resmessage = null;
+            _this.resMessage = null;
         }, function (error) {
             //console.log(error);
         });
@@ -109,34 +132,47 @@ var IssueComponent = /** @class */ (function () {
     //Search
     IssueComponent.prototype.onSearch = function () {
         var term = this.searchTerm;
-        this.availableequipmentlist = this.availableequipmentlist.filter(function (tag) {
-            return tag.equipmentId.indexOf(term) >= 0;
+        this.availableEquipmentList = this.availableEquipmentListCopy.filter(function (tag) {
+            return tag.equipmentId.toLowerCase().indexOf(term.toLowerCase()) >= 0;
         });
     };
     //Get Choosed equipment
     IssueComponent.prototype.oncheckChange = function (e, i) {
         e.preventDefault();
         if (e.currentTarget.checked) {
-            this.equipmentchoosed.push({
+            this.equipmentChoosed.push({
                 id: i
             });
         }
+        else {
+            this.removeArrayList(this.equipmentChoosed, i);
+        }
+    };
+    IssueComponent.prototype.removeArrayList = function (array, item) {
+        array.forEach(function (element, index) {
+            if (element.id == item) {
+                array.splice(index, 1);
+            }
+        });
+        return array;
     };
     //Create
     IssueComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.loading = true;
         this.issueForm.patchValue({
-            equipments: this.equipmentchoosed
+            equipments: this.equipmentChoosed
         });
-        console.log(this.equipmentchoosed);
+        console.log(this.equipmentChoosed);
         if (this.issueForm.invalid) {
             return;
         }
         if (this.issueForm.value.userId > 0) {
             this._dataService.save(this.issueForm.value, this._saveUrl)
                 .subscribe(function (response) {
-                _this.resmessage = response.message;
-                _this.alertmessage = "alert-outline-info";
+                _this.loading = false;
+                _this.resMessage = response.message;
+                _this.alertMessage = "alert-outline-info";
                 _this.reset();
                 _this.focus();
             }, function (error) {
@@ -147,18 +183,23 @@ var IssueComponent = /** @class */ (function () {
     //equipmentlist to choose
     IssueComponent.prototype.equipmentList = function () {
         var _this = this;
-        this._dataService.getall(this._getequipmentUrl)
+        this.loading = true;
+        this._dataService.getall(this._getEquipmentUrl)
             .subscribe(function (response) {
-            _this.equipmentlist = response;
+            _this.loading = false;
+            _this.equipmentsList = response;
         }, function (error) {
             //console.log(error);
         });
     };
-    IssueComponent.prototype.availableequipmentList = function () {
+    IssueComponent.prototype.getAvailableEquipmentList = function () {
         var _this = this;
-        this._dataService.getall(this._getavailableallequipmentUrl)
+        this.loading = true;
+        this._dataService.getall(this._getAvailableallEquipmentUrl)
             .subscribe(function (response) {
-            _this.availableequipmentlist = response;
+            _this.loading = false;
+            _this.availableEquipmentList = response;
+            _this.availableEquipmentListCopy = response;
         }, function (error) {
             //console.log(error);
         });
@@ -166,14 +207,15 @@ var IssueComponent = /** @class */ (function () {
     //Pop Modal
     IssueComponent.prototype.issueedList = function () {
         var _this = this;
+        this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
-            _this.equipmentissueed = response;
+            _this.loading = false;
+            _this.equipmentIssueedList = response;
         }, function (error) {
             //console.log(error);
         });
-        console.log(this.equipmentissueed);
     };
     //Close Modal
     IssueComponent.prototype.issueedListclose = function () {
@@ -181,19 +223,22 @@ var IssueComponent = /** @class */ (function () {
     };
     //Reset Form
     IssueComponent.prototype.reset = function () {
-        this.issueForm.setValue({
-            id: 0,
-            userId: 0,
-            memberSearch: null,
-            memberName: null,
-            email: null,
-            dueDate: null,
-            equipments: []
-        });
+        if (this.loggedUser.usertype == 1) {
+            this.issueForm.setValue({
+                id: 0,
+                userId: 0,
+                memberSearch: null,
+                memberName: null,
+                email: null,
+                dueDate: null,
+                equipments: []
+            });
+        }
         this.searchTerm = "";
-        this.equipmentissueedlist = [];
-        this.availableequipmentList();
-        this.availableequipmentlist = [];
+        this.availableEquipmentList = [];
+        this.availableEquipmentListCopy = [];
+        this.getAvailableEquipmentList();
+        this.equipmentChoosed = [];
     };
     //Focus input
     IssueComponent.prototype.focus = function () {

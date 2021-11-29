@@ -20,26 +20,37 @@ var UsersComponent = /** @class */ (function () {
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
+        this.loading = false;
         this._getUrl = '/api/users/getall';
         this._getbyIdUrl = '/api/users/getbyid';
         this._saveUrl = '/api/users/save';
         this._deleteUrl = '/api/users/deletebyid';
+        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+        this.loggedUsername = loggedUser.displayname;
+        this.loggedemail = loggedUser.email;
+        this.loggedUsertype = loggedUser.usertype;
     }
     UsersComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Kullancılar");
         this.createForm();
         this.getAll();
     };
+    UsersComponent.prototype.userTypeControl = function () {
+        if (this.loggedUsertype != 1) {
+            localStorage.removeItem('isLoggedin');
+            localStorage.removeItem('loggedUser');
+            this.router.navigate(['/login']);
+        }
+    };
     UsersComponent.prototype.createForm = function () {
         this.userForm = this.formBuilder.group({
-            id: 0,
+            userId: 0,
             firstName: new forms_1.FormControl('', forms_1.Validators.required),
             lastName: new forms_1.FormControl('', forms_1.Validators.required),
             email: new forms_1.FormControl('', forms_1.Validators.compose([
                 forms_1.Validators.required,
                 forms_1.Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-            ])),
-            contact: new forms_1.FormControl('', forms_1.Validators.required)
+            ]))
         });
         $("#firstName").focus();
     };
@@ -55,10 +66,10 @@ var UsersComponent = /** @class */ (function () {
     //Get All User
     UsersComponent.prototype.getAll = function () {
         var _this = this;
-        //debugger
+        this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
-            //console.log(response)
+            _this.loading = false;
             _this.users = response;
         }, function (error) {
             console.log(error);
@@ -67,18 +78,17 @@ var UsersComponent = /** @class */ (function () {
     //Get by ID
     UsersComponent.prototype.edit = function (e, m) {
         var _this = this;
-        //debugger
+        this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getbyid(m.userId, this._getbyIdUrl)
             .subscribe(function (response) {
-            //console.log(response);
+            _this.loading = false;
             _this.user = response;
             _this.userForm.setValue({
-                id: _this.user.id,
+                userId: _this.user.userId,
                 firstName: _this.user.firstname,
                 lastName: _this.user.lastname,
-                email: _this.user.email,
-                contact: _this.user.contact
+                email: _this.user.email
             });
             $('#defaultsizemodal').modal('show');
             $("#defaultsizemodal").on('shown.bs.modal', function () {
@@ -91,6 +101,7 @@ var UsersComponent = /** @class */ (function () {
     //Create
     UsersComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.loading = true;
         if (this.userForm.invalid) {
             return;
         }
@@ -102,6 +113,7 @@ var UsersComponent = /** @class */ (function () {
             _this.alertmessage = "alert-outline-info";
             _this.getAll();
             _this.reset();
+            _this.loading = false;
         }, function (error) {
             //console.log(error);
         });
@@ -110,12 +122,13 @@ var UsersComponent = /** @class */ (function () {
     UsersComponent.prototype.delete = function (e, m) {
         var _this = this;
         //debugger
+        this.loading = true;
         e.preventDefault();
         var IsConf = confirm('You are about to delete ' + m.firstname + '. Are you sure?');
         if (IsConf) {
-            this._dataService.delete(m.id, this._deleteUrl)
+            this._dataService.delete(m.userId, this._deleteUrl)
                 .subscribe(function (response) {
-                //console.log(response)
+                _this.loading = false;
                 _this.resmessage = response;
                 _this.getAll();
             }, function (error) {
@@ -125,11 +138,10 @@ var UsersComponent = /** @class */ (function () {
     };
     UsersComponent.prototype.reset = function () {
         this.userForm.setValue({
-            id: 0,
+            userId: 0,
             firstName: null,
             lastName: null,
-            email: null,
-            contact: null
+            email: null
         });
         this.resmessage = null;
         $('#firstName').focus();

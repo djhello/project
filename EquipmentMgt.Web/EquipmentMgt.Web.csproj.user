@@ -13,4 +13,14 @@
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
     <ToolsVersionPromptShown>3.1</ToolsVersionPromptShown>
   </PropertyGroup>
+  <ItemGroup>
+    <TypeScriptCompile Update="clientapp\shared\TableUtil.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Update="clientapp\shared\confirmed.validator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
 </Project>

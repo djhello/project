@@ -11,31 +11,37 @@ import { DataService } from '../../../shared/service';
 })
 
 export class IssueComponent implements OnInit {
+    
+    public loggedUser: any;
     public issueForm: FormGroup;
-    public keypress: number;
+    public keyPress: number;
     public user: any;
     public searchTerm: any;
-    public equipmentissue: any;
-    public equipmentlist: any[] = [];
-    public availableequipmentlist: any[] = [];
-    public equipmentchoosed: any[] = [];
-    public equipmentissueed: any[] = [];
-    public equipmentissueedlist: any[] = [];
-    public resmessage: string;
-    public alertmessage: string;
+    public equipmentIssue: any;
+    public equipmentsList: any[] = [];
+    public availableEquipmentList: any[] = [];
+    public availableEquipmentListCopy: any[] = [];
+    public equipmentChoosed: any[] = [];
+    public equipmentIssueedList: any[] = [];
+    public equipmentByUserIssueedList: any[] = [];
+    public resMessage: string;
+    public alertMessage: string;
+    public loading: boolean = false; 
+    public showSearchMemberDiv: boolean = false;
+
 
     public _getUrl: string = '/api/circulation/getissueall';
     public _getbyIdUrl: string = '/api/circulation/getissuebyid';
     public _saveUrl: string = '/api/circulation/issueequipment';
-    public _getequipmentUrl: string = '/api/circulation/getallequipment';
-    public _getavailableallequipmentUrl: string = '/api/equipment/getavailableallequipment';
+    public _getEquipmentUrl: string = '/api/circulation/getallequipment';
+    public _getAvailableallEquipmentUrl: string = '/api/equipment/getavailableallequipment';
     public _getbyUserIdUrl: string = '/api/users/getbyid';
     
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        this.keypress = event.keyCode;
-        if (this.keypress == 32) {
-            this.resmessage = null;
+        this.keyPress = event.keyCode;
+        if (this.keyPress == 32) {
+            this.resMessage = null;
             this.reset();
             this.focus();
         }
@@ -46,14 +52,16 @@ export class IssueComponent implements OnInit {
         private titleService: Title,
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
+        this.loggedUser  = JSON.parse(localStorage.getItem('loggedUser'));
     }
 
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi| Ödünç");
         this.loadScripts();
         this.createForm();
-        //this.equipmentList();
-        this.availableequipmentList();
+        this.getAvailableEquipmentList();
+        this.setUser();
+
     }
 
     public loadScripts() {
@@ -82,9 +90,28 @@ export class IssueComponent implements OnInit {
         });
         this.focus();
     }
-
+    setUser() {
+        if (this.loggedUser.usertype != 1) {
+            this.showSearchMemberDiv = false;
+            var dt = new Date();
+            dt.setDate(dt.getDate() + 15);
+            this.issueForm.setValue({
+                id: 0,
+                userId: this.loggedUser.userid,
+                memberName: this.loggedUser.displayname,
+                email: this.loggedUser.email,
+                dueDate: dt.toLocaleDateString('en-US'),
+                memberSearch: null,
+                equipments: []
+            });
+        }
+        else {
+            this.showSearchMemberDiv = true;
+        }
+    }
     //Search Member
     onChange(e, searchValue) {
+        this.loading = true;
         this.reset();
         e.preventDefault();
         this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
@@ -109,12 +136,11 @@ export class IssueComponent implements OnInit {
 
         this._dataService.getbyid(searchValue, this._getbyIdUrl)
             .subscribe(response => {
-                console.log(response);
+                this.loading = false;
                 if (response != null) {
-                    this.equipmentissueedlist = response;
+                    this.equipmentByUserIssueedList = response;
                 }
-                //this.focus();
-                this.resmessage = null;
+                this.resMessage = null;
             }, error => {
                 //console.log(error);
             });
@@ -123,8 +149,8 @@ export class IssueComponent implements OnInit {
     //Search
     onSearch(): void {
         let term = this.searchTerm;
-        this.availableequipmentlist = this.availableequipmentlist.filter(function (tag) {
-            return tag.equipmentId.indexOf(term) >= 0;
+        this.availableEquipmentList = this.availableEquipmentListCopy.filter(function (tag) {
+            return tag.equipmentId.toLowerCase().indexOf(term.toLowerCase()) >= 0;
         });
     }
 
@@ -132,26 +158,39 @@ export class IssueComponent implements OnInit {
     oncheckChange(e, i) {
         e.preventDefault();
         if (e.currentTarget.checked) {
-            this.equipmentchoosed.push({
+            this.equipmentChoosed.push({
                 id: i
             });
         }
+        else {
+            this.removeArrayList(this.equipmentChoosed, i);
+         }
     }
-
+    removeArrayList(array, item) {
+        array.forEach((element, index) => {
+            if (element.id == item) {
+                array.splice(index, 1)
+            }
+        });
+        return array;
+    }
+    
     //Create
     onSubmit() {
+        this.loading = true;
         this.issueForm.patchValue({
-            equipments: this.equipmentchoosed
+            equipments: this.equipmentChoosed
         });
-        console.log(this.equipmentchoosed);
+        console.log(this.equipmentChoosed);
         if (this.issueForm.invalid) {
             return;
         }
         if (this.issueForm.value.userId > 0) {
             this._dataService.save(this.issueForm.value, this._saveUrl)
                 .subscribe(response => {
-                    this.resmessage = response.message;
-                    this.alertmessage = "alert-outline-info";
+                    this.loading = false;
+                    this.resMessage = response.message;
+                    this.alertMessage = "alert-outline-info";
                     this.reset();
                     this.focus();
                 }, error => {
@@ -162,20 +201,25 @@ export class IssueComponent implements OnInit {
 
     //equipmentlist to choose
     equipmentList() {
-        this._dataService.getall(this._getequipmentUrl)
+        this.loading = true;
+        this._dataService.getall(this._getEquipmentUrl)
             .subscribe(
                 response => {
-                    this.equipmentlist = response;
+                    this.loading = false;
+                    this.equipmentsList = response;
                 }, error => {
                     //console.log(error);
                 }
             );
     }
-    availableequipmentList() {
-        this._dataService.getall(this._getavailableallequipmentUrl)
+    getAvailableEquipmentList() {
+        this.loading = true;
+        this._dataService.getall(this._getAvailableallEquipmentUrl)
             .subscribe(
                 response => {
-                    this.availableequipmentlist = response;
+                    this.loading = false;
+                    this.availableEquipmentList = response;
+                    this.availableEquipmentListCopy = response;
                 }, error => {
                     //console.log(error);
                 }
@@ -183,17 +227,18 @@ export class IssueComponent implements OnInit {
     }
     //Pop Modal
     issueedList() {
+        this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
-                    this.equipmentissueed = response;
+                    this.loading = false;
+                    this.equipmentIssueedList = response;
                 }, error => {
                     //console.log(error);
                 }
                 
         );
-        console.log(this.equipmentissueed);
     }
 
     //Close Modal
@@ -203,19 +248,22 @@ export class IssueComponent implements OnInit {
 
     //Reset Form
     reset() {
-        this.issueForm.setValue({
-            id: 0,
-            userId: 0,
-            memberSearch: null,
-            memberName: null,
-            email: null,
-            dueDate: null,
-            equipments: []
-        });
+        if (this.loggedUser.usertype == 1) {
+            this.issueForm.setValue({
+                id: 0,
+                userId: 0,
+                memberSearch: null,
+                memberName: null,
+                email: null,
+                dueDate: null,
+                equipments: []
+            });
+        }
         this.searchTerm = "";
-        this.equipmentissueedlist = [];
-        this.availableequipmentList();
-        this.availableequipmentlist= [];
+        this.availableEquipmentList = [];
+        this.availableEquipmentListCopy = [];
+        this.getAvailableEquipmentList();
+        this.equipmentChoosed = [];
     }
 
     //Focus input

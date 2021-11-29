@@ -14,12 +14,14 @@ var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var service_1 = require("../../shared/service");
+var confirmed_validator_1 = require("../../shared/confirmed.validator");
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(router, titleService, formBuilder, _dataService) {
         this.router = router;
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
+        this.loading = false;
         this._saveUrl = '/api/auth/regusers';
     }
     RegisterComponent.prototype.ngOnInit = function () {
@@ -28,39 +30,49 @@ var RegisterComponent = /** @class */ (function () {
     };
     RegisterComponent.prototype.createForm = function () {
         this.userForm = this.formBuilder.group({
+            userId: new forms_1.FormControl('', forms_1.Validators.required),
             firstName: new forms_1.FormControl('', forms_1.Validators.required),
             lastName: new forms_1.FormControl('', forms_1.Validators.required),
             email: new forms_1.FormControl('', forms_1.Validators.compose([
                 forms_1.Validators.required,
-                forms_1.Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+                forms_1.Validators.pattern('^[a-zA-Z0-9_.+-]+@tei.com.tr+$')
             ])),
-            contact: new forms_1.FormControl('', forms_1.Validators.required)
+            password: new forms_1.FormControl('', forms_1.Validators.required),
+            confirmPassword: new forms_1.FormControl('', forms_1.Validators.required)
+        }, {
+            validator: confirmed_validator_1.ConfirmedValidator('password', 'confirmPassword')
         });
-        $("#firstName").focus();
+        $("#userId").focus();
     };
     RegisterComponent.prototype.onSubmit = function () {
         var _this = this;
         if (this.userForm.invalid) {
             return;
         }
+        this.loading = true;
         //debugger
         this._dataService.save(this.userForm.value, this._saveUrl)
             .subscribe(function (response) {
-            //console.log(response);
+            _this.loading = false;
             _this.resmessage = response.message;
             _this.alertmessage = "alert-outline-info";
+            if (_this.resmessage == "Saved Successfully.") {
+                _this.reset();
+                //this.router.navigate(['/login']);
+            }
         }, function (error) {
-            //console.log(error);
         });
     };
     RegisterComponent.prototype.reset = function () {
         this.userForm.setValue({
             firstName: null,
             lastName: null,
+            userId: null,
             email: null,
-            contact: null
+            password: null,
+            confirmPassword: null
         });
-        this.resmessage = null;
+        //this.resmessage = null;
     };
     RegisterComponent = __decorate([
         core_1.Component({

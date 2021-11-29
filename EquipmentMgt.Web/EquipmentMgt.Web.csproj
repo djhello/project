@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="clientapp\shared\confirmed.validator.ts" />
+    <None Remove="clientapp\shared\TableUtil.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\app\" />
   </ItemGroup>
 
@@ -21,6 +26,11 @@
     <ProjectReference Include="..\DataFactory\DataFactory.csproj" />
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\DataUtilities\DataUtilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="clientapp\shared\confirmed.validator.ts" />
+    <TypeScriptCompile Include="clientapp\shared\TableUtil.ts" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties tsconfig_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

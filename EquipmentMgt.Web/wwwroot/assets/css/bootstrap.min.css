@@ -6022,11 +6022,11 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 	}
 }
 .sr-only {
-	position: absolute;
+	/*position: absolute;*/
 	width: 1px;
 	height: 1px;
 	padding: 0;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border: 0

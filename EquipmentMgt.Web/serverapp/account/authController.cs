@@ -19,7 +19,7 @@ namespace EquipmentMgt.Web.serverapp.account
 
         // POST: api/auth/regusers
         [HttpPost("[action]")]
-        public async Task<object> regusers([FromBody]User model)
+        public async Task<object> regusers([FromBody]vmUser model)
         {
             object result = null; string message = string.Empty;
             try
@@ -28,7 +28,6 @@ namespace EquipmentMgt.Web.serverapp.account
                 {
                     return BadRequest();
                 }
-
                 //Save
                 _objusers = new AuthUsers();
                 message = await _objusers.regusers(model);

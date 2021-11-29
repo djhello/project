@@ -32,7 +32,7 @@ const routes: Routes = [
     imports: [BrowserModule, RouterModule.forRoot(routes)],
     declarations: [AppComponent],
     bootstrap: [AppComponent],
-    providers: [Title, AuthGuard],
+    providers: [Title, AuthGuard], 
     exports: [RouterModule]
 })
 
