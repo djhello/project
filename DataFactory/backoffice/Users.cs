@@ -68,8 +68,8 @@ namespace DataFactory.backoffice
                             var entityUpdate = _ctx.User.FirstOrDefault(x => x.Id == model.Id);
                             if (entityUpdate != null)
                             {
-                                entityUpdate.Firstname = model.Firstname;
-                                entityUpdate.Lastname = model.Lastname;
+                                entityUpdate.FirstName = model.Firstname;
+                                entityUpdate.LastName = model.Lastname;
                                 entityUpdate.Email = model.Email;
                                 await _ctx.SaveChangesAsync();
                             }
@@ -83,8 +83,8 @@ namespace DataFactory.backoffice
                                 {
                                     UserId = model.UserId,
                                     Usertype = (int) MemberType.Member,
-                                    Firstname = model.Firstname,
-                                    Lastname = model.Lastname,
+                                    FirstName = model.Firstname,
+                                    LastName = model.Lastname,
                                     Email = model.Email
                                 };
                                 _ctx.User.Add(UserModel);
@@ -122,6 +122,7 @@ namespace DataFactory.backoffice
 
             return message;
         }
+        
         public async Task<string> updateUserInfos(vmUser model)
         {
             string message = string.Empty;
@@ -136,10 +137,48 @@ namespace DataFactory.backoffice
                             var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
                             if (entityUpdate != null)
                             {
-                                entityUpdate.Firstname = model.Firstname;
-                                entityUpdate.Lastname = model.Lastname;
+                                entityUpdate.FirstName = model.Firstname;
+                                entityUpdate.LastName = model.Lastname;
                                 entityUpdate.Email = model.Email;
                                 await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
+
+            return message;
+        }
+        public async Task<string> updatePasswordUrl(vmUser model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.UserId > 0)
+                        {
+                            var entityUpdate = _ctx.UserAuthentication.FirstOrDefault(x => x.Userid == model.UserId);
+                            if (entityUpdate != null)
+                            {
+                                var UserAuthModel = new UserAuthentication
+                                {
+                                   Userpass = model.Password
+                                };
+                                _ctx.UserAuthentication.Add(UserAuthModel);
+
+                                await _ctx.SaveChangesAsync();
+
                                 message = MessageConstants.Saved;
                             }
                         }

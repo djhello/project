@@ -27,8 +27,6 @@ var LocationsComponent = /** @class */ (function () {
         this._getbyIdUrl = '/api/location/getbyid';
         this._saveUrl = '/api/location/save';
         this._deleteUrl = '/api/location/deletebyid';
-        this._getcalibrationUrl = '/api/dropdown/getallauthor';
-        this._getcategoryUrl = '/api/dropdown/getallcategory';
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUsername = loggedUser.displayname;
         this.loggedemail = loggedUser.email;
@@ -72,7 +70,6 @@ var LocationsComponent = /** @class */ (function () {
             $(this).find('#name').focus();
         });
         this.reset();
-        this.getcalibration();
     };
     //Get Locations 
     LocationsComponent.prototype.getAll = function () {
@@ -148,17 +145,6 @@ var LocationsComponent = /** @class */ (function () {
             });
         }
     };
-    LocationsComponent.prototype.getcalibration = function () {
-        var _this = this;
-        this.loading = true;
-        this._dataService.getall(this._getcalibrationUrl)
-            .subscribe(function (response) {
-            _this.loading = false;
-            _this.calibrations = response;
-        }, function (error) {
-            console.log(error);
-        });
-    };
     LocationsComponent.prototype.reset = function () {
         this.locationForm.setValue({
             id: 0,
@@ -166,7 +152,7 @@ var LocationsComponent = /** @class */ (function () {
         });
         this.fileInput.nativeElement.value = '';
         this.resmessage = null;
-        $('#bookName').focus();
+        $('#name').focus();
     };
     __decorate([
         core_1.ViewChild('fileInput'),
@@ -174,7 +160,7 @@ var LocationsComponent = /** @class */ (function () {
     ], LocationsComponent.prototype, "fileInput", void 0);
     LocationsComponent = __decorate([
         core_1.Component({
-            selector: 'ng-test',
+            selector: 'ng-location',
             templateUrl: './app/backoffice/equipment/location/component.html',
             providers: [service_1.DataService]
         }),

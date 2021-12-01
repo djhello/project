@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label for="userId">Personnel Id</label>
                             <div class="position-relative has-icon-left">
-                                <input type="number" id="userId" name="userId" formControlName="userId" class="form-control" disabled placeholder="Personel Number" required
+                                <input type="number" id="userId" name="userId" formControlName="userId" disabled class="form-control"  placeholder="Personel Number" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Personel Id'" autocomplete="off" />
                                 <div class="form-control-position" style="top:-6px;">
                                     <i class="icon-user"></i><em class="text-danger">*</em>
@@ -60,7 +60,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary shadow-primary btn-block waves-effect waves-light" form="userForm" [disabled]="!f.valid">SAVE</button>
                     </form>
-                    <form id="passwordForm" [formGroup]="passwordForm" #f="ngForm" (ngSubmit)="onSubmit()">
+                    <form id="passwordForm" [formGroup]="passwordForm" #p="ngForm" (ngSubmit)="onSubmitPassword()">
                         <div class="form-group">
                             <label for="password">Password</label>
                             <div class="position-relative has-icon-left">
@@ -82,11 +82,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="passwordForm.controls['confirmPassword'].touched && passwordForm.controls['passwordForm'].invalid" class="alert alert-danger">
+                        <div *ngIf="passwordForm.controls['confirmPassword'].touched && passwordForm.controls['confirmPassword'].invalid" class="alert alert-danger">
                             <div *ngIf="passwordForm.controls['confirmPassword'].errors.required">Password is required.</div>
                             <div *ngIf="passwordForm.controls['confirmPassword'].errors.confirmedValidator">Password and Confirm Password must be match.</div>
                         </div>
-                        <button type="submit" class="btn btn-primary shadow-primary btn-block waves-effect waves-light" form="passwordForm" [disabled]="!f.valid">Change Password</button>
+                        <button type="submit" class="btn btn-primary shadow-primary btn-block waves-effect waves-light" form="passwordForm" [disabled]="!p.valid">Change Password</button>
                     </form>
                         <!--<div class="form-group mb-0">
             <div class="demo-checkbox">

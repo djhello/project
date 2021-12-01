@@ -26,6 +26,9 @@ export class UsersComponent implements OnInit {
     public _saveUrl: string = '/api/users/save';
     public _deleteUrl: string = '/api/users/deletebyid';
 
+
+    public _getDepartmansUrl: string = '/api/departmans/getall';
+
     constructor(
         private router: Router,
         private titleService: Title,

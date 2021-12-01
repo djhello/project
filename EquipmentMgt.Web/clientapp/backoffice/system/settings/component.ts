@@ -21,6 +21,8 @@ export class UserSettingsComponent implements OnInit {
     public alertmessage: string;
     public _getbyIdUrl: string = '/api/users/getbyid';
     public _updateUrl: string = '/api/users/updateUserInfos';
+    public _updatePasswordUrl: string = '/api/users/updatePasswordUrl';
+    
     constructor(
         private router: Router,
         private titleService: Title,
@@ -67,18 +69,33 @@ export class UserSettingsComponent implements OnInit {
                 this.loading = false;
                 this.resmessage = response.message;
                 this.alertmessage = "alert-outline-info";
-                if (this.resmessage == "Saved Successfully.") {
-                    this.reset();
-                }
             }, error => {
             });
     }
+    onSubmitPassword() {
+        if (this.passwordForm.invalid) {
+            return;
+        }
+        this.loading = true;
+        this._dataService.save({
+            userId: this.user.userId,
+            password: this.passwordForm.value.password
+        }, this._updatePasswordUrl)
+            .subscribe(response => {
+                this.loading = false;
+                this.resmessage = response.message;
+                this.alertmessage = "alert-outline-info";
+                if (this.resmessage == "Saved Successfully.") {
+                    this.passwordReset();
+                }
+            }, error => {
+            });
+        
+    }
     getbyIdUrl() {
         this.loading = true;
-        console.log(this.loggedUser);
         this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl )
             .subscribe(response => {
-                console.log(response);
                 this.loading = false;
                 this.user = response;
                 this.userForm.setValue({
@@ -105,7 +122,13 @@ export class UserSettingsComponent implements OnInit {
             userId:null,
             email: null
         });
-
-        //this.resmessage = null;
     }
+    passwordReset() {
+        this.passwordForm.setValue({
+            password: null,
+            confirmPassword: null
+        });
+    }
+        //this.resmessage = null;
+   
 }

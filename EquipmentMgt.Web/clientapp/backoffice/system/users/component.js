@@ -25,6 +25,7 @@ var UsersComponent = /** @class */ (function () {
         this._getbyIdUrl = '/api/users/getbyid';
         this._saveUrl = '/api/users/save';
         this._deleteUrl = '/api/users/deletebyid';
+        this._getDepartmansUrl = '/api/departmans/getall';
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUsername = loggedUser.displayname;
         this.loggedemail = loggedUser.email;

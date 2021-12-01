@@ -252,7 +252,7 @@ var EquipmentsComponent = /** @class */ (function () {
     ], EquipmentsComponent.prototype, "fileInput", void 0);
     EquipmentsComponent = __decorate([
         core_1.Component({
-            selector: 'ng-books',
+            selector: 'ng-equipments',
             templateUrl: './app/backoffice/equipment/equipments/component.html',
             providers: [service_1.DataService]
         }),

@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { DataService } from '../../../shared/service';
 
 @Component({
-    selector: 'ng-test',
+    selector: 'ng-location',
     templateUrl: './app/backoffice/equipment/location/component.html',
     providers: [DataService]
 })
@@ -30,8 +30,6 @@ export class LocationsComponent implements OnInit {
     public _saveUrl: string = '/api/location/save';
     public _deleteUrl: string = '/api/location/deletebyid';
 
-    public _getcalibrationUrl: string = '/api/dropdown/getallauthor';
-    public _getcategoryUrl: string = '/api/dropdown/getallcategory';
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -87,7 +85,6 @@ export class LocationsComponent implements OnInit {
         });
 
         this.reset();
-        this.getcalibration();
     }
 
     //Get Locations 
@@ -172,20 +169,6 @@ export class LocationsComponent implements OnInit {
         }
     }
 
-    getcalibration() {
-        this.loading = true;
-        this._dataService.getall(this._getcalibrationUrl)
-            .subscribe(
-                response => {
-                    this.loading = false;
-                    this.calibrations = response;
-                }, error => {
-                    console.log(error);
-                }
-            );
-    }
-
-   
     reset() {
         this.locationForm.setValue({
             id: 0,
@@ -194,7 +177,7 @@ export class LocationsComponent implements OnInit {
 
         this.fileInput.nativeElement.value = '';
         this.resmessage = null;
-        $('#bookName').focus();
+        $('#name').focus();
     }
 
 }

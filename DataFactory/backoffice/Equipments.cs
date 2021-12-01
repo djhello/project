@@ -184,7 +184,7 @@ namespace DataFactory.backoffice
                     {
                         if (model.Id > 0)
                         {
-                            //Update Author
+                            //Update calibration
                             var entityUpdate = _ctx.Equipment.FirstOrDefault(x => x.Id == model.Id);
                             if (entityUpdate != null)
                             {

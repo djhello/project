@@ -36,8 +36,8 @@ namespace DataFactory.account
                             {
                                 UserId = model.UserId,
                                 Usertype = (int) MemberType.Member,
-                                Firstname = model.Firstname,
-                                Lastname = model.Lastname,
+                                FirstName = model.Firstname,
+                                LastName = model.Lastname,
                                 Email = model.Email
                             };
                             _ctx.User.Add(UserModel);
@@ -96,7 +96,7 @@ namespace DataFactory.account
                                                 Userid = ua.Userid,
                                                 Username = ua.Username,
                                                 Usertype = ur.Usertype,
-                                                Displayname = ur.Firstname+" "+ur.Lastname,
+                                                Displayname = ur.FirstName+" "+ur.LastName,
                                                 Email = ur.Email
                                             }).FirstOrDefaultAsync();
                     }

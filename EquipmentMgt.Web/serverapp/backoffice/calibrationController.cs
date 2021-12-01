@@ -14,7 +14,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     {
         private Calibrations _objcalibration = null;
 
-        // GET: api/author/getall
+        // GET: api/calibration/getall
         [HttpGet("[action]")]
         public async Task<List<Calibration>> getall()
         {
@@ -31,7 +31,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return calibrations;
         }
 
-        // GET api/author/getbyid/1
+        // GET api/calibration/getbyid/1
         [HttpGet("[action]/{id}")]
         public async Task<Calibration> getbyid(int id)
         {
@@ -48,7 +48,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return calibration;
         }
 
-        // POST: api/author/save
+        // POST: api/calibration/save
         [HttpPost("[action]")]
         public async Task<object> save([FromBody]Calibration model)
         {
@@ -77,7 +77,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return result;
         }
 
-        // DELETE api/author/deletebyid/1
+        // DELETE api/calibration/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)
         {

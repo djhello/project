@@ -14,7 +14,7 @@ namespace EquipmentMgt.Web.serverapp.common
     {
         private Dropdown _objddl = null;
 
-        // GET: api/dropdown/getallauthor
+        // GET: api/dropdown/getallcalibration
         [HttpGet("[action]")]
         public async Task<List<Calibration>> getallcalibration()
         {

@@ -6,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { DataService } from '../../../shared/service';
 
 @Component({
-    selector: 'ng-books',
+    selector: 'ng-equipments',
     templateUrl: './app/backoffice/equipment/equipments/component.html',
     providers: [DataService]
 })

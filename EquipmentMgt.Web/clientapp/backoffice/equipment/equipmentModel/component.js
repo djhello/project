@@ -180,7 +180,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
     ], EquipmentModelsComponent.prototype, "fileInput", void 0);
     EquipmentModelsComponent = __decorate([
         core_1.Component({
-            selector: 'ng-test',
+            selector: 'ng-equipmentModel',
             templateUrl: './app/backoffice/equipment/equipmentModel/component.html',
             providers: [service_1.DataService]
         }),

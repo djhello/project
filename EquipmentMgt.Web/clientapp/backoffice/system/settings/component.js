@@ -25,6 +25,7 @@ var UserSettingsComponent = /** @class */ (function () {
         this.loading = false;
         this._getbyIdUrl = '/api/users/getbyid';
         this._updateUrl = '/api/users/updateUserInfos';
+        this._updatePasswordUrl = '/api/users/updatePasswordUrl';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     UserSettingsComponent.prototype.ngOnInit = function () {
@@ -64,8 +65,25 @@ var UserSettingsComponent = /** @class */ (function () {
             _this.loading = false;
             _this.resmessage = response.message;
             _this.alertmessage = "alert-outline-info";
+        }, function (error) {
+        });
+    };
+    UserSettingsComponent.prototype.onSubmitPassword = function () {
+        var _this = this;
+        if (this.passwordForm.invalid) {
+            return;
+        }
+        this.loading = true;
+        this._dataService.save({
+            userId: this.user.userId,
+            password: this.passwordForm.value.password
+        }, this._updatePasswordUrl)
+            .subscribe(function (response) {
+            _this.loading = false;
+            _this.resmessage = response.message;
+            _this.alertmessage = "alert-outline-info";
             if (_this.resmessage == "Saved Successfully.") {
-                _this.reset();
+                _this.passwordReset();
             }
         }, function (error) {
         });
@@ -73,10 +91,8 @@ var UserSettingsComponent = /** @class */ (function () {
     UserSettingsComponent.prototype.getbyIdUrl = function () {
         var _this = this;
         this.loading = true;
-        console.log(this.loggedUser);
         this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl)
             .subscribe(function (response) {
-            console.log(response);
             _this.loading = false;
             _this.user = response;
             _this.userForm.setValue({
@@ -101,7 +117,12 @@ var UserSettingsComponent = /** @class */ (function () {
             userId: null,
             email: null
         });
-        //this.resmessage = null;
+    };
+    UserSettingsComponent.prototype.passwordReset = function () {
+        this.passwordForm.setValue({
+            password: null,
+            confirmPassword: null
+        });
     };
     UserSettingsComponent = __decorate([
         core_1.Component({

@@ -23,6 +23,7 @@
                     </a>
                     <ul class="sidebar-submenu">
                         <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/system/users']"><i class="fa fa-circle-o"></i> Kullanıcılar</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/system/departmans']"><i class="fa fa-circle-o"></i> Bölümler</a></li>
                     </ul>
                 </li>
                 <li *ngIf="loggedUsertype === 1" class="sidebar-header">Tanımlama</li>
@@ -104,7 +105,7 @@
                             <li class="dropdown-divider"></li>
                             <li class="dropdown-item">
                                 <a href="JavaScript:Void(0);" [routerLink]="['/backoffice/system/settings']">
-                                    <i class="icon-settings mr-2"></i> Setting
+                                    <i class="icon-settings mr-2"></i> Settings
                                 </a>
                             </li>
                             <li class="dropdown-divider"></li>

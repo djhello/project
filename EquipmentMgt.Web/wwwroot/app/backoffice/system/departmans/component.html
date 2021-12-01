@@ -1,0 +1,95 @@
+<!-- Breadcrumb-->
+<div class="row pt-2 pb-2">
+    <div class="col-sm-6">
+        <div id="cover-spin" *ngIf="loading"></div>
+        <h4 class="page-title"><i class="fa fa-cube"></i> System Departmans</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="JavaScript:Void(0);" [routerLink]="['/backoffice']">Dashboard</a></li>
+            <li class="breadcrumb-item">System</li>
+            <li class="breadcrumb-item active" aria-current="page">Departmans</li>
+        </ol>
+    </div>
+    <div class="col-sm-6">
+        <div class="btn-group group-round m-1 float-right">
+            <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="addNew()">
+                <i class="fa fa-plus-circle"></i>Add Departman
+            </button>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumb-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <!--<div class="card-header">
+                <h5 class="float-left"><i class="fa fa-cube"></i> List Departmans</h5>
+            </div>-->
+            <div class="card-body">
+                <h5 class="card-title"><i class="fa fa-cube"></i> Departmans</h5>
+                <div class="table-responsive" style="max-height:480px; overflow:auto;">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Departman Name</th>
+                                <th class="text-right">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of departmans;let sl = index">
+                                <th scope="row">{{sl+1}}</th>
+                                <td>{{item.departmanName}}</td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                        <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                                            <i class="fa fa-trash-o"></i> Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End Row-->
+<!-- Modal -->
+<<div class="modal fade" id="defaultsizemodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-plus-circle"></i> Departman</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="departmanForm" [formGroup]="departmanForm" #f="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <div class="position-relative has-icon-left">
+                            <label for="departmanName" class="sr-only">Departman Name</label>
+                            <input type="text" id="departmanName" name="departmanName" formControlName="departmanName" class="form-control" placeholder="Departman Name" required
+                                   onfocus="this.placeholder=''" onblur="this.placeholder='Departman Name'" autocomplete="off" />
+                            <div class="form-control-position">
+                                <i class="icon-user"></i><em class="text-danger">*</em>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="reset()">
+                    <i class="fa fa-refresh"></i> Reset
+                </button>
+                <button type="submit" class="btn btn-primary shadow-primary btn-block waves-effect waves-light" form="departmanForm" [disabled]="!f.valid">
+                    <i class="fa fa-check-square-o"></i> Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

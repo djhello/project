@@ -8,9 +8,11 @@ namespace DataModels.EntityModels
     {
         public int Id { get; set; }
         public int? UserId { get; set; }
+        public int? DepartmanId { get; set; }
+        public string DepartmanName { get; set; }
         public int? Usertype { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
         
 

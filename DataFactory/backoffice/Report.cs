@@ -57,7 +57,7 @@ namespace DataFactory.backoffice
                                     select new vmMemberchart
                                     {
                                         tid = p.Id,
-                                        mname = p.Firstname,
+                                        mname = p.FirstName,
                                         ntrans = g.Count()
                                     }).ToListAsync();
 

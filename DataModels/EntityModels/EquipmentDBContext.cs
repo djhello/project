@@ -22,6 +22,7 @@ namespace DataModels.EntityModels
         public virtual DbSet<vmEquipment> vEquipment { get; set; }
         public virtual DbSet<vmAvailableEquipment> vAvailableEquipment { get; set; }
         public virtual DbSet<Location> Location { get; set; }
+        public virtual DbSet<Departman> Departman { get; set; }
         public virtual DbSet<EquipmentModel> EquipmentModel { get; set; }
         public virtual DbSet<vmEquipmentIssuereturn> vEquipmentIssueReturn { get; set; }
         public virtual DbSet<EquipmentIssueReturn> EquipmentIssueReturn { get; set; }
@@ -287,7 +288,16 @@ namespace DataModels.EntityModels
                     .HasColumnName("name")
                     .HasMaxLength(50);
             });
+            modelBuilder.Entity<Departman>(entity =>
+            {
+                entity.ToTable("departman");
 
+                entity.Property(e => e.DepartmanId).HasColumnName("id");
+
+                entity.Property(e => e.DepartmanName)
+                    .HasColumnName("departmanName")
+                    .HasMaxLength(255);
+            });
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("user");
@@ -298,15 +308,17 @@ namespace DataModels.EntityModels
                     .HasColumnName("email")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Firstname)
+                entity.Property(e => e.FirstName)
                     .HasColumnName("firstName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Lastname)
+                entity.Property(e => e.LastName)
                     .HasColumnName("lastName")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.DepartmanId).HasColumnName("departmanId");
 
                 entity.Property(e => e.Usertype).HasColumnName("userType");
 

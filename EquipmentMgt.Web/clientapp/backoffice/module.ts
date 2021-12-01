@@ -17,6 +17,7 @@ import { IssueComponent } from './circulation/issue/component';
 import { ReturnComponent } from './circulation/return/component';
 import { UserSettingsComponent } from './system/settings/component';
 import { UsersComponent } from './system/users/component';
+import { DepartmansComponent } from './system/departmans/component';
 import { EquipmentReportsComponent } from './reports/equipment/component';
 import { LocationsComponent } from './equipment/location/component';
 
@@ -34,6 +35,7 @@ const routes: Routes = [
             { path: 'circulation/issue', component: IssueComponent },
             { path: 'circulation/return', component: ReturnComponent },
             { path: 'system/users', component: UsersComponent, canActivate: [AccessPermission] },
+            { path: 'system/departmans', component: DepartmansComponent, canActivate: [AccessPermission] },
             { path: 'system/settings', component: UserSettingsComponent, canActivate: [AccessPermission] },
             { path: 'reports/equipment', component: EquipmentReportsComponent }
         ]
@@ -52,6 +54,7 @@ const routes: Routes = [
         IssueComponent,
         ReturnComponent,
         UsersComponent,
+        DepartmansComponent,
         UserSettingsComponent,
         EquipmentReportsComponent
     ],
