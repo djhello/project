@@ -23,14 +23,18 @@ var RegisterComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.loading = false;
         this._saveUrl = '/api/auth/regusers';
+        this._getDepartmanUrl = '/api/departman/getall';
     }
     RegisterComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Register");
         this.createForm();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+        this.getDepartmanAll();
     };
     RegisterComponent.prototype.createForm = function () {
         this.userForm = this.formBuilder.group({
             userId: new forms_1.FormControl('', forms_1.Validators.required),
+            departmanId: new forms_1.FormControl('', forms_1.Validators.required),
             firstName: new forms_1.FormControl('', forms_1.Validators.required),
             lastName: new forms_1.FormControl('', forms_1.Validators.required),
             email: new forms_1.FormControl('', forms_1.Validators.compose([
@@ -43,6 +47,17 @@ var RegisterComponent = /** @class */ (function () {
             validator: confirmed_validator_1.ConfirmedValidator('password', 'confirmPassword')
         });
         $("#userId").focus();
+    };
+    RegisterComponent.prototype.getDepartmanAll = function () {
+        var _this = this;
+        this.loading = true;
+        this._dataService.getall(this._getDepartmanUrl)
+            .subscribe(function (response) {
+            _this.loading = false;
+            _this.departmans = response;
+        }, function (error) {
+            console.log(error);
+        });
     };
     RegisterComponent.prototype.onSubmit = function () {
         var _this = this;
@@ -68,6 +83,7 @@ var RegisterComponent = /** @class */ (function () {
             firstName: null,
             lastName: null,
             userId: null,
+            departmanId: null,
             email: null,
             password: null,
             confirmPassword: null

@@ -43,8 +43,8 @@
                             <tr *ngFor="let item of users;let sl = index">
                                 <th scope="row">{{sl+1}}</th>
                                 <td>{{item.userId}}</td>
-                                <td>{{item.firstname}}</td>
-                                <td>{{item.lastname}}</td>
+                                <td>{{item.firstName}}</td>
+                                <td>{{item.lastName}}</td>
                                 <td>{{item.departmanName}}</td>
                                 <td>{{item.email}}</td>
                                 <td>
@@ -52,7 +52,7 @@
                                         <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
-                                        <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                                        <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="updateStatus($event, item)">
                                             <i class="fa fa-trash-o"></i> Delete
                                         </a>
                                     </div>
@@ -80,7 +80,7 @@
                     <div class="form-group">
                         <div class="position-relative has-icon-left">
                             <label for="userId" class="sr-only">Personel Id</label>
-                            <input type="text" id="userId" name="userId" formControlName="userId" class="form-control" placeholder="First Name" required
+                            <input type="text" id="userId" name="userId" formControlName="userId" class="form-control" placeholder="User Id" required
                                    onfocus="this.placeholder=''" onblur="this.placeholder='Personel Id'" autocomplete="off" />
                             <div class="form-control-position">
                                 <i class="icon-user"></i><em class="text-danger">*</em>
@@ -106,6 +106,15 @@
                                 <i class="icon-user"></i><em class="text-danger">*</em>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="departmanId">Departman</label><em class="text-danger">*</em>
+                        <select class="form-control" id="departmanId" name="departmanId" formControlName="departmanId" required tabindex="2">
+                            <option value="">--Select Departman--</option>
+                            <option *ngFor="let item of departmans" value={{item.departmanId}}>
+                                {{item.departmanName}}
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <div class="position-relative has-icon-left">

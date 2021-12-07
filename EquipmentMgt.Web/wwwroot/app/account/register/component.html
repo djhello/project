@@ -31,7 +31,7 @@
                             <div class="position-relative has-icon-left">
                                 <input type="number" id="userId" name="userId" formControlName="userId" class="form-control" placeholder="Personel Number" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Personel Id'" autocomplete="off" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-7px">
                                     <i class="icon-user"></i><em class="text-danger">*</em>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                             <div class="position-relative has-icon-left">
                                 <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="First Name" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='First Name'" autocomplete="off" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-7px">
                                     <i class="icon-user"></i><em class="text-danger">*</em>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                             <div class="position-relative has-icon-left">
                                 <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="Last Name" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Last Name'" autocomplete="off" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-7px">
                                     <i class="icon-user"></i><em class="text-danger">*</em>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                             <div class="position-relative has-icon-left">
                                 <input type="text" formControlName="email" class="form-control" placeholder="Email ID" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Email ID'" autocomplete="off" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-7px">
                                     <i class="icon-envelope-open"></i><em class="text-danger">*</em>
                                 </div>
                                 <span *ngIf="userForm.controls['email'].hasError('pattern')" class="text-danger">
@@ -70,11 +70,20 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="departmanId">Departman</label><em class="text-danger">*</em>
+                            <select class="form-control" id="departmanId" name="departmanId" formControlName="departmanId" required tabindex="2">
+                                <option value="">--Select Departman--</option>
+                                <option *ngFor="let item of departmans" value={{item.departmanId}}>
+                                    {{item.departmanName}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="password">Password</label>
                             <div class="position-relative has-icon-left">
                                 <input type="password" formControlName="password" class="form-control" placeholder="Password" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Password'" autocomplete="off" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-7px">
                                     <i class="icon-lock"></i><em *ngIf="userForm.controls['password'].hasError('required')" class="text-danger">*</em>
                                 </div>
                             </div>
@@ -85,7 +94,7 @@
                             <div class="position-relative has-icon-left">
                                 <input type="password" formControlName="confirmPassword" class="form-control" placeholder="Confirm Password" required
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Confirm Password'" autocomplete="off" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-7px">
                                     <i class="icon-lock"></i><em *ngIf="userForm.controls['confirmPassword'].hasError('required')" class="text-danger">*</em>
                                 </div>
                             </div>
@@ -95,11 +104,11 @@
                             <div *ngIf="userForm.controls['confirmPassword'].errors.confirmedValidator">Password and Confirm Password must be match.</div>
                         </div>
                         <!--<div class="form-group mb-0">
-                        <div class="demo-checkbox">
-                            <input type="checkbox" id="user-checkbox" class="filled-in chk-col-primary" checked="" />
-                            <label for="user-checkbox">I Accept terms & conditions</label>
-                        </div>
-                    </div>-->
+        <div class="demo-checkbox">
+            <input type="checkbox" id="user-checkbox" class="filled-in chk-col-primary" checked="" />
+            <label for="user-checkbox">I Accept terms & conditions</label>
+        </div>
+    </div>-->
                         <button type="submit" class="btn btn-primary shadow-primary btn-block waves-effect waves-light" form="userForm" [disabled]="!f.valid">Register</button>
                         <div class="text-center pt-3">
                             <p class="text-muted">Already have an account? <a href="JavaScript:Void(0);" [routerLink]="['/login']"> Login here</a></p>

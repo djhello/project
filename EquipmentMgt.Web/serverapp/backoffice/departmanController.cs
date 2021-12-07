@@ -1,13 +1,10 @@
 ﻿using DataFactory.backoffice;
 using DataModels.EntityModels;
-using DataModels.ViewModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace EquipmentMgt.Web.serverapp.backoffice

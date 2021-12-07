@@ -11,14 +11,12 @@
         "dependencies": {
           "DataModels": "1.0.0",
           "DataUtilities": "1.0.0",
-          "EntityFramework": "6.4.4",
           "NETStandard.Library": "2.0.3"
         },
         "runtime": {
           "DataFactory.dll": {}
         }
       },
-      "EntityFramework/6.4.4": {},
       "Microsoft.EntityFrameworkCore/2.1.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "2.1.0",
@@ -642,13 +640,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "EntityFramework/6.4.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-yj1+/4tci7Panu3jKDHYizxwVm0Jvm7b7m057b5h4u8NUHGCR8WIWirBTw+8EptRffwftIWPBeIRGNKD1ewEMQ==",
-      "path": "entityframework/6.4.4",
-      "hashPath": "entityframework.6.4.4.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/2.1.0": {
       "type": "package",

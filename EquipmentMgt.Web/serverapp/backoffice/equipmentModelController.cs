@@ -1,6 +1,5 @@
 ﻿using DataFactory.backoffice;
 using DataModels.EntityModels;
-using DataModels.ViewModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -99,7 +98,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     Description = Request.Form["description"].ToString(),
                     EDocWebAddress = Request.Form["eDocWebAddress"].ToString(),
                     EDocLocalAddress = Request.Form["eDocLocalAddress"].ToString(),
-                    Quantity= Convert.ToInt32(Request.Form["quantity"]),
+                    Quantity = Convert.ToInt32(Request.Form["quantity"]),
                     CoverImage = serverPath
                 };
 

@@ -186,7 +186,7 @@ export class IssueComponent implements OnInit {
             return;
         }
         if (this.issueForm.value.userId > 0) {
-            this._dataService.save(this.issueForm.value, this._saveUrl)
+            this._dataService.saveWithUser(this.issueForm.value, this.loggedUser, this._saveUrl)
                 .subscribe(response => {
                     this.loading = false;
                     this.resMessage = response.message;

@@ -31,7 +31,6 @@ var EquipmentsComponent = /** @class */ (function () {
         this._getCalibrationUrl = '/api/calibration/getall';
         this._getLocationUrl = '/api/location/getall';
         this._getEquipmentModelUrl = '/api/equipmentmodel/getall';
-        this._getcategoryUrl = '/api/dropdown/getallcategory';
         this._getUserUrl = '/api/users/getall';
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUsername = loggedUser.displayname;

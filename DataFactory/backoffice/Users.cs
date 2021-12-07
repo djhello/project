@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
 namespace DataFactory.backoffice
 {
     public class Users
@@ -18,14 +20,28 @@ namespace DataFactory.backoffice
             _ctx = new EquipmentDBContext();
         }
 
-        public async Task<List<User>> getall()
+        public async Task<List<vmUserDepartman>> getall()
         {
-            List<User> users = null;
+            List<vmUserDepartman> users = null;
             try
             {
                 using (_ctx)
                 {
-                    users = await _ctx.User.ToListAsync();
+
+                    users = await (from u in _ctx.User
+                                   join d in _ctx.Departman on u.DepartmanId equals d.DepartmanId
+                                   where u.Status==1
+                                   select new vmUserDepartman
+                                   {
+                                       Id = u.Id,
+                                       UserId = u.UserId,
+                                       UserType = u.UserType,
+                                       FirstName = u.FirstName,
+                                       LastName = u.LastName,
+                                       Email = u.Email,
+                                       DepartmanId = u.DepartmanId,
+                                       DepartmanName = d.DepartmanName
+                                   }).ToListAsync();
                 }
             }
             catch (Exception ex)
@@ -33,17 +49,30 @@ namespace DataFactory.backoffice
                 ex.ToString();
             }
             return users;
-        }
 
-        public async Task<User> getbyid(int id)
+        }
+        public async Task<vmUserDepartman> getbyid(int id)
         {
-            User user = null;
+            vmUserDepartman user = null;
 
             try
             {
                 using (_ctx)
                 {
-                    user = await _ctx.User.FirstOrDefaultAsync(x => x.Id == id);
+                    user = await (from u in _ctx.User
+                                  join d in _ctx.Departman on u.DepartmanId equals d.DepartmanId
+                                  where u.UserId == id
+                                  select new vmUserDepartman
+                                  {
+                                      Id = u.Id,
+                                      UserId = u.UserId,
+                                      UserType = u.UserType,
+                                      FirstName = u.FirstName,
+                                      LastName = u.LastName,
+                                      Email = u.Email,
+                                      DepartmanId = u.DepartmanId,
+                                      DepartmanName = d.DepartmanName
+                                  }).FirstOrDefaultAsync();
                 }
             }
             catch (Exception ex)
@@ -63,14 +92,19 @@ namespace DataFactory.backoffice
                 {
                     try
                     {
-                        if (model.Id > 0)
+                        if (model.UserId > 0 && model.Id > 0)
                         {
-                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.Id == model.Id);
+                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
                             if (entityUpdate != null)
                             {
-                                entityUpdate.FirstName = model.Firstname;
-                                entityUpdate.LastName = model.Lastname;
+                                entityUpdate.FirstName = model.FirstName;
+                                entityUpdate.LastName = model.LastName;
+                                entityUpdate.DepartmanId = model.DepartmanId;
                                 entityUpdate.Email = model.Email;
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LastUserId = model.LastUserId;
                                 await _ctx.SaveChangesAsync();
                             }
                         }
@@ -82,9 +116,14 @@ namespace DataFactory.backoffice
                                 var UserModel = new User
                                 {
                                     UserId = model.UserId,
-                                    Usertype = (int) MemberType.Member,
-                                    FirstName = model.Firstname,
-                                    LastName = model.Lastname,
+                                    UserType = (int) MemberType.Member,
+                                    FirstName = model.FirstName,
+                                    LastName = model.LastName,
+                                    DepartmanId=model.DepartmanId,
+                                    Status = model.Status,
+                                    LockStatus = model.LockStatus,
+                                    CreateDate = model.CreateDate,
+                                    LastUserId = model.LastUserId,
                                     Email = model.Email
                                 };
                                 _ctx.User.Add(UserModel);
@@ -122,7 +161,41 @@ namespace DataFactory.backoffice
 
             return message;
         }
-        
+        public async Task<string> updateStatus(vmUser model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.UserId > 0)
+                        {
+                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
+                            if (entityUpdate != null)
+                            {
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
+
+            return message;
+        }
         public async Task<string> updateUserInfos(vmUser model)
         {
             string message = string.Empty;
@@ -137,8 +210,9 @@ namespace DataFactory.backoffice
                             var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
                             if (entityUpdate != null)
                             {
-                                entityUpdate.FirstName = model.Firstname;
-                                entityUpdate.LastName = model.Lastname;
+                                entityUpdate.FirstName = model.FirstName;
+                                entityUpdate.LastName = model.LastName;
+                                entityUpdate.DepartmanId = model.DepartmanId;
                                 entityUpdate.Email = model.Email;
                                 await _ctx.SaveChangesAsync();
                                 message = MessageConstants.Saved;
@@ -195,7 +269,7 @@ namespace DataFactory.backoffice
 
             return message;
         }
-        public async Task<string> deletebyid(int id)
+        public async Task<string> deletebyid(int userId)
         {
             string message = string.Empty;
 
@@ -205,7 +279,7 @@ namespace DataFactory.backoffice
                 {
                     try
                     {
-                        var idToRemove = _ctx.User.SingleOrDefault(x => x.Id == id);
+                        var idToRemove = _ctx.User.SingleOrDefault(x => x.UserId == userId);
                         if (idToRemove != null)
                         {
                             _ctx.User.Remove(idToRemove);

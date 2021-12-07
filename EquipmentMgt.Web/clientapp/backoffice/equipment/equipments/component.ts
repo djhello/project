@@ -37,7 +37,6 @@ export class EquipmentsComponent implements OnInit {
     public _getCalibrationUrl: string = '/api/calibration/getall';
     public _getLocationUrl: string = '/api/location/getall';
     public _getEquipmentModelUrl: string = '/api/equipmentmodel/getall';
-    public _getcategoryUrl: string = '/api/dropdown/getallcategory';
     public _getUserUrl: string = '/api/users/getall';
 
     @ViewChild('fileInput') fileInput: ElementRef;

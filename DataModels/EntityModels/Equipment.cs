@@ -15,6 +15,10 @@ namespace DataModels.EntityModels
         public int CurrentLocationId { get; set; }
         public int CurrentUserId { get; set; }
         public int PermanentLocationId { get; set; }
-        
+        public bool? Status { get; set; }
+        public bool? LockStatus { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string LastUserId { get; set; }
+
     }
 }

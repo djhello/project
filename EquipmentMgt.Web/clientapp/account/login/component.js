@@ -29,6 +29,7 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Login");
         this.createForm();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     };
     LoginComponent.prototype.createForm = function () {
         this.userForm = this.formBuilder.group({

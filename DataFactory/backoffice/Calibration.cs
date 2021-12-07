@@ -72,6 +72,10 @@ namespace DataFactory.backoffice
                             if (entityUpdate != null)
                             {
                                 entityUpdate.CalibrationName = model.CalibrationName;
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LastUserId = model.LastUserId;
                                 await _ctx.SaveChangesAsync();
                             }
                         }
@@ -83,7 +87,11 @@ namespace DataFactory.backoffice
                             var CalibrationrModel = new Calibration
                             {
                                 //Id = maxId,
-                                CalibrationName = model.CalibrationName
+                                CalibrationName = model.CalibrationName,
+                                Status = model.Status,
+                                LockStatus = model.LockStatus,
+                                CreateDate = model.CreateDate,
+                                LastUserId=model.LastUserId
                             };
                             _ctx.Calibration.Add(CalibrationrModel);
                             await _ctx.SaveChangesAsync();

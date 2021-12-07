@@ -33,6 +33,7 @@ var UserSettingsComponent = /** @class */ (function () {
         this.createUserForm();
         this.createPasswordForm();
         this.getbyIdUrl();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     };
     UserSettingsComponent.prototype.createUserForm = function () {
         this.userForm = this.formBuilder.group({
@@ -60,7 +61,7 @@ var UserSettingsComponent = /** @class */ (function () {
             return;
         }
         this.loading = true;
-        this._dataService.save(this.userForm.value, this._updateUrl)
+        this._dataService.saveWithUser(this.userForm.value, this.loggedUser, this._updateUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.resmessage = response.message;
@@ -74,10 +75,10 @@ var UserSettingsComponent = /** @class */ (function () {
             return;
         }
         this.loading = true;
-        this._dataService.save({
+        this._dataService.saveWithUser({
             userId: this.user.userId,
             password: this.passwordForm.value.password
-        }, this._updatePasswordUrl)
+        }, this.loggedUser, this._updatePasswordUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.resmessage = response.message;

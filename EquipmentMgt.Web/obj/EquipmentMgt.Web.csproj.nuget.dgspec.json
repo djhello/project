@@ -49,14 +49,6 @@
       "frameworks": {
         "netstandard2.0": {
           "dependencies": {
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.4.4, )"
-            },
-            "EntityFramework.SqlServerCompact": {
-              "target": "Package",
-              "version": "[6.4.4, )"
-            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",
@@ -256,10 +248,6 @@
       "frameworks": {
         "netcoreapp2.1": {
           "dependencies": {
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.4.4, )"
-            },
             "Microsoft.AspNetCore.App": {
               "target": "Package",
               "version": "[2.1.0, )"
@@ -285,6 +273,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[2.1.0, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[4.4.0, )"
             }
           },
           "imports": [

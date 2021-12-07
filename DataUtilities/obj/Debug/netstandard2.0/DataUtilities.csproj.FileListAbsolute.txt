@@ -67,3 +67,4 @@ C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataU
 C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.AssemblyInfo.cs
 C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.dll
 C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.pdb
+C:\Users\Uyanık\Documents\Projects\DataUtilities\obj\Debug\netstandard2.0\DataUtilities.csprojAssemblyReference.cache

@@ -10,5 +10,6 @@ namespace DataModels.EntityModels
         public string Username { get; set; }
         public string Userpass { get; set; }
         public DateTime? Joindate { get; set; }
+
     }
 }

@@ -11,6 +11,7 @@ import { DataService } from '../../shared/service';
 })
 
 export class LoginComponent implements OnInit {
+    public loggedUser: any;
     public userForm: FormGroup;
     public loading: boolean = false;
     public resmessage: string;
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi | Login");
         this.createForm();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
 
     createForm() {
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit {
         }
         this.loading = true;
         //debugger
-        this._dataService.save(this.userForm.value, this._saveUrl)
+        this._dataService.save(this.userForm.value,this._saveUrl)
             .subscribe(response => {
                 this.loading = false;
                 var loggeduser = response.loggeduser;

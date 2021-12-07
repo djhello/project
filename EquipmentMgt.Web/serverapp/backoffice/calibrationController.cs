@@ -18,7 +18,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
         [HttpGet("[action]")]
         public async Task<List<Calibration>> getall()
         {
-            List<Calibration> calibrations= null;
+            List<Calibration> calibrations = null;
             try
             {
                 _objcalibration = new Calibrations();
@@ -59,7 +59,6 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 {
                     return BadRequest();
                 }
-
                 //Save
                 _objcalibration = new Calibrations();
                 message = await _objcalibration.create(model);

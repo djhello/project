@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,15 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\DataUtilities\DataUtilities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="EntityFramework.SqlServerCompact" Version="6.4.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EntityFramework\" />
   </ItemGroup>
 
 </Project>

@@ -17,13 +17,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
         // GET: api/users/getall
         [HttpGet("[action]")]
-        public async Task<List<User>> getall()
+        public async Task<List<vmUserDepartman>> getall()
         {
-            List<User> users = null;
+            List<vmUserDepartman> users = null;
             try
             {
                 _objusers = new Users();
                 users = await _objusers.getall();
+               // users = _objusers.getAllUser();
+                
             }
             catch (Exception ex)
             {
@@ -34,9 +36,9 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
         // GET api/users/getbyid/1
         [HttpGet("[action]/{id}")]
-        public async Task<User> getbyid(int id)
+        public async Task<vmUserDepartman> getbyid(int id)
         {
-            User user = null;
+            vmUserDepartman user = null;
             try
             {
                 _objusers = new Users();
@@ -105,6 +107,33 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return result;
         }
         [HttpPost("[action]")]
+        public async Task<object> updateStatus([FromBody]vmUser model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+
+                //Save
+                _objusers = new Users();
+                message = await _objusers.updateStatus(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
+        [HttpPost("[action]")]
         public async Task<object> updatePasswordUrl([FromBody]vmUser model)
         {
             object result = null; string message = string.Empty;
@@ -131,7 +160,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        
+
 
         // DELETE api/users/deletebyid/1
         [HttpDelete("[action]/{id}")]

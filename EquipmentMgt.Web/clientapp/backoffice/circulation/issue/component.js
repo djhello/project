@@ -168,7 +168,7 @@ var IssueComponent = /** @class */ (function () {
             return;
         }
         if (this.issueForm.value.userId > 0) {
-            this._dataService.save(this.issueForm.value, this._saveUrl)
+            this._dataService.saveWithUser(this.issueForm.value, this.loggedUser, this._saveUrl)
                 .subscribe(function (response) {
                 _this.loading = false;
                 _this.resMessage = response.message;

@@ -158,7 +158,7 @@ export class ReturnComponent implements OnInit {
             return;
         }
         if (this.returnForm.value.userId > 0) {
-            this._dataService.save(this.returnForm.value, this._saveUrl)
+            this._dataService.saveWithUser(this.returnForm.value, this.loggedUser, this._saveUrl)
                 .subscribe(response => {
                     this.loading = false;
                     this.resMessage = response.message;

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataFactory.account;
+﻿using DataFactory.account;
 using DataModels.EntityModels;
 using DataModels.ViewModels;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace EquipmentMgt.Web.serverapp.account
 {

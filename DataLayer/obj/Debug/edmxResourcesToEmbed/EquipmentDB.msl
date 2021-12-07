@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EquipmentDBModelStoreContainer" CdmEntityContainer="EquipmentDBEntities1">
+    <FunctionImportMapping FunctionImportName="GetUserList" FunctionName="EquipmentDBModel.Store.GetUserList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EquipmentDBModel.GetUserList_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="departmanId" ColumnName="departmanId" />
+          <ScalarProperty Name="departmanName" ColumnName="departmanName" />
+          <ScalarProperty Name="userType" ColumnName="userType" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

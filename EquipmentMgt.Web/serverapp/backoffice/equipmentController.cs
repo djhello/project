@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace EquipmentMgt.Web.serverapp.backoffice
@@ -74,7 +72,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
         [HttpGet("[action]/{text}")]
         public async Task<List<vmEquipment>> getbytext(string text)
         {
-            
+
             List<vmEquipment> equipments = null;
             try
             {
@@ -123,7 +121,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 Equipment model = new Equipment()
                 {
                     Id = Convert.ToInt32(Request.Form["id"]),
-                    EquipmentId= Request.Form["equipmentId"].ToString(),
+                    EquipmentId = Request.Form["equipmentId"].ToString(),
                     EquipmentModelId = Convert.ToInt32(Request.Form["equipmentModelId"]),
                     CalibrationId = Convert.ToInt32(Request.Form["calibrationId"]),
                     /*CurrentLocationId = Convert.ToInt32(Request.Form["currentLocationID"]),*/
@@ -139,7 +137,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             }
             catch (Exception ex)
             {
-                
+
                 ex.ToString();
             }
 

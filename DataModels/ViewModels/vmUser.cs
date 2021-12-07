@@ -8,10 +8,15 @@ namespace DataModels.ViewModels
     {
         public int Id { get; set; }
         public int? UserId { get; set; }
+        public int? DepartmanId { get; set; }
         public int? Usertype { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public byte? Status { get; set; }
+        public bool? LockStatus { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string LastUserId { get; set; }
     }
 }

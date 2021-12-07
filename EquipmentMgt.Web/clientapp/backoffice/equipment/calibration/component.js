@@ -30,6 +30,7 @@ var CalibrationsComponent = /** @class */ (function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Calibrations");
         this.createForm();
         this.getAll();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     };
     CalibrationsComponent.prototype.createForm = function () {
         this.calibrationForm = this.formBuilder.group({
@@ -90,7 +91,7 @@ var CalibrationsComponent = /** @class */ (function () {
             return;
         }
         //debugger
-        this._dataService.save(this.calibrationForm.value, this._saveUrl)
+        this._dataService.saveWithUser(this.calibrationForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             //console.log(response);
             _this.resmessage = response.message;

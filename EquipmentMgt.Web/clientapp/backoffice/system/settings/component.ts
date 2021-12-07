@@ -12,6 +12,7 @@ import { ConfirmedValidator } from '../../../shared/confirmed.validator';
 })
 
 export class UserSettingsComponent implements OnInit {
+
     public userForm: FormGroup;
     public passwordForm: FormGroup;
     public user: any;
@@ -37,6 +38,7 @@ export class UserSettingsComponent implements OnInit {
         this.createUserForm();
         this.createPasswordForm();
         this.getbyIdUrl();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
    
     createUserForm() {
@@ -64,7 +66,7 @@ export class UserSettingsComponent implements OnInit {
             return;
         }
         this.loading = true;
-        this._dataService.save(this.userForm.value, this._updateUrl)
+        this._dataService.saveWithUser(this.userForm.value, this.loggedUser, this._updateUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.resmessage = response.message;
@@ -77,10 +79,10 @@ export class UserSettingsComponent implements OnInit {
             return;
         }
         this.loading = true;
-        this._dataService.save({
+        this._dataService.saveWithUser({
             userId: this.user.userId,
             password: this.passwordForm.value.password
-        }, this._updatePasswordUrl)
+        }, this.loggedUser,this._updatePasswordUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.resmessage = response.message;

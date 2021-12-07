@@ -76,6 +76,14 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.CurrentUserId).HasColumnName("currentUserId");
 
                 entity.Property(e => e.PermanentLocationId).HasColumnName("permanentLocationId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");   
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
 
             modelBuilder.Entity<vmEquipment>(entity =>
@@ -121,6 +129,7 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.EDocLocalAddress).HasColumnName("eDocLocalAddress");
 
                 entity.Property(e => e.CoverImage).HasColumnName("coverImage");
+
 
             });
             modelBuilder.Entity<vmAvailableEquipment>(entity =>
@@ -251,9 +260,17 @@ namespace DataModels.EntityModels
                     .HasColumnName("returnDate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Status)
+                entity.Property(e => e.IsReturn)
                     .HasColumnName("status")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate");
+
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
             modelBuilder.Entity<EquipmentModel>(entity =>
             {
@@ -276,6 +293,14 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.CoverImage)
                     .HasColumnName("coverImage")
                     .HasMaxLength(250);
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate");
+
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
             
             modelBuilder.Entity<Location>(entity =>
@@ -287,6 +312,14 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate");
+
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
             modelBuilder.Entity<Departman>(entity =>
             {
@@ -320,7 +353,15 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.DepartmanId).HasColumnName("departmanId");
 
-                entity.Property(e => e.Usertype).HasColumnName("userType");
+                entity.Property(e => e.UserType).HasColumnName("userType");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate");
+
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
 
             });
 
@@ -343,6 +384,7 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.Userpass)
                     .HasColumnName("userpass")
                     .HasMaxLength(50);
+
             });
 
             modelBuilder.Entity<UserType>(entity =>
@@ -356,6 +398,14 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.Type)
                     .HasColumnName("type")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate");
+
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
         }
     }

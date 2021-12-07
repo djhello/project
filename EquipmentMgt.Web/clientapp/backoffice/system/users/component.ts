@@ -10,12 +10,14 @@ import { DataService } from '../../../shared/service';
     providers: [DataService]
 })
 export class UsersComponent implements OnInit {
-    public loggedUsername: string;
-    public loggedUsertype: number;
-    public loggedemail: string;
+    //public loggedUsername: string;
+    //public loggedUsertype: number;
+    //public loggedemail: string;
 
+    public loggedUser: any;
     public userForm: FormGroup;
     public users: any[];
+    public departmans: any[];
     public user: any;
     public resmessage: string;
     public alertmessage: string;
@@ -25,9 +27,9 @@ export class UsersComponent implements OnInit {
     public _getbyIdUrl: string = '/api/users/getbyid';
     public _saveUrl: string = '/api/users/save';
     public _deleteUrl: string = '/api/users/deletebyid';
+    public _updateUrl: string = '/api/users/updateStatus';
 
-
-    public _getDepartmansUrl: string = '/api/departmans/getall';
+    public _getDepartmanUrl: string = '/api/departman/getall';
 
     constructor(
         private router: Router,
@@ -35,10 +37,10 @@ export class UsersComponent implements OnInit {
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
 
-        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+        //this.loggedUsername = loggedUser.displayname;
+        //this.loggedemail = loggedUser.email;
+        //this.loggedUsertype = loggedUser.usertype;
     }
 
     ngOnInit() {
@@ -46,9 +48,10 @@ export class UsersComponent implements OnInit {
         this.createForm();
         this.getAll();
         
+        
     }
     userTypeControl() {
-        if (this.loggedUsertype != 1) {
+        if (this.loggedUser.loggedUsertype != 1) {
             localStorage.removeItem('isLoggedin');
             localStorage.removeItem('loggedUser');
             this.router.navigate(['/login']);
@@ -56,12 +59,14 @@ export class UsersComponent implements OnInit {
     }
     createForm() {
         this.userForm = this.formBuilder.group({
+            id:0,
             userId: 0,
+            departmanId:0,
             firstName: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
             email: new FormControl('', Validators.compose([
                 Validators.required,
-                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+                Validators.pattern('^[a-zA-Z0-9_.+-]+@tei.com.tr+$')
             ]))
         });
 
@@ -70,7 +75,7 @@ export class UsersComponent implements OnInit {
 
     //Pop Modal
     addNew() {
-        //debugger
+        this.getDepartmanAll();
         $('#defaultsizemodal').modal('show');
         $("#defaultsizemodal").on('shown.bs.modal', function () {
             $(this).find('#firstName').focus();
@@ -92,19 +97,36 @@ export class UsersComponent implements OnInit {
                 }
             );
     }
+    getDepartmanAll() {
+        this.loading = true;
+        this._dataService.getall(this._getDepartmanUrl)
+            .subscribe(
+                response => {
+                    this.loading = false;
+                    this.departmans = response;
+                }, error => {
+                    console.log(error);
+                }
+            );
+    }
 
     //Get by ID
     edit(e, m) {
+        console.log(m);
+        this.getDepartmanAll();
         this.loading = true;
         e.preventDefault();
         this._dataService.getbyid(m.userId, this._getbyIdUrl)
             .subscribe(response => {
+                console.log(response);
                 this.loading = false;
                 this.user = response;
                 this.userForm.setValue({
+                    id:this.user.id,
                     userId: this.user.userId,
-                    firstName: this.user.firstname,
-                    lastName: this.user.lastname,
+                    departmanId: this.user.departmanId,
+                    firstName: this.user.firstName,
+                    lastName: this.user.lastName,
                     email: this.user.email
                 });
                 $('#defaultsizemodal').modal('show');
@@ -123,8 +145,8 @@ export class UsersComponent implements OnInit {
             return;
         }
 
-        //debugger
-        this._dataService.save(this.userForm.value, this._saveUrl)
+        //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
+        this._dataService.saveWithUser(this.userForm.value, this.loggedUser,this._saveUrl)
             .subscribe(response => {
                 //console.log(response);
                 this.resmessage = response.message;
@@ -132,17 +154,38 @@ export class UsersComponent implements OnInit {
                 this.getAll();
                 this.reset();
                 this.loading = false;
+                $('#defaultsizemodal').modal('hide');
             }, error => {
                 //console.log(error);
             });
     }
+    updateStatus(e, m) {
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.firstName + '. Are you sure?');
+        if (IsConf) {
 
+            //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
+            this._dataService.updateStatus(this.userForm.value, this.loggedUser, this._updateUrl)
+                .subscribe(response => {
+                    //console.log(response);
+                    this.resmessage = response.message;
+                    this.alertmessage = "alert-outline-info";
+                    this.getAll();
+                    this.reset();
+                    this.loading = false;
+                    $('#defaultsizemodal').modal('hide');
+                }, error => {
+                    //console.log(error);
+                });
+        }
+    }
     //Delete
     delete(e, m) {
         //debugger
         this.loading = true;
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.firstname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.firstName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.userId, this._deleteUrl)
                 .subscribe(response => {
@@ -157,7 +200,9 @@ export class UsersComponent implements OnInit {
 
     reset() {
         this.userForm.setValue({
+            id: 0,
             userId: 0,
+            departmanId:0,
             firstName: null,
             lastName: null,
             email: null

@@ -118,7 +118,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipmentIssueissueList;
         }
 
-        
+
         // POST: api/circulation/issuebook
         [HttpPost("[action]")]
         public async Task<object> issueequipment([FromBody] object model)

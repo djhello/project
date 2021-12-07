@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using DataModels.EntityModels;
+﻿using DataModels.EntityModels;
 using DataUtilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace EquipmentMgt.Web
 {
@@ -26,7 +21,7 @@ namespace EquipmentMgt.Web
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
-           
+
 
             services.AddDbContext<EquipmentDBContext>(options => options.UseSqlServer(StaticInfos.conString));
         }

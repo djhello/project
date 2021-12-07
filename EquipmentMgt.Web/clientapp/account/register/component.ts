@@ -12,11 +12,14 @@ import { ConfirmedValidator } from '../../shared/confirmed.validator';
 })
 
 export class RegisterComponent implements OnInit {
+    public loggedUser: any;
     public userForm: FormGroup;
     public loading: boolean = false;
+    public departmans: any[];
     public resmessage: string;
     public alertmessage: string;
     public _saveUrl: string = '/api/auth/regusers';
+    public _getDepartmanUrl: string = '/api/departman/getall';
 
     constructor(
         private router: Router,
@@ -28,11 +31,14 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi | Register");
         this.createForm();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+        this.getDepartmanAll();
     }
    
     createForm() {
         this.userForm = this.formBuilder.group({
             userId: new FormControl('', Validators.required),
+            departmanId: new FormControl('', Validators.required),
             firstName: new FormControl('', Validators.required),
             lastName: new FormControl('', Validators.required),
             email: new FormControl('', Validators.compose([
@@ -47,7 +53,18 @@ export class RegisterComponent implements OnInit {
 
         $("#userId").focus();
     }
-
+    getDepartmanAll() {
+        this.loading = true;
+        this._dataService.getall(this._getDepartmanUrl)
+            .subscribe(
+                response => {
+                    this.loading = false;
+                    this.departmans = response;
+                }, error => {
+                    console.log(error);
+                }
+            );
+    }
     onSubmit() {
         if (this.userForm.invalid) {
             return;
@@ -71,7 +88,8 @@ export class RegisterComponent implements OnInit {
         this.userForm.setValue({
             firstName: null,
             lastName: null,
-            userId:null,
+            userId: null,
+            departmanId:null,
             email: null,
             password: null,
             confirmPassword:null

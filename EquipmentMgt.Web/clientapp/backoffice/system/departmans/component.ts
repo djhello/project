@@ -101,7 +101,7 @@ export class DepartmansComponent implements OnInit {
             return;
         }
         console.log(this.departmanForm.value);
-        this._dataService.save(this.departmanForm.value, this._saveUrl)
+        this._dataService.saveWithUser(this.departmanForm.value, this.loggedUser, this._saveUrl)
             .subscribe(response => {
                 this.resmessage = response.message;
                 this.alertmessage = "alert-outline-info";

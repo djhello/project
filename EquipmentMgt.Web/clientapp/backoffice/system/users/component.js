@@ -25,11 +25,12 @@ var UsersComponent = /** @class */ (function () {
         this._getbyIdUrl = '/api/users/getbyid';
         this._saveUrl = '/api/users/save';
         this._deleteUrl = '/api/users/deletebyid';
-        this._getDepartmansUrl = '/api/departmans/getall';
-        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
+        this._updateUrl = '/api/users/updateStatus';
+        this._getDepartmanUrl = '/api/departman/getall';
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+        //this.loggedUsername = loggedUser.displayname;
+        //this.loggedemail = loggedUser.email;
+        //this.loggedUsertype = loggedUser.usertype;
     }
     UsersComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Kullancılar");
@@ -37,7 +38,7 @@ var UsersComponent = /** @class */ (function () {
         this.getAll();
     };
     UsersComponent.prototype.userTypeControl = function () {
-        if (this.loggedUsertype != 1) {
+        if (this.loggedUser.loggedUsertype != 1) {
             localStorage.removeItem('isLoggedin');
             localStorage.removeItem('loggedUser');
             this.router.navigate(['/login']);
@@ -45,19 +46,21 @@ var UsersComponent = /** @class */ (function () {
     };
     UsersComponent.prototype.createForm = function () {
         this.userForm = this.formBuilder.group({
+            id: 0,
             userId: 0,
+            departmanId: 0,
             firstName: new forms_1.FormControl('', forms_1.Validators.required),
             lastName: new forms_1.FormControl('', forms_1.Validators.required),
             email: new forms_1.FormControl('', forms_1.Validators.compose([
                 forms_1.Validators.required,
-                forms_1.Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+                forms_1.Validators.pattern('^[a-zA-Z0-9_.+-]+@tei.com.tr+$')
             ]))
         });
         $("#firstName").focus();
     };
     //Pop Modal
     UsersComponent.prototype.addNew = function () {
-        //debugger
+        this.getDepartmanAll();
         $('#defaultsizemodal').modal('show');
         $("#defaultsizemodal").on('shown.bs.modal', function () {
             $(this).find('#firstName').focus();
@@ -76,19 +79,35 @@ var UsersComponent = /** @class */ (function () {
             console.log(error);
         });
     };
+    UsersComponent.prototype.getDepartmanAll = function () {
+        var _this = this;
+        this.loading = true;
+        this._dataService.getall(this._getDepartmanUrl)
+            .subscribe(function (response) {
+            _this.loading = false;
+            _this.departmans = response;
+        }, function (error) {
+            console.log(error);
+        });
+    };
     //Get by ID
     UsersComponent.prototype.edit = function (e, m) {
         var _this = this;
+        console.log(m);
+        this.getDepartmanAll();
         this.loading = true;
         e.preventDefault();
         this._dataService.getbyid(m.userId, this._getbyIdUrl)
             .subscribe(function (response) {
+            console.log(response);
             _this.loading = false;
             _this.user = response;
             _this.userForm.setValue({
+                id: _this.user.id,
                 userId: _this.user.userId,
-                firstName: _this.user.firstname,
-                lastName: _this.user.lastname,
+                departmanId: _this.user.departmanId,
+                firstName: _this.user.firstName,
+                lastName: _this.user.lastName,
                 email: _this.user.email
             });
             $('#defaultsizemodal').modal('show');
@@ -106,8 +125,8 @@ var UsersComponent = /** @class */ (function () {
         if (this.userForm.invalid) {
             return;
         }
-        //debugger
-        this._dataService.save(this.userForm.value, this._saveUrl)
+        //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
+        this._dataService.saveWithUser(this.userForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             //console.log(response);
             _this.resmessage = response.message;
@@ -115,9 +134,31 @@ var UsersComponent = /** @class */ (function () {
             _this.getAll();
             _this.reset();
             _this.loading = false;
+            $('#defaultsizemodal').modal('hide');
         }, function (error) {
             //console.log(error);
         });
+    };
+    UsersComponent.prototype.updateStatus = function (e, m) {
+        var _this = this;
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.firstName + '. Are you sure?');
+        if (IsConf) {
+            //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
+            this._dataService.updateStatus(this.userForm.value, this.loggedUser, this._updateUrl)
+                .subscribe(function (response) {
+                //console.log(response);
+                _this.resmessage = response.message;
+                _this.alertmessage = "alert-outline-info";
+                _this.getAll();
+                _this.reset();
+                _this.loading = false;
+                $('#defaultsizemodal').modal('hide');
+            }, function (error) {
+                //console.log(error);
+            });
+        }
     };
     //Delete
     UsersComponent.prototype.delete = function (e, m) {
@@ -125,7 +166,7 @@ var UsersComponent = /** @class */ (function () {
         //debugger
         this.loading = true;
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.firstname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.firstName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.userId, this._deleteUrl)
                 .subscribe(function (response) {
@@ -139,7 +180,9 @@ var UsersComponent = /** @class */ (function () {
     };
     UsersComponent.prototype.reset = function () {
         this.userForm.setValue({
+            id: 0,
             userId: 0,
+            departmanId: 0,
             firstName: null,
             lastName: null,
             email: null

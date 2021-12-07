@@ -16,6 +16,7 @@ var operators_1 = require("rxjs/operators");
 var DataService = /** @class */ (function () {
     function DataService(_http) {
         this._http = _http;
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     //Get
     DataService.prototype.getall = function (_getUrl) {
@@ -45,9 +46,26 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
     };
+    DataService.prototype.saveWithUser = function (model, loggedUser, _saveUrl) {
+        var body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() }));
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.post(_saveUrl, body, options)
+            .pipe(operators_1.map(function (res) { return res.json(); }))
+            .pipe(operators_1.catchError(this.handleError));
+    };
     //PostFormData
     DataService.prototype.saveForm = function (model, _saveUrl) {
         return this._http.post(_saveUrl, model)
+            .pipe(operators_1.map(function (res) { return res.json(); }))
+            .pipe(operators_1.catchError(this.handleError));
+    };
+    DataService.prototype.updateStatus = function (id, loggedUser, _updateUrl) {
+        console.log(_updateUrl);
+        var body = JSON.stringify({ id: id, LastUserId: loggedUser.userid, Status: 0, LockStatus: 1, CreateDate: new Date() });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.post(_updateUrl, body, options)
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
     };

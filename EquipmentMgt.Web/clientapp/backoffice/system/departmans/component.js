@@ -96,7 +96,7 @@ var DepartmansComponent = /** @class */ (function () {
             return;
         }
         console.log(this.departmanForm.value);
-        this._dataService.save(this.departmanForm.value, this._saveUrl)
+        this._dataService.saveWithUser(this.departmanForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             _this.resmessage = response.message;
             _this.alertmessage = "alert-outline-info";

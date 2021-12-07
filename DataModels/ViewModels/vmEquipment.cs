@@ -26,5 +26,7 @@ namespace DataModels.ViewModels
         public string EDocWebAddress { get; set; }
         public string EDocLocalAddress { get; set; }
         public string CoverImage { get; set; }
+
+
     }
 }

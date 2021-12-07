@@ -13,7 +13,12 @@ import { text } from '@angular/core/src/render3/instructions';
 
 export class DataService {
     public headers: Headers;
-    constructor(private _http: Http) { }
+    public loggedUser: any;
+
+    constructor(private _http: Http) {
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+    }
+    
 
     //Get
     getall(_getUrl: string): Observable<any[]> {
@@ -39,7 +44,7 @@ export class DataService {
     }
     //Post
     save(model: any, _saveUrl: string): Observable<any> {
-        let body = JSON.stringify(model);
+        let body = JSON.stringify (model);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -47,15 +52,31 @@ export class DataService {
             .pipe(map(res => res.json()))
             .pipe(catchError(this.handleError));
     }
+    saveWithUser(model: any, loggedUser: any, _saveUrl: string): Observable<any> {
+        let body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() }));
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
 
+        return this._http.post(_saveUrl, body, options)
+            .pipe(map(res => res.json()))
+            .pipe(catchError(this.handleError));
+    }
     //PostFormData
     saveForm(model: any, _saveUrl: string): Observable<any> {
-
         return this._http.post(_saveUrl, model)
             .pipe(map(res => res.json()))
             .pipe(catchError(this.handleError));
     }
+    updateStatus(id: string, loggedUser: any, _updateUrl: string): Observable<any> {
+        console.log(_updateUrl);
+        let body = JSON.stringify({ id: id, LastUserId: loggedUser.userid, Status: 0, LockStatus:1, CreateDate: new Date() });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
 
+        return this._http.post(_updateUrl, body, options)
+            .pipe(map(res => res.json()))
+            .pipe(catchError(this.handleError));
+    }
     //Delete
     delete(id: string, _deleteByIdUrl: string): Observable<any> {
         var deleteByIdUrl = _deleteByIdUrl + '/' + id

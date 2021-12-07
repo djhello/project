@@ -23,6 +23,9 @@ export class CalibrationsComponent implements OnInit {
     public _saveUrl: string = '/api/calibration/save';
     public _deleteUrl: string = '/api/calibration/deletebyid';
 
+    public loggedUser: any;
+
+
     constructor(
         private router: Router,
         private titleService: Title,
@@ -36,6 +39,7 @@ export class CalibrationsComponent implements OnInit {
         this.titleService.setTitle("Envanter Takip Sistemi | Calibrations");
         this.createForm();
         this.getAll();
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
 
     createForm() {
@@ -104,7 +108,7 @@ export class CalibrationsComponent implements OnInit {
         }
 
         //debugger
-        this._dataService.save(this.calibrationForm.value, this._saveUrl)
+        this._dataService.saveWithUser(this.calibrationForm.value, this.loggedUser, this._saveUrl)
             .subscribe(response => {
                 //console.log(response);
                 this.resmessage = response.message;

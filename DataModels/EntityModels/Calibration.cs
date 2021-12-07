@@ -7,5 +7,11 @@ namespace DataModels.EntityModels
     {
         public int Id { get; set; }
         public string CalibrationName { get; set; }
+        public bool? Status { get; set; }
+        public bool? LockStatus { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string LastUserId { get; set; }
+
+
     }
 }
