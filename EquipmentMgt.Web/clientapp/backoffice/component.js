@@ -17,9 +17,9 @@ var BackofficeComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.router = router;
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
+        this.loggedUserName = loggedUser.displayName;
+        this.loggedEmail = loggedUser.email;
+        this.loggedUserType = loggedUser.userType;
     }
     BackofficeComponent.prototype.ngOnInit = function () {
         this.loadScripts();

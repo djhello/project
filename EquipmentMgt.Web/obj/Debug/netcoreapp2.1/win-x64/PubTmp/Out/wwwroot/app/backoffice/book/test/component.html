@@ -1,0 +1,126 @@
+<!-- Breadcrumb-->
+<div class="row pt-2 pb-2">
+    <div class="col-sm-6">
+        <h4 class="page-title"><i class="fa fa-cube"></i> Library Test</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="JavaScript:Void(0);" [routerLink]="['/backoffice']">Dashboard</a></li>
+            <li class="breadcrumb-item">Test</li>
+            <li class="breadcrumb-item active" aria-current="page">Tests</li>
+        </ol>
+    </div>
+    <div class="col-sm-6">
+        <div class="btn-group group-round m-1 float-right">
+            <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="addNew()">
+                <i class="fa fa-plus-circle">
+                </i> Add New test
+            </button>
+        </div>
+        
+    </div>
+</div>
+<!-- End Breadcrumb-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="float-left"><i class="fa fa-cube"></i> List tests</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="form-group col-md-4">
+                    <label> Date</label>
+                    <div class="position-relative has-icon-left">
+                        <input type="text" id="date" name="date" formControlName="date" class="form-control" tabindex="3" />
+                        <div class="form-control-position">
+                            <i class="fa fa-calendar text-info"></i>
+                        </div>
+                    </div>
+                </div>
+                <!--<h5 class="card-title"><i class="fa fa-cube"></i> Categories</h5>-->
+                <div class="table-responsive" style="max-height:480px; overflow:auto;">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Test Name</th>
+                                <th scope="col">Date</th>
+                                <th class="text-right">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tests;let sl = index">
+                                <th scope="row">{{sl+1}}</th>
+                                <td>{{item.name}}</td>
+                                <td>{{item.date}}</td>
+                                <td>
+                                    <div class="pull-right">
+                                        <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                        <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                                            <i class="fa fa-trash-o"></i> Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End Row-->
+<!-- Modal -->
+<div class="modal fade" id="largesizemodal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-plus-circle"></i> Add</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="testForm" [formGroup]="testForm" #f="ngForm" (ngSubmit)="onSubmit()">
+                    <!--<h4 class="form-header text-uppercase">
+                        <i class="fa fa-user-circle-o"></i>
+                        Personal Info
+                    </h4>-->
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="position-relative has-icon-left">
+                                <label for="name" class="sr-only"> Name</label>
+                                <input type="text" id="name" name="name" formControlName="name" class="form-control" placeholder=" Name" required
+                                       onfocus="this.placeholder=''" onblur="this.placeholder=' Name'" autocomplete="off" tabindex="1" />
+                                <div class="form-control-position">
+                                    <i class="icon-info"></i><em class="text-danger">*</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label> Date</label>
+                        <div class="position-relative has-icon-left">
+                            <input type="text" id="date" name="date" formControlName="date" class="form-control" tabindex="3" />
+                            <div class="form-control-position">
+                                <i class="fa fa-calendar text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                  
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="reset()" tabindex="5">
+                    <i class="fa fa-refresh"></i> Reset
+                </button>
+                <button type="submit" class="btn btn-primary" form="testForm" [disabled]="!f.valid" tabindex="4">
+                    <i class="fa fa-check-square-o"></i> Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

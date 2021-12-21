@@ -26,7 +26,14 @@ namespace DataFactory.backoffice
             {
                 using (_ctx)
                 {
-                    calibrations = await _ctx.Calibration.ToListAsync();
+                    calibrations = await (from t in _ctx.Calibration
+                                            where t.Status == 1
+                                            select new Calibration
+
+                                            {
+                                                Id = t.Id,
+                                                CalibrationName = t.CalibrationName
+                                            }).ToListAsync();
                 }
             }
             catch (Exception ex)
@@ -111,7 +118,41 @@ namespace DataFactory.backoffice
 
             return message;
         }
+        public async Task<string> updateStatus(Calibration model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.Id > 0)
+                        {
+                            var entityUpdate = _ctx.Calibration.FirstOrDefault(x => x.Id == model.Id);
+                            if (entityUpdate != null)
+                            {
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
 
+            return message;
+        }
         public async Task<string> deletebyid(int id)
         {
             string message = string.Empty;

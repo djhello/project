@@ -25,6 +25,7 @@ var CalibrationsComponent = /** @class */ (function () {
         this._getbyIdUrl = '/api/calibration/getbyid';
         this._saveUrl = '/api/calibration/save';
         this._deleteUrl = '/api/calibration/deletebyid';
+        this._updateUrl = '/api/calibration/updateStatus';
     }
     CalibrationsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Calibrations");
@@ -103,6 +104,28 @@ var CalibrationsComponent = /** @class */ (function () {
         }, function (error) {
             console.log(error);
         });
+    };
+    CalibrationsComponent.prototype.updateStatus = function (e, m) {
+        var _this = this;
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.calibrationname + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(function (response) {
+                //console.log(response);
+                _this.resmessage = response.message;
+                _this.alertmessage = "alert-outline-info";
+                _this.getAll();
+                _this.reset();
+                _this.loading = false;
+                $('#defaultsizemodal').modal('hide');
+            }, function (error) {
+                console.log(error);
+                _this.loading = false;
+            });
+        }
+        this.loading = false;
     };
     //Delete
     CalibrationsComponent.prototype.delete = function (e, m) {

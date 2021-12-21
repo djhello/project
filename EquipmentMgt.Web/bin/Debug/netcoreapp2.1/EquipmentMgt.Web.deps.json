@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.1": {
       "EquipmentMgt.Web/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.0.2",
           "DataFactory": "1.0.0",
           "DataModels": "1.0.0",
           "DataUtilities": "1.0.0",
@@ -40,6 +41,20 @@
         },
         "compile": {
           "EquipmentMgt.Web.dll": {}
+        }
+      },
+      "BCrypt.Net-Next/4.0.2": {
+        "dependencies": {
+          "System.Memory": "4.5.4"
+        },
+        "runtime": {
+          "lib/netstandard2.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/BCrypt.Net-Next.dll": {}
         }
       },
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
@@ -393,6 +408,7 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.Memory/4.5.4": {},
       "System.Security.Cryptography.ProtectedData/4.4.0": {
         "runtime": {
           "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
@@ -411,6 +427,7 @@
       },
       "DataFactory/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.0.2",
           "DataModels": "1.0.0",
           "DataUtilities": "1.0.0"
         },
@@ -1460,7 +1477,7 @@
           "Microsoft.Extensions.Options": "2.1.0",
           "System.Buffers": "4.5.0",
           "System.IO.Pipelines": "4.5.0",
-          "System.Memory": "4.5.0",
+          "System.Memory": "4.5.4",
           "System.Numerics.Vectors": "4.5.0",
           "System.Runtime.CompilerServices.Unsafe": "4.5.0",
           "System.Security.Principal.Windows": "4.5.0"
@@ -1491,7 +1508,7 @@
           "Microsoft.Extensions.Logging.Abstractions": "2.1.0",
           "Microsoft.Extensions.Options": "2.1.0",
           "Microsoft.Net.Http.Headers": "2.1.0",
-          "System.Memory": "4.5.0",
+          "System.Memory": "4.5.4",
           "System.Numerics.Vectors": "4.5.0",
           "System.Runtime.CompilerServices.Unsafe": "4.5.0",
           "System.Security.Cryptography.Cng": "4.5.0",
@@ -2200,7 +2217,7 @@
       },
       "Microsoft.Extensions.Primitives/2.1.0": {
         "dependencies": {
-          "System.Memory": "4.5.0",
+          "System.Memory": "4.5.4",
           "System.Runtime.CompilerServices.Unsafe": "4.5.0"
         },
         "compile": {
@@ -2950,9 +2967,6 @@
         },
         "compileOnly": true
       },
-      "System.Memory/4.5.0": {
-        "compileOnly": true
-      },
       "System.Net.Http/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
@@ -3574,6 +3588,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "BCrypt.Net-Next/4.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LyNKpIpr4GraRD9+xlTviyxxbZpF6J4xJf7DvraC1mR8PSN/KonGc4rt8C/fjkD3vaEvgA7BcvsbHFCOjgczyQ==",
+      "path": "bcrypt.net-next/4.0.2",
+      "hashPath": "bcrypt.net-next.4.0.2.nupkg.sha512"
+    },
     "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
       "type": "package",
       "serviceable": true,
@@ -3720,6 +3741,13 @@
       "sha512": "sha512-td7x21K8LalpjTWCzW/nQboQIFbq9i0r+PCyBBCdLWWnm4NBcdN18vpz/G9hCpUaCIfRL+ZxJNVTywlNlB1aLQ==",
       "path": "system.linq.parallel/4.3.0",
       "hashPath": "system.linq.parallel.4.3.0.nupkg.sha512"
+    },
+    "System.Memory/4.5.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
+      "path": "system.memory/4.5.4",
+      "hashPath": "system.memory.4.5.4.nupkg.sha512"
     },
     "System.Security.Cryptography.ProtectedData/4.4.0": {
       "type": "package",
@@ -5282,13 +5310,6 @@
       "sha512": "sha512-Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
       "path": "system.linq.queryable/4.0.1",
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
-    },
-    "System.Memory/4.5.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-m0psCSpUxTGfvwyO0i03ajXVhgBqyXlibXz0Mo1dtKGjaHrXFLnuQ8rNBTmWRqbfRjr4eC6Wah4X5FfuFDu5og==",
-      "path": "system.memory/4.5.0",
-      "hashPath": "system.memory.4.5.0.nupkg.sha512"
     },
     "System.Net.Http/4.3.0": {
       "type": "package",

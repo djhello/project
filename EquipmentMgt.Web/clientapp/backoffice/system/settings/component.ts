@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../../../shared/service';
 import { ConfirmedValidator } from '../../../shared/confirmed.validator';
+import * as bcrypt from "bcryptjs";
+const saltround = 10;
 
 @Component({
     selector: 'app-userSettings',
@@ -75,35 +77,43 @@ export class UserSettingsComponent implements OnInit {
             });
     }
     onSubmitPassword() {
+        var that = this;
         if (this.passwordForm.invalid) {
             return;
         }
-        this.loading = true;
-        this._dataService.saveWithUser({
-            userId: this.user.userId,
-            password: this.passwordForm.value.password
-        }, this.loggedUser,this._updatePasswordUrl)
-            .subscribe(response => {
-                this.loading = false;
-                this.resmessage = response.message;
-                this.alertmessage = "alert-outline-info";
-                if (this.resmessage == "Saved Successfully.") {
-                    this.passwordReset();
-                }
-            }, error => {
-            });
+        bcrypt.hash(this.passwordForm.value.password, saltround, (error: any, hash: string) => {
+            if (error) {
+                console.log("hata geldi");
+            }
+            else {
+                that.loading = true;
+                that._dataService.saveWithUser({
+                    userId: that.user.userId,
+                    password: hash
+                }, that.loggedUser, that._updatePasswordUrl)
+                    .subscribe(response => {
+                        that.loading = false;
+                        that.resmessage = response.message;
+                        that.alertmessage = "alert-outline-info";
+                        if (that.resmessage == "Saved Successfully.") {
+                            that.passwordReset();
+                        }
+                    }, error => {
+                    });
+            }
+        });
         
     }
     getbyIdUrl() {
         this.loading = true;
-        this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl )
+        this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl )
             .subscribe(response => {
                 this.loading = false;
                 this.user = response;
                 this.userForm.setValue({
                     userId: this.user.userId,
-                    firstName: this.user.firstname,
-                    lastName: this.user.lastname,
+                    firstName: this.user.firstName,
+                    lastName: this.user.lastName,
                     email: this.user.email
                 });
                 $('#defaultsizemodal').modal('show');

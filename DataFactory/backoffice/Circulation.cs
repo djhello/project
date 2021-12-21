@@ -28,7 +28,7 @@ namespace DataFactory.backoffice
                 using (_ctx)
                 {
                     equipmentReturned = await (from ed in _ctx.vEquipmentIssueReturn
-                                          where ed.Status == true
+                                          where ed.IsReturn == true
                                           select new vmEquipmentIssuereturn
                                           {
                                               Id = ed.Id,
@@ -51,10 +51,10 @@ namespace DataFactory.backoffice
                                               EDocWebAddress = ed.EDocWebAddress,
                                               EDocLocalAddress = ed.EDocLocalAddress,
                                               CoverImage = ed.CoverImage,
-                                              EquipmentIssuereturnId = ed.EquipmentIssuereturnId,
+                                              EquipmentIssueReturnId = ed.EquipmentIssueReturnId,
                                               IssueDate = ed.IssueDate,
                                               ReturnDate = ed.ReturnDate,
-                                              Status = ed.Status,
+                                              IsReturn = ed.IsReturn,
                                               UserId = ed.UserId,
                                               OduncAlanAdi = ed.FirstName,
                                               OduncAlanSoyadi = ed.LastName,
@@ -81,7 +81,7 @@ namespace DataFactory.backoffice
                 {
 
                     equipmentIssueed = await (from ed in _ctx.vEquipmentIssueReturn
-                                              where ed.UserId == id && ed.Status == false
+                                              where ed.UserId == id && ed.IsReturn == false
                                               select new vmEquipmentIssuereturn
                                               {
                                                   Id = ed.Id,
@@ -104,10 +104,10 @@ namespace DataFactory.backoffice
                                                   EDocWebAddress = ed.EDocWebAddress,
                                                   EDocLocalAddress = ed.EDocLocalAddress,
                                                   CoverImage = ed.CoverImage,
-                                                  EquipmentIssuereturnId = ed.EquipmentIssuereturnId,
+                                                  EquipmentIssueReturnId = ed.EquipmentIssueReturnId,
                                                   IssueDate = ed.IssueDate,
                                                   ReturnDate = ed.ReturnDate,
-                                                  Status = ed.Status,
+                                                  IsReturn = ed.IsReturn,
                                                   UserId = ed.UserId,
                                                   OduncAlanAdi = ed.FirstName,
                                                   OduncAlanSoyadi = ed.LastName,
@@ -137,11 +137,15 @@ namespace DataFactory.backoffice
                         {
                             foreach (var item in model.Equipments)
                             {
-                                var entityUpdate = _ctx.EquipmentIssueReturn.FirstOrDefault(x => x.Id == item.Id && x.Status == false);
+                                var entityUpdate = _ctx.EquipmentIssueReturn.FirstOrDefault(x => x.Id == item.Id && x.IsReturn == false);
                                 if (entityUpdate != null)
                                 {
-                                    entityUpdate.Status = true;
+                                    entityUpdate.IsReturn = true;
                                     entityUpdate.ReturnDate = DateTime.Now;
+                                    entityUpdate.CreateDate = model.CreateDate;
+                                    entityUpdate.LastUserId = model.LastUserId;
+                                    entityUpdate.Status = model.Status;
+                                    entityUpdate.LockStatus = model.LockStatus;
                                     await _ctx.SaveChangesAsync();
                                 }
                                
@@ -174,7 +178,7 @@ namespace DataFactory.backoffice
                 {
 
                     equipmentIssueed = await (from ed in _ctx.vEquipmentIssueReturn
-                                                 where  ed.Status == false
+                                                 where  ed.IsReturn == false
                                                  select new vmEquipmentIssuereturn
                                                  {
                                                      Id = ed.Id,
@@ -197,10 +201,10 @@ namespace DataFactory.backoffice
                                                      EDocWebAddress = ed.EDocWebAddress,
                                                      EDocLocalAddress = ed.EDocLocalAddress,
                                                      CoverImage = ed.CoverImage,
-                                                     EquipmentIssuereturnId = ed.EquipmentIssuereturnId,
+                                                     EquipmentIssueReturnId = ed.EquipmentIssueReturnId,
                                                      IssueDate = ed.IssueDate,
                                                      ReturnDate = ed.ReturnDate,
-                                                     Status = ed.Status,
+                                                     IsReturn = ed.IsReturn,
                                                      UserId = ed.UserId,
                                                      OduncAlanAdi = ed.FirstName,
                                                      OduncAlanSoyadi = ed.LastName,
@@ -225,7 +229,7 @@ namespace DataFactory.backoffice
                 using (_ctx)
                 {
                     equipmentIssueeList = await (from ed in _ctx.vEquipmentIssueReturn
-                                             where ed.UserId == id && ed.Status == false
+                                             where ed.UserId == id && ed.IsReturn == false
                                     select new vmEquipmentIssuereturn
                                        {
                                            Id = ed.Id,
@@ -248,10 +252,10 @@ namespace DataFactory.backoffice
                                            EDocWebAddress = ed.EDocWebAddress,
                                            EDocLocalAddress = ed.EDocLocalAddress,
                                            CoverImage = ed.CoverImage,
-                                           EquipmentIssuereturnId=ed.EquipmentIssuereturnId,
+                                           EquipmentIssueReturnId=ed.EquipmentIssueReturnId,
                                            IssueDate=ed.IssueDate,
                                            ReturnDate=ed.ReturnDate,
-                                           Status=ed.Status,
+                                           IsReturn = ed.IsReturn,
                                            UserId = ed.UserId,
                                            OduncAlanAdi = ed.FirstName,
                                            OduncAlanSoyadi =ed.LastName,
@@ -290,7 +294,11 @@ namespace DataFactory.backoffice
                                 IssueDate = DateTime.Now,
                                 EquipmentId = item.Id,
                                 DueDate = Convert.ToDateTime(model.DueDate),
-                                Status = false
+                                IsReturn = false,
+                                CreateDate = model.CreateDate,
+                                LastUserId = model.LastUserId,
+                                Status = model.Status,
+                                LockStatus = model.LockStatus
                             };
                             listEquipments.Add(EquipemtnModel);                           
                         }

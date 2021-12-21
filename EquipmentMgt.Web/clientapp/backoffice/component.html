@@ -15,8 +15,8 @@
                         <i class="icon-home"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li *ngIf="loggedUsertype === 1" class="sidebar-header">Ayarlar</li>
-                <li *ngIf="loggedUsertype === 1">
+                <li *ngIf="loggedUserType === 1" class="sidebar-header">Ayarlar</li>
+                <li *ngIf="loggedUserType === 1">
                     <a href="javaScript:void();" class="waves-effect">
                         <i class="icon-folder-alt"></i> <span>Sistem</span>
                         <i class="fa fa-angle-left float-right"></i>
@@ -26,8 +26,8 @@
                         <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/system/departmans']"><i class="fa fa-circle-o"></i> Bölümler</a></li>
                     </ul>
                 </li>
-                <li *ngIf="loggedUsertype === 1" class="sidebar-header">Tanımlama</li>
-                <li *ngIf="loggedUsertype === 1">
+                <li *ngIf="loggedUserType === 1" class="sidebar-header">Tanımlama</li>
+                <li *ngIf="loggedUserType === 1">
                     <a href="javaScript:void();" class="waves-effect">
                         <i class="icon-folder-alt"></i> <span>Cihaz</span>
                         <i class="fa fa-angle-left float-right"></i>
@@ -96,8 +96,8 @@
                                             <img class="align-self-start mr-3" src="assets/images/avatars/avatar-1.png" alt="user avatar">
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="mt-2 user-title">{{loggedUsername}}</h6>
-                                            <p class="user-subtitle">{{loggedemail}}</p>
+                                            <h6 class="mt-2 user-title">{{loggedUserName}}</h6>
+                                            <p class="user-subtitle">{{loggedEmail}}</p>
                                         </div>
                                     </div>
                                 </a>

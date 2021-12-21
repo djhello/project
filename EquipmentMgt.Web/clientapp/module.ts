@@ -2,7 +2,8 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
-import * as bootstrap from "bootstrap"
+import * as bootstrap from "bootstrap";
+
 
 //Components
 import { AppComponent } from './component';

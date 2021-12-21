@@ -15,6 +15,7 @@ var http_1 = require("@angular/http");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var service_1 = require("../../../shared/service");
+var handsontable_1 = require("handsontable");
 var EquipmentsComponent = /** @class */ (function () {
     function EquipmentsComponent(_http, router, titleService, formBuilder, _dataService) {
         this._http = _http;
@@ -28,24 +29,18 @@ var EquipmentsComponent = /** @class */ (function () {
         this._saveUrl = '/api/equipment/save';
         this._deleteUrl = '/api/equipment/deletebyid';
         this._getbyEquipmentIdUrl = '/api/equipment/getbytext';
+        this._updateUrl = '/api/equipment/updateStatus';
         this._getCalibrationUrl = '/api/calibration/getall';
         this._getLocationUrl = '/api/location/getall';
         this._getEquipmentModelUrl = '/api/equipmentmodel/getall';
         this._getUserUrl = '/api/users/getall';
-        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     EquipmentsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Cihazlar");
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
+        //this.setupHandsontable();
     };
     EquipmentsComponent.prototype.createForm = function () {
         this.equipmentForm = this.formBuilder.group({
@@ -60,6 +55,16 @@ var EquipmentsComponent = /** @class */ (function () {
             equipmentModelId: new forms_1.FormControl('', forms_1.Validators.required)
         });
     };
+    EquipmentsComponent.prototype.setupHandsontable = function () {
+        var container = document.getElementById('example');
+        var hot = new handsontable_1.default(container, {
+            data: this.equipments,
+            rowHeaders: true,
+            colHeaders: true,
+            filters: true,
+            dropdownMenu: true
+        });
+    };
     //Pop Modal
     EquipmentsComponent.prototype.addNew = function () {
         //debugger 
@@ -67,6 +72,7 @@ var EquipmentsComponent = /** @class */ (function () {
         $("#largesizemodal").on('shown.bs.modal', function () {
             $(this).find('#equipmentId').focus();
         });
+        this.reset();
         this.getCalibration();
         this.getLocations();
         this.getEquipmentModels();
@@ -79,6 +85,7 @@ var EquipmentsComponent = /** @class */ (function () {
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
             _this.equipments = response;
+            _this.setupHandsontable();
             _this.loading = false;
         }, function (error) {
             console.log(error);
@@ -153,16 +160,36 @@ var EquipmentsComponent = /** @class */ (function () {
         formModel.append('permanentLocationId', this.equipmentForm.value.permanentLocationId);
         formModel.append('currentUserId', this.equipmentForm.value.currentUserId);
         //debugger
-        this._dataService.saveForm(formModel, this._saveUrl)
+        this._dataService.saveWithUser(this.equipmentForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             _this.resmessage = response.message;
             _this.alertmessage = "alert-outline-info";
             _this.getAll();
             _this.reset();
+            $('#largesizemodal').modal('hide');
             _this.loading = false;
         }, function (error) {
             console.log(error);
         });
+    };
+    EquipmentsComponent.prototype.updateStatus = function (e, m) {
+        var _this = this;
+        this.loading = true;
+        e.preventDefault();
+        this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+            .subscribe(function (response) {
+            //console.log(response);
+            _this.resmessage = response.message;
+            _this.alertmessage = "alert-outline-info";
+            _this.getAll();
+            _this.reset();
+            _this.loading = false;
+            $('#defaultsizemodal').modal('hide');
+        }, function (error) {
+            console.log(error);
+            _this.loading = false;
+        });
+        this.loading = false;
     };
     //Delete
     EquipmentsComponent.prototype.delete = function (e, m) {
@@ -170,7 +197,7 @@ var EquipmentsComponent = /** @class */ (function () {
         this.loading = true;
         //debugger
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.bookname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.equipmentName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(function (response) {
@@ -224,6 +251,7 @@ var EquipmentsComponent = /** @class */ (function () {
         this._dataService.getall(this._getUserUrl)
             .subscribe(function (response) {
             _this.users = response;
+            console.log(_this.users);
             _this.loading = false;
         }, function (error) {
             console.log(error);
@@ -232,16 +260,15 @@ var EquipmentsComponent = /** @class */ (function () {
     EquipmentsComponent.prototype.reset = function () {
         this.equipmentForm.setValue({
             id: 0,
-            equipmentId: null,
+            equipmentId: '',
             equipmentName: '',
-            calibrationId: '',
-            description: null,
-            serialPortUSB: null,
-            equipmentModelId: '',
-            permanentLocationId: '',
-            currentUserId: ''
+            calibrationId: 0,
+            description: '',
+            serialPortUSB: '',
+            equipmentModelId: 0,
+            permanentLocationId: 0,
+            currentUserId: 0
         });
-        this.fileInput.nativeElement.value = '';
         this.resmessage = null;
         $('#equipmentId').focus();
     };

@@ -81,24 +81,25 @@ export class IssueComponent implements OnInit {
     createForm() {
         this.issueForm = this.formBuilder.group({
             id: 0,
-            userId: 0,
+            userId: new FormControl('', Validators.required),
             memberSearch: new FormControl(''),
             memberName: new FormControl(''),
-            email: new FormControl(''),
-            dueDate: new FormControl(''),
+            email: new FormControl('', Validators.required),
+            dueDate: new FormControl('', Validators.required),
             equipments: []
         });
         this.focus();
     }
     setUser() {
-        if (this.loggedUser.usertype != 1) {
+        console.log(this.loggedUser);
+        if (this.loggedUser.userType != 1) {
             this.showSearchMemberDiv = false;
             var dt = new Date();
             dt.setDate(dt.getDate() + 15);
             this.issueForm.setValue({
                 id: 0,
-                userId: this.loggedUser.userid,
-                memberName: this.loggedUser.displayname,
+                userId: this.loggedUser.userId,
+                memberName: this.loggedUser.displayName,
                 email: this.loggedUser.email,
                 dueDate: dt.toLocaleDateString('en-US'),
                 memberSearch: null,
@@ -122,7 +123,7 @@ export class IssueComponent implements OnInit {
                 this.issueForm.setValue({
                     id: 0,
                     userId: this.user.userId,
-                    memberName: this.user.firstname + " " + this.user.firstname ,
+                    memberName: this.user.firstName + ' ' + this.user.lastName,
                     email: this.user.email,
                     dueDate: dt.toLocaleDateString('en-US'),
                     memberSearch: null,
@@ -181,21 +182,26 @@ export class IssueComponent implements OnInit {
         this.issueForm.patchValue({
             equipments: this.equipmentChoosed
         });
-        console.log(this.equipmentChoosed);
         if (this.issueForm.invalid) {
             return;
         }
-        if (this.issueForm.value.userId > 0) {
-            this._dataService.saveWithUser(this.issueForm.value, this.loggedUser, this._saveUrl)
-                .subscribe(response => {
-                    this.loading = false;
-                    this.resMessage = response.message;
-                    this.alertMessage = "alert-outline-info";
-                    this.reset();
-                    this.focus();
-                }, error => {
-                    //console.log(error);
-                });
+        if (this.issueForm.value.equipments.length != 0) {
+            if (this.issueForm.value.userId > 0) {
+                this._dataService.saveWithUser(this.issueForm.value, this.loggedUser, this._saveUrl)
+                    .subscribe(response => {
+                        this.loading = false;
+                        this.resMessage = response.message;
+                        this.alertMessage = "alert-outline-info";
+                        this.reset();
+                        this.focus();
+                    }, error => {
+                        //console.log(error);
+                    });
+            }
+        }
+        else {
+            this.loading = false;
+            alert('Lütfen en az bir ekipmanı seçiniz');
         }
     }
 
@@ -248,7 +254,7 @@ export class IssueComponent implements OnInit {
 
     //Reset Form
     reset() {
-        if (this.loggedUser.usertype == 1) {
+        if (this.loggedUser.userType == 1) {
             this.issueForm.setValue({
                 id: 0,
                 userId: 0,
@@ -263,6 +269,7 @@ export class IssueComponent implements OnInit {
         this.availableEquipmentList = [];
         this.availableEquipmentListCopy = [];
         this.getAvailableEquipmentList();
+        this.equipmentByUserIssueedList = [];  
         this.equipmentChoosed = [];
     }
 

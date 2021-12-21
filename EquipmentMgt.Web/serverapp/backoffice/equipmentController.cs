@@ -22,7 +22,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/book/getall
+        // GET: api/equipments/getall
         [HttpGet("[action]")]
         public async Task<List<vmEquipment>> getall()
         {
@@ -53,7 +53,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             }
             return equipments;
         }
-        // GET api/book/getbyid/1
+        // GET api/equipment/getbyid/1
         [HttpGet("[action]/{id}")]
         public async Task<vmEquipment> getbyid(int id)
         {
@@ -87,51 +87,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
         }
         // POST: api/book/save
         [HttpPost("[action]")]
-        public async Task<object> save()
+        public async Task<object> save([FromBody]Hardware model)
         {
             object result = null; string message = string.Empty;
             try
             {
-                //    string serverPath = string.Empty;
-                //    var totalfile = Request.Form.Files.Count;
-                //    if (totalfile > 0)
-                //    {
-                //        var file = Request.Form.Files[0];
-                //        string folderName = "uploads";
-                //        string webRootPath = _hostingEnvironment.WebRootPath;
-                //        string newPath = Path.Combine(webRootPath, folderName);
-
-                //        if (!Directory.Exists(newPath))
-                //        {
-                //            Directory.CreateDirectory(newPath);
-                //        }
-                //        if (file.Length > 0)
-                //        {
-                //            string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                //            string fullPath = Path.Combine(newPath, fileName);
-                //            serverPath = folderName + "/" + fileName;
-                //            using (var stream = new FileStream(fullPath, FileMode.Create))
-                //            {
-                //                file.CopyTo(stream);
-                //            }
-                //        }
-                //    }
-
-                //Save
-                Equipment model = new Equipment()
+                if (model == null)
                 {
-                    Id = Convert.ToInt32(Request.Form["id"]),
-                    EquipmentId = Request.Form["equipmentId"].ToString(),
-                    EquipmentModelId = Convert.ToInt32(Request.Form["equipmentModelId"]),
-                    CalibrationId = Convert.ToInt32(Request.Form["calibrationId"]),
-                    /*CurrentLocationId = Convert.ToInt32(Request.Form["currentLocationID"]),*/
-                    PermanentLocationId = Convert.ToInt32(Request.Form["permanentLocationId"]),
-                    CurrentUserId = Convert.ToInt32(Request.Form["currentUserId"]),
-                    Description = Request.Form["description"].ToString(),
-                    EquipmentName = Request.Form["equipmentName"].ToString(),
-                    SerialPortUSB = Request.Form["serialPortUSB"].ToString(),
-                };
-
+                    return BadRequest();
+                }
                 _objEquipment = new Equipments();
                 message = await _objEquipment.create(model);
             }
@@ -148,8 +112,34 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        [HttpPost("[action]")]
+        public async Task<object> updateStatus([FromBody]Hardware model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
 
-        // DELETE api/book/deletebyid/1
+                //Save
+                _objEquipment = new Equipments();
+                message = await _objEquipment.updateStatus(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
+        // DELETE api/equipment/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)
         {

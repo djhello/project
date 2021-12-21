@@ -1,24 +1,25 @@
 <!-- Breadcrumb-->
 <div class="row pt-2 pb-2">
     <div class="col-sm-6">
-        <h4 class="page-title"><i class="fa fa-cube"></i> Book Return</h4>
+        <div id="cover-spin" *ngIf="loading"></div>
+        <h4 class="page-title"><i class="fa fa-cube"></i> Equipment Return</h4>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="JavaScript:Void(0);" [routerLink]="['/backoffice']">Dashboard</a></li>
-            <li class="breadcrumb-item">Book</li>
+            <li class="breadcrumb-item">Equipment</li>
             <li class="breadcrumb-item active" aria-current="page">Return</li>
         </ol>
     </div>
     <div class="col-sm-6">
         <div class="btn-group group-round m-1 float-right">
             <button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="returnedList()">
-                <i class="fa fa-database"></i> Returned Book
+                <i class="fa fa-database"></i> Returned Equipment
             </button>
         </div>
     </div>
 </div>
 <!-- End Breadcrumb-->
 <div class="row">
-    <div class="col-lg-7">
+    <div class="col-lg-3">
         <div class="card">
             <div class="card-body">
                 <form id="returnForm" [formGroup]="returnForm" #f="ngForm" (ngSubmit)="onSubmit()" tabindex="-1">
@@ -27,7 +28,7 @@
                         Return Info
                     </h4>
 
-                    <div class="alert alert-outline-info alert-dismissible" role="alert">
+                    <div class="alert alert-outline-info alert-dismissible" role="alert" *ngIf="showSearchMemberDiv">
                         <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
                         <div class="alert-icon">
                             <i class="icon-info"></i>
@@ -37,32 +38,40 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-8">
+                    <div class="form-row" *ngIf="showSearchMemberDiv">
+                        <div class="form-group col-md-12">
                             <label for="memberName">Member Search</label>
                             <div class="position-relative has-icon-left">
                                 <input type="text" id="memberSearch" name="memberSearch" formControlName="memberSearch" (change)="onChange($event, $event.target.value)"
                                        class="form-control" placeholder="Search Member"
                                        onfocus="this.placeholder=''" onblur="this.placeholder='Search Member'" autocomplete="off" tabindex="1" maxlength="5" />
-                                <div class="form-control-position">
+                                <div class="form-control-position" style="top:-10px;">
                                     <i class="fa fa-search text-info"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Due Date</label>
-                            <div class="position-relative has-icon-left">
-                                <input type="text" id="dueDate" name="dueDate" formControlName="dueDate" class="form-control" readonly />
-                                <div class="form-control-position">
-                                    <i class="fa fa-calendar text-info"></i>
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="form-group col-md-4">
+            <label>Due Date</label>
+            <div class="position-relative has-icon-left">
+                <input type="text" id="dueDate" name="dueDate" formControlName="dueDate" class="form-control" readonly />
+                <div class="form-control-position">
+                    <i class="fa fa-calendar text-info"></i>
+                </div>
+            </div>
+        </div>-->
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
+                            <label for="userId">Member Id</label>
+                            <input type="text" id="userId" name="userId" formControlName="userId" class="form-control" placeholder="Member Id" readonly />
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="memberName">Member Name</label>
                             <input type="text" id="memberName" name="memberName" formControlName="memberName" class="form-control" placeholder="Member Name" readonly />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="memberName">Email</label>
+                            <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="Email" readonly />
                         </div>
                     </div>
 
@@ -72,7 +81,7 @@
                                 <i class="fa fa-refresh"></i> Reset
                             </button>
                             <button type="submit" class="btn btn-primary m-1" form="returnForm" [disabled]="!f.valid" tabindex="2">
-                                <i class="fa fa-check-square-o"></i> Return Book
+                                <i class="fa fa-check-square-o"></i> Return Equipment
                             </button>
                         </div>
                     </div>
@@ -91,27 +100,31 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-5">
+    <div class="col-lg-9">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-uppercase"><i class="fa fa-cube"></i> Books to Return</h5>
+                <h5 class="card-title text-uppercase"><i class="fa fa-cube"></i> equipments to return</h5>
+                <input type="text" id="equipmentSearch" name="equipmentSearch" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()"
+                       class="form-control" placeholder="Search equipment"
+                       onfocus="this.placeholder=''" onblur="this.placeholder='Search equipment'" autocomplete="off" tabindex="2" />
+                <br />
+                <div class="table-responsive" style="height:180px; max-height:180px; overflow:auto;">
 
-                <div class="table-responsive" style="min-height:365px; overflow:auto;">
                     <table class="table table-sm">
-                        <thead>
-                            <tr *ngIf="bookreturnedlist.length > 0">
-                                <th scope="col">#</th>
-                                <th scope="col">Book Name</th>
-                            </tr>
-                        </thead>
                         <tbody>
-                            <tr *ngFor="let item of bookreturnedlist;let sl = index">
-                                <th scope="row">{{sl+1}}</th>
-                                <td>{{item.bookname}}</td>
+                            <tr *ngFor="let item of equipmentIssueedList;let sl = index">
+                                <td>
+                                    <div class="demo-checkbox">
+                                        <input type="checkbox" id="user-checkbox{{sl+1}}" class="filled-in chk-col-primary"
+                                               (change)="oncheckChange($event, item.equipmentIssueReturnId)" />
+                                        <label for="user-checkbox{{sl+1}}">{{item.equipmentModel}}-{{item.equipmentId}}-{{item.equipmentName}}</label>
+                                    </div>
+                                </td>
+
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr *ngIf="bookreturnedlist.length === 0">
+                            <tr *ngIf="equipmentIssueedList.length === 0">
                                 <td>
                                     <p style="color:red;">No records found</p>
                                 </td>
@@ -122,6 +135,36 @@
 
             </div>
         </div>
+        <!--<div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-uppercase"><i class="fa fa-cube"></i> Equipments to Return</h5>
+
+                <div class="table-responsive" style="min-height:365px; overflow:auto;">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr *ngIf="equipmentreturnedlist.length > 0">
+                                <th scope="col">#</th>
+                                <th scope="col">Equipment Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of equipmentreturnedlist;let sl = index">
+                                <th scope="row">{{sl+1}}</th>
+                                <td>{{item.equipmentname}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr *ngIf="equipmentreturnedlist.length === 0">
+                                <td>
+                                    <p style="color:red;">No records found</p>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+            </div>
+        </div>-->
     </div>
 </div><!--End Row-->
 <!-- Modal -->
@@ -129,7 +172,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-database"></i> Returned Book</h5>
+                <h5 class="modal-title"><i class="fa fa-database"></i> Returned Equipment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="returnedListclose()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -146,7 +189,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of bookreturned;let sl = index">
+                            <tr *ngFor="let item of equipmentreturned;let sl = index">
                                 <th scope="row">{{sl+1}}</th>
                                 <td>{{item.membername}}</td>
                                 <td>{{item.duedate}}</td>

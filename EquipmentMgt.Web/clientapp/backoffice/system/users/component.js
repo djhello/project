@@ -28,9 +28,6 @@ var UsersComponent = /** @class */ (function () {
         this._updateUrl = '/api/users/updateStatus';
         this._getDepartmanUrl = '/api/departman/getall';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        //this.loggedUsername = loggedUser.displayname;
-        //this.loggedemail = loggedUser.email;
-        //this.loggedUsertype = loggedUser.usertype;
     }
     UsersComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Kullancılar");
@@ -38,7 +35,7 @@ var UsersComponent = /** @class */ (function () {
         this.getAll();
     };
     UsersComponent.prototype.userTypeControl = function () {
-        if (this.loggedUser.loggedUsertype != 1) {
+        if (this.loggedUser.loggedUserType != 1) {
             localStorage.removeItem('isLoggedin');
             localStorage.removeItem('loggedUser');
             this.router.navigate(['/login']);
@@ -93,13 +90,11 @@ var UsersComponent = /** @class */ (function () {
     //Get by ID
     UsersComponent.prototype.edit = function (e, m) {
         var _this = this;
-        console.log(m);
         this.getDepartmanAll();
         this.loading = true;
         e.preventDefault();
         this._dataService.getbyid(m.userId, this._getbyIdUrl)
             .subscribe(function (response) {
-            console.log(response);
             _this.loading = false;
             _this.user = response;
             _this.userForm.setValue({
@@ -125,7 +120,6 @@ var UsersComponent = /** @class */ (function () {
         if (this.userForm.invalid) {
             return;
         }
-        //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
         this._dataService.saveWithUser(this.userForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             //console.log(response);
@@ -145,8 +139,7 @@ var UsersComponent = /** @class */ (function () {
         e.preventDefault();
         var IsConf = confirm('You are about to delete ' + m.firstName + '. Are you sure?');
         if (IsConf) {
-            //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
-            this._dataService.updateStatus(this.userForm.value, this.loggedUser, this._updateUrl)
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
                 .subscribe(function (response) {
                 //console.log(response);
                 _this.resmessage = response.message;
@@ -156,9 +149,11 @@ var UsersComponent = /** @class */ (function () {
                 _this.loading = false;
                 $('#defaultsizemodal').modal('hide');
             }, function (error) {
-                //console.log(error);
+                console.log(error);
+                _this.loading = false;
             });
         }
+        this.loading = false;
     };
     //Delete
     UsersComponent.prototype.delete = function (e, m) {

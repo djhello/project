@@ -12,11 +12,11 @@ namespace EquipmentMgt.Web.serverapp.account
     [ApiController]
     public class authController : ControllerBase
     {
-        private AuthUsers _objusers = null;
+        private AuthUsers _objUsers = null;
 
         // POST: api/auth/regusers
         [HttpPost("[action]")]
-        public async Task<object> regusers([FromBody]vmUser model)
+        public async Task<object> regUsers([FromBody]vmUser model)
         {
             object result = null; string message = string.Empty;
             try
@@ -26,8 +26,8 @@ namespace EquipmentMgt.Web.serverapp.account
                     return BadRequest();
                 }
                 //Save
-                _objusers = new AuthUsers();
-                message = await _objusers.regusers(model);
+                _objUsers = new AuthUsers();
+                message = await _objUsers.regUsers(model);
             }
             catch (Exception ex)
             {
@@ -44,10 +44,10 @@ namespace EquipmentMgt.Web.serverapp.account
 
         // POST: api/auth/loginusers
         [HttpPost("[action]")]
-        public async Task<object> loginusers([FromBody]UserAuthentication model)
+        public async Task<object> loginUsers([FromBody]UserAuthentication model)
         {
             object result = null; string message = string.Empty;
-            vmLoggeduser loggeduser = null;
+            vmLoggeduser loggedUser = null;
 
             try
             {
@@ -57,8 +57,8 @@ namespace EquipmentMgt.Web.serverapp.account
                 }
 
                 //Save
-                _objusers = new AuthUsers();
-                loggeduser = await _objusers.loginusers(model);
+                _objUsers = new AuthUsers();
+                loggedUser = await _objUsers.loginUsers(model);
             }
             catch (Exception ex)
             {
@@ -67,7 +67,36 @@ namespace EquipmentMgt.Web.serverapp.account
 
             result = new
             {
-                loggeduser
+                loggedUser
+            };
+
+            return result;
+        }
+        [HttpPost("[action]")]
+        public async Task<object> checkPassword([FromBody]UserAuthentication model)
+        {
+            object result = null; string message = string.Empty;
+            UserAuthentication loggedUser = null;
+
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+
+                //Save
+                _objUsers = new AuthUsers();
+                loggedUser = await _objUsers.checkPassword(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                loggedUser
             };
 
             return result;

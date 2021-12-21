@@ -7,10 +7,11 @@ namespace DataModels.ViewModels
 {
     public class vmLoggeduser
     {
-        public int? Userid { get; set; }
-        public int? Usertype { get; set; }
-        public string Username { get; set; }
-        public string Displayname { get; set; }
+        public int? UserId { get; set; }
+        public int? UserType { get; set; }
+        public string UserName { get; set; }
+        public int? DepartmanId { get; set; }
+        public string DisplayName { get; set; }
         public string Email { get; set; }
     }
 }

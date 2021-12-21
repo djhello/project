@@ -23,10 +23,14 @@ var EquipmentModelsComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
         this.loading = false;
+        this.updatePicture = false;
         this._getUrl = '/api/equipmentmodel/getall';
         this._getbyIdUrl = '/api/equipmentmodel/getbyid';
         this._saveUrl = '/api/equipmentmodel/save';
         this._deleteUrl = '/api/equipmentmodel/deletebyid';
+        this._updateUrl = '/api/equipmentmodel/updateStatus';
+        this._getDepartmanUrl = '/api/departman/getall';
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     EquipmentModelsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Equipment Model");
@@ -50,6 +54,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
     EquipmentModelsComponent.prototype.createForm = function () {
         this.equipmentModelForm = this.formBuilder.group({
             id: 0,
+            departmanId: 0,
             name: new forms_1.FormControl('', forms_1.Validators.required),
             quantity: new forms_1.FormControl(''),
             description: new forms_1.FormControl(''),
@@ -63,33 +68,55 @@ var EquipmentModelsComponent = /** @class */ (function () {
             var file = event.target.files[0];
             this.equipmentModelForm.get('fileupload').setValue(file);
         }
+        else {
+            var list = new DataTransfer();
+            var result = this.equipmentModel.coverImage.substr(this.equipmentModel.coverImage.indexOf("/") + 1);
+            var file = new File(["content"], result);
+            list.items.add(file);
+            var myFileList = list.files;
+            event.target.files = myFileList;
+        }
     };
     //Pop Modal
     EquipmentModelsComponent.prototype.addNew = function () {
-        //debugger 
+        this.getDepartmanAll();
         $('#largesizemodal').modal('show');
         $("#largesizemodal").on('shown.bs.modal', function () {
             $(this).find('#name').focus();
         });
         this.reset();
     };
-    //Get LOcations 
+    //Get Models 
     EquipmentModelsComponent.prototype.getAll = function () {
         var _this = this;
         //debugger
         this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
+            console.log(response);
             _this.equipmentModels = response;
         }, function (error) {
             console.log(error);
         });
         this.loading = false;
     };
+    EquipmentModelsComponent.prototype.getDepartmanAll = function () {
+        var _this = this;
+        this.loading = true;
+        this._dataService.getall(this._getDepartmanUrl)
+            .subscribe(function (response) {
+            _this.loading = false;
+            _this.departmans = response;
+            console.log(_this.departmans);
+        }, function (error) {
+            console.log(error);
+        });
+    };
     //Get by ID
     EquipmentModelsComponent.prototype.edit = function (e, m) {
         var _this = this;
         //debugger
+        this.getDepartmanAll();
         e.preventDefault();
         this.loading = true;
         this._dataService.getbyid(m.id, this._getbyIdUrl)
@@ -99,12 +126,20 @@ var EquipmentModelsComponent = /** @class */ (function () {
             _this.equipmentModelForm.setValue({
                 id: _this.equipmentModel.id,
                 name: _this.equipmentModel.name,
+                departmanId: _this.equipmentModel.departmanId,
                 quantity: _this.equipmentModel.quantity,
                 description: _this.equipmentModel.description,
                 eDocWebAddress: _this.equipmentModel.eDocWebAddress,
                 eDocLocalAddress: _this.equipmentModel.eDocLocalAddress,
                 fileupload: _this.equipmentModel.coverImage
             });
+            var inputElement = document.getElementById("fileupload");
+            var list = new DataTransfer();
+            var result = _this.equipmentModel.coverImage.substr(_this.equipmentModel.coverImage.indexOf("/") + 1);
+            var file = new File(["content"], result);
+            list.items.add(file);
+            var myFileList = list.files;
+            inputElement.files = myFileList;
             $('#largesizemodal').modal('show');
             $("#largesizemodal").on('shown.bs.modal', function () {
                 $(this).find('#name').focus();
@@ -114,6 +149,29 @@ var EquipmentModelsComponent = /** @class */ (function () {
             console.log(error);
         });
     };
+    EquipmentModelsComponent.prototype.updateStatus = function (e, m) {
+        var _this = this;
+        console.log(m);
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.equipmentModelName + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(function (response) {
+                //console.log(response);
+                _this.resmessage = response.message;
+                _this.alertmessage = "alert-outline-info";
+                _this.getAll();
+                _this.reset();
+                _this.loading = false;
+                $('#defaultsizemodal').modal('hide');
+            }, function (error) {
+                console.log(error);
+                _this.loading = false;
+            });
+        }
+        this.loading = false;
+    };
     //Create
     EquipmentModelsComponent.prototype.onSubmit = function () {
         var _this = this;
@@ -121,14 +179,21 @@ var EquipmentModelsComponent = /** @class */ (function () {
         if (this.equipmentModelForm.invalid) {
             return;
         }
+        console.log(this.equipmentModelForm.value.fileupload);
+        var now = new Date();
         var formModel = new FormData();
         formModel.append('id', this.equipmentModelForm.value.id);
         formModel.append('name', this.equipmentModelForm.value.name);
         formModel.append('quantity', this.equipmentModelForm.value.quantity);
         formModel.append('description', this.equipmentModelForm.value.description);
+        formModel.append('departmanId', this.equipmentModelForm.value.departmanId);
         formModel.append('eDocWebAddress', this.equipmentModelForm.value.eDocWebAddress);
         formModel.append('eDocLocalAddress', this.equipmentModelForm.value.eDocLocalAddress);
         formModel.append('fileupload', this.equipmentModelForm.value.fileupload);
+        formModel.append('Status', "1");
+        formModel.append('LastUserId', this.loggedUser.userId);
+        formModel.append('LockStatus', "1");
+        formModel.append('CreateDate', now.toString());
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(function (response) {
@@ -163,6 +228,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
     EquipmentModelsComponent.prototype.reset = function () {
         this.equipmentModelForm.setValue({
             id: 0,
+            departmanId: 0,
             name: null,
             quantity: null,
             description: null,

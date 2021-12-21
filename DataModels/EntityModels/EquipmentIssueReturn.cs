@@ -13,9 +13,9 @@ namespace DataModels.EntityModels
         public DateTime? ReturnDate { get; set; }
         public bool? IsReturn { get; set; }
         public List<Equipment> Equipments { get; set; }
-        public bool? Status { get; set; }
+        public byte? Status { get; set; }
         public bool? LockStatus { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string LastUserId { get; set; }
     }
 }

@@ -4,15 +4,13 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../../../shared/service';
 
+
 @Component({
     selector: 'ng-users',
     templateUrl: './app/backoffice/system/users/component.html',
     providers: [DataService]
 })
 export class UsersComponent implements OnInit {
-    //public loggedUsername: string;
-    //public loggedUsertype: number;
-    //public loggedemail: string;
 
     public loggedUser: any;
     public userForm: FormGroup;
@@ -38,20 +36,15 @@ export class UsersComponent implements OnInit {
         private _dataService: DataService) {
 
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        //this.loggedUsername = loggedUser.displayname;
-        //this.loggedemail = loggedUser.email;
-        //this.loggedUsertype = loggedUser.usertype;
     }
 
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi | Kullancılar");
         this.createForm();
         this.getAll();
-        
-        
     }
     userTypeControl() {
-        if (this.loggedUser.loggedUsertype != 1) {
+        if (this.loggedUser.loggedUserType != 1) {
             localStorage.removeItem('isLoggedin');
             localStorage.removeItem('loggedUser');
             this.router.navigate(['/login']);
@@ -112,13 +105,11 @@ export class UsersComponent implements OnInit {
 
     //Get by ID
     edit(e, m) {
-        console.log(m);
         this.getDepartmanAll();
         this.loading = true;
         e.preventDefault();
         this._dataService.getbyid(m.userId, this._getbyIdUrl)
             .subscribe(response => {
-                console.log(response);
                 this.loading = false;
                 this.user = response;
                 this.userForm.setValue({
@@ -144,8 +135,6 @@ export class UsersComponent implements OnInit {
         if (this.userForm.invalid) {
             return;
         }
-
-        //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
         this._dataService.saveWithUser(this.userForm.value, this.loggedUser,this._saveUrl)
             .subscribe(response => {
                 //console.log(response);
@@ -164,9 +153,7 @@ export class UsersComponent implements OnInit {
         e.preventDefault();
         var IsConf = confirm('You are about to delete ' + m.firstName + '. Are you sure?');
         if (IsConf) {
-
-            //debugger Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() })
-            this._dataService.updateStatus(this.userForm.value, this.loggedUser, this._updateUrl)
+               this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
                 .subscribe(response => {
                     //console.log(response);
                     this.resmessage = response.message;
@@ -176,9 +163,11 @@ export class UsersComponent implements OnInit {
                     this.loading = false;
                     $('#defaultsizemodal').modal('hide');
                 }, error => {
-                    //console.log(error);
+                        console.log(error);
+                        this.loading = false;
                 });
         }
+        this.loading = false;
     }
     //Delete
     delete(e, m) {
@@ -197,7 +186,6 @@ export class UsersComponent implements OnInit {
                 });
         }
     }
-
     reset() {
         this.userForm.setValue({
             id: 0,

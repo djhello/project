@@ -11,9 +11,7 @@ import { DataService } from '../../../shared/service';
     providers: [DataService]
 })
 export class LocationsComponent implements OnInit {
-    public loggedUsername: string;
-    public loggedUsertype: number;
-    public loggedemail: string;
+    public loggedUser: any;
 
     public loading: boolean = false;
     public locations: any[];
@@ -30,6 +28,7 @@ export class LocationsComponent implements OnInit {
     public _saveUrl: string = '/api/location/save';
     public _deleteUrl: string = '/api/location/deletebyid';
 
+    public _updateUrl: string = '/api/location/updateStatus';
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -39,10 +38,7 @@ export class LocationsComponent implements OnInit {
         private titleService: Title,
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
-            var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-            this.loggedUsername = loggedUser.displayname;
-            this.loggedemail = loggedUser.email;
-            this.loggedUsertype = loggedUser.usertype;
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
 
     ngOnInit() {
@@ -50,11 +46,6 @@ export class LocationsComponent implements OnInit {
         this.loadScripts();
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
     }
     public loadScripts() {
         const libScripts = [
@@ -138,7 +129,7 @@ export class LocationsComponent implements OnInit {
         formModel.append('name', this.locationForm.value.name);
 
         //debugger
-        this._dataService.saveForm(formModel, this._saveUrl)
+        this._dataService.saveWithUser(this.locationForm.value, this.loggedUser, this._saveUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.resmessage = response.message;
@@ -150,13 +141,33 @@ export class LocationsComponent implements OnInit {
                 console.log(error);
             });
     }
-
+    updateStatus(e, m) {
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.name + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(response => {
+                    //console.log(response);
+                    this.resmessage = response.message;
+                    this.alertmessage = "alert-outline-info";
+                    this.getAll();
+                    this.reset();
+                    this.loading = false;
+                    $('#defaultsizemodal').modal('hide');
+                }, error => {
+                    console.log(error);
+                    this.loading = false;
+                });
+        }
+        this.loading = false;
+    }
 
     //Delete
     delete(e, m) {
         this.loading = true;
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.locationName + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.name + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(response => {

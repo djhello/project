@@ -35,7 +35,13 @@
             //xlsx
             'xlsx': 'npm:xlsx/xlsx.js',
 
-            'file-saver': 'npm:file-saver/src/Filesaver.js'
+            'file-saver': 'npm:file-saver/src/Filesaver.js',
+
+            'bcrypt': 'npm:bcrypt/bcrypt.js',
+
+            'bcryptjs': 'npm:bcryptjs/index.js',
+
+            'handsontable': 'npm:handsontable/dist/handsontable.full.min.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

@@ -11,6 +11,8 @@ import { DataService } from '../../../shared/service';
 })
 
 export class CalibrationsComponent implements OnInit {
+
+    public loggedUser: any;
     public calibrations: any[];
     public calibration: any;
     public calibrationForm: FormGroup;
@@ -23,8 +25,7 @@ export class CalibrationsComponent implements OnInit {
     public _saveUrl: string = '/api/calibration/save';
     public _deleteUrl: string = '/api/calibration/deletebyid';
 
-    public loggedUser: any;
-
+    public _updateUrl: string = '/api/calibration/updateStatus';
 
     constructor(
         private router: Router,
@@ -121,7 +122,27 @@ export class CalibrationsComponent implements OnInit {
                 console.log(error);
             });
     }
-
+    updateStatus(e, m) {
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.calibrationname + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(response => {
+                    //console.log(response);
+                    this.resmessage = response.message;
+                    this.alertmessage = "alert-outline-info";
+                    this.getAll();
+                    this.reset();
+                    this.loading = false;
+                    $('#defaultsizemodal').modal('hide');
+                }, error => {
+                    console.log(error);
+                    this.loading = false;
+                });
+        }
+        this.loading = false;
+    }
 
     //Delete
     delete(e, m) {

@@ -10,9 +10,9 @@ import { DataService } from '../shared/service';
 })
 export class BackofficeComponent implements OnInit{
     
-    public loggedUsername: string;
-    public loggedUsertype: number;
-    public loggedemail: string;
+    public loggedUserName: string;
+    public loggedUserType: number;
+    public loggedEmail: string;
     
     constructor(
         private _dataService: DataService,
@@ -20,9 +20,9 @@ export class BackofficeComponent implements OnInit{
         
     ) {
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
+        this.loggedUserName = loggedUser.displayName;
+        this.loggedEmail = loggedUser.email;
+        this.loggedUserType = loggedUser.userType;
     }
 
     ngOnInit() {

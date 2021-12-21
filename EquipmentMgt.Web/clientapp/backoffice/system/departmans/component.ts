@@ -16,11 +16,14 @@ export class DepartmansComponent implements OnInit {
     public departman: any;
     public resmessage: string;
     public alertmessage: string;
+    public booleanValue: any = false;
     public loading: boolean = false; 
     public _getUrl: string = '/api/departman/getall';
     public _getbyIdUrl: string = '/api/departman/getbyid';
     public _saveUrl: string = '/api/departman/save';
     public _deleteUrl: string = '/api/departman/deletebyid';
+
+    public _updateUrl: string = '/api/departman/updateStatus';
 
     constructor(
         private router: Router,
@@ -34,13 +37,7 @@ export class DepartmansComponent implements OnInit {
         this.createForm();
         this.getAll();
     }
-    userTypeControl() {
-        if (this.loggedUser.usertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }  
-    }
+    
     createForm() {
         this.departmanForm = this.formBuilder.group({
             departmanId: 0,
@@ -58,7 +55,7 @@ export class DepartmansComponent implements OnInit {
 
         this.reset();
     }
-
+    
     //Get All Departman
     getAll() {
         this.loading = true;
@@ -100,7 +97,6 @@ export class DepartmansComponent implements OnInit {
         if (this.departmanForm.invalid) {
             return;
         }
-        console.log(this.departmanForm.value);
         this._dataService.saveWithUser(this.departmanForm.value, this.loggedUser, this._saveUrl)
             .subscribe(response => {
                 this.resmessage = response.message;
@@ -113,7 +109,28 @@ export class DepartmansComponent implements OnInit {
                 //console.log(error);
             });
     }
-
+    updateStatus(e, m) {
+        console.log(m);
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.departmanName + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(response => {
+                    //console.log(response);
+                    this.resmessage = response.message;
+                    this.alertmessage = "alert-outline-info";
+                    this.getAll();
+                    this.reset();
+                    this.loading = false;
+                    $('#defaultsizemodal').modal('hide');
+                }, error => {
+                    console.log(error);
+                    this.loading = false;
+                });
+        }
+        this.loading = false;
+    }
     //Delete
     delete(e, m) {
         //debugger
@@ -131,7 +148,19 @@ export class DepartmansComponent implements OnInit {
                 });
         }
     }
-
+    sort(colName) {
+        this.departmans.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+    }
+    sortFunction(colName, boolean) {
+        if (boolean == true) {
+            this.departmans.sort((a, b) => a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0)
+            this.booleanValue = !this.booleanValue
+        }
+        else {
+            this.departmans.sort((a, b) => a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0)
+            this.booleanValue = !this.booleanValue
+        }
+    }
     reset() {
         this.departmanForm.setValue({
             departmanId: 0,

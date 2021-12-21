@@ -4,6 +4,7 @@ import { HttpModule, Http, Request, RequestMethod, Response, RequestOptions, Hea
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../../../shared/service';
+import Handsontable from 'handsontable';
 
 @Component({
     selector: 'ng-equipments',
@@ -11,9 +12,7 @@ import { DataService } from '../../../shared/service';
     providers: [DataService]
 })
 export class EquipmentsComponent implements OnInit {
-    public loggedUsername: string;
-    public loggedUsertype: number;
-    public loggedemail: string;
+    public loggedUser: any;
 
     public loading: boolean = false;
     public equipments: any[];
@@ -33,6 +32,8 @@ export class EquipmentsComponent implements OnInit {
     public _saveUrl: string = '/api/equipment/save';
     public _deleteUrl: string = '/api/equipment/deletebyid';
     public _getbyEquipmentIdUrl: string = '/api/equipment/getbytext';
+    public _updateUrl: string = '/api/equipment/updateStatus';
+
 
     public _getCalibrationUrl: string = '/api/calibration/getall';
     public _getLocationUrl: string = '/api/location/getall';
@@ -47,22 +48,14 @@ export class EquipmentsComponent implements OnInit {
         private titleService: Title,
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
-
-            var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-            this.loggedUsername = loggedUser.displayname;
-            this.loggedemail = loggedUser.email;
-            this.loggedUsertype = loggedUser.usertype;
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
 
     ngOnInit() {
         this.titleService.setTitle("Envanter Takip Sistemi | Cihazlar");
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
+        //this.setupHandsontable();
     }
 
     createForm() {
@@ -78,7 +71,16 @@ export class EquipmentsComponent implements OnInit {
             equipmentModelId: new FormControl('', Validators.required)
         });
     }
-
+    setupHandsontable() {
+        var container = document.getElementById('example');
+        var hot = new Handsontable(container, {
+            data: this.equipments,
+            rowHeaders: true,
+            colHeaders: true,
+            filters: true,
+            dropdownMenu: true
+        });
+    }
     //Pop Modal
     addNew() {
         //debugger 
@@ -86,6 +88,7 @@ export class EquipmentsComponent implements OnInit {
         $("#largesizemodal").on('shown.bs.modal', function () {
             $(this).find('#equipmentId').focus();
         });
+        this.reset();
         this.getCalibration();
         this.getLocations();
         this.getEquipmentModels();
@@ -99,6 +102,7 @@ export class EquipmentsComponent implements OnInit {
             .subscribe(
                 response => {
                     this.equipments = response;
+                    this.setupHandsontable();
                     this.loading = false;
                 }, error => {
                     console.log(error);
@@ -163,7 +167,6 @@ export class EquipmentsComponent implements OnInit {
         if (this.equipmentForm.invalid) {
             return;
         }
-
         const formModel = new FormData();
         formModel.append('id', this.equipmentForm.value.id);
         formModel.append('equipmentId', this.equipmentForm.value.equipmentId);
@@ -174,27 +177,43 @@ export class EquipmentsComponent implements OnInit {
         formModel.append('equipmentModelId', this.equipmentForm.value.equipmentModelId);
         formModel.append('permanentLocationId', this.equipmentForm.value.permanentLocationId);
         formModel.append('currentUserId', this.equipmentForm.value.currentUserId);
-        
         //debugger
-        this._dataService.saveForm(formModel, this._saveUrl)
+        this._dataService.saveWithUser(this.equipmentForm.value, this.loggedUser, this._saveUrl)
             .subscribe(response => {
                 this.resmessage = response.message;
                 this.alertmessage = "alert-outline-info";
                 this.getAll();
                 this.reset();
+                $('#largesizemodal').modal('hide');
                 this.loading = false;
             }, error => {
                 console.log(error);
             });
     }
-
-
+    updateStatus(e, m) {
+        this.loading = true;
+        e.preventDefault();
+        this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(response => {
+                    //console.log(response);
+                    this.resmessage = response.message;
+                    this.alertmessage = "alert-outline-info";
+                    this.getAll();
+                    this.reset();
+                    this.loading = false;
+                    $('#defaultsizemodal').modal('hide');
+                }, error => {
+                    console.log(error);
+                    this.loading = false;
+                });
+        this.loading = false;
+    }
     //Delete
     delete(e, m) {
         this.loading = true;
         //debugger
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.bookname + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.equipmentName + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(response => {
@@ -252,6 +271,7 @@ export class EquipmentsComponent implements OnInit {
             .subscribe(
                 response => {
                     this.users = response;
+                    console.log(this.users);
                     this.loading = false;
                 }, error => {
                     console.log(error);
@@ -262,17 +282,15 @@ export class EquipmentsComponent implements OnInit {
     reset() {
         this.equipmentForm.setValue({
             id: 0,
-            equipmentId: null,
+            equipmentId: '',
             equipmentName: '',
-            calibrationId: '',
-            description: null,
-            serialPortUSB: null,
-            equipmentModelId: '',
-            permanentLocationId: '',
-            currentUserId:''
+            calibrationId: 0,
+            description: '',
+            serialPortUSB: '',
+            equipmentModelId: 0,
+            permanentLocationId: 0,
+            currentUserId:0
         });
-
-        this.fileInput.nativeElement.value = '';
         this.resmessage = null;
         $('#equipmentId').focus();
     }

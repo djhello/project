@@ -27,8 +27,9 @@ namespace DataFactory.backoffice
                 using (_ctx)
                 {
                     locationList = await (from t in _ctx.Location
-
+                                          where t.Status==1
                                       select new vmLocation
+
                                    {
                                        id = t.Id,
                                        name = t.Name
@@ -79,6 +80,9 @@ namespace DataFactory.backoffice
                             if (entityUpdate != null)
                             {
                                 entityUpdate.Name = model.Name;
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
                                 await _ctx.SaveChangesAsync();
                             }
                         }
@@ -86,7 +90,11 @@ namespace DataFactory.backoffice
                         {
                             var locationModel = new Location
                             {
-                                Name = model.Name
+                                Name = model.Name,
+                                CreateDate = model.CreateDate,
+                                LastUserId = model.LastUserId,
+                                Status = model.Status,
+                                LockStatus = model.LockStatus
                             };
                             _ctx.Location.Add(locationModel);
                             await _ctx.SaveChangesAsync();
@@ -106,7 +114,41 @@ namespace DataFactory.backoffice
 
             return message;
         }
+        public async Task<string> updateStatus(Location model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.Id > 0)
+                        {
+                            var entityUpdate = _ctx.Location.FirstOrDefault(x => x.Id == model.Id);
+                            if (entityUpdate != null)
+                            {
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
 
+            return message;
+        }
         public async Task<string> deletebyid(int id)
         {
             string message = string.Empty;

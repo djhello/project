@@ -20,24 +20,19 @@ var DepartmansComponent = /** @class */ (function () {
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
+        this.booleanValue = false;
         this.loading = false;
         this._getUrl = '/api/departman/getall';
         this._getbyIdUrl = '/api/departman/getbyid';
         this._saveUrl = '/api/departman/save';
         this._deleteUrl = '/api/departman/deletebyid';
+        this._updateUrl = '/api/departman/updateStatus';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     DepartmansComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Bölümler");
         this.createForm();
         this.getAll();
-    };
-    DepartmansComponent.prototype.userTypeControl = function () {
-        if (this.loggedUser.usertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
     };
     DepartmansComponent.prototype.createForm = function () {
         this.departmanForm = this.formBuilder.group({
@@ -95,7 +90,6 @@ var DepartmansComponent = /** @class */ (function () {
         if (this.departmanForm.invalid) {
             return;
         }
-        console.log(this.departmanForm.value);
         this._dataService.saveWithUser(this.departmanForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             _this.resmessage = response.message;
@@ -107,6 +101,29 @@ var DepartmansComponent = /** @class */ (function () {
         }, function (error) {
             //console.log(error);
         });
+    };
+    DepartmansComponent.prototype.updateStatus = function (e, m) {
+        var _this = this;
+        console.log(m);
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.departmanName + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(function (response) {
+                //console.log(response);
+                _this.resmessage = response.message;
+                _this.alertmessage = "alert-outline-info";
+                _this.getAll();
+                _this.reset();
+                _this.loading = false;
+                $('#defaultsizemodal').modal('hide');
+            }, function (error) {
+                console.log(error);
+                _this.loading = false;
+            });
+        }
+        this.loading = false;
     };
     //Delete
     DepartmansComponent.prototype.delete = function (e, m) {
@@ -124,6 +141,19 @@ var DepartmansComponent = /** @class */ (function () {
             }, function (error) {
                 //console.log(error);
             });
+        }
+    };
+    DepartmansComponent.prototype.sort = function (colName) {
+        this.departmans.sort(function (a, b) { return a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0; });
+    };
+    DepartmansComponent.prototype.sortFunction = function (colName, boolean) {
+        if (boolean == true) {
+            this.departmans.sort(function (a, b) { return a[colName] < b[colName] ? 1 : a[colName] > b[colName] ? -1 : 0; });
+            this.booleanValue = !this.booleanValue;
+        }
+        else {
+            this.departmans.sort(function (a, b) { return a[colName] > b[colName] ? 1 : a[colName] < b[colName] ? -1 : 0; });
+            this.booleanValue = !this.booleanValue;
         }
     };
     DepartmansComponent.prototype.reset = function () {

@@ -83,7 +83,34 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        // POST: api/users/updateStatus
+        [HttpPost("[action]")]
+        public async Task<object> updateStatus([FromBody]Departman model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
 
+                //Save
+                _objdepartman = new Departmans();
+                message = await _objdepartman.updateStatus(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
         // DELETE api/departman/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)

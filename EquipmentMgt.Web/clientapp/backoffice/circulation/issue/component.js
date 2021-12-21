@@ -67,24 +67,25 @@ var IssueComponent = /** @class */ (function () {
     IssueComponent.prototype.createForm = function () {
         this.issueForm = this.formBuilder.group({
             id: 0,
-            userId: 0,
+            userId: new forms_1.FormControl('', forms_1.Validators.required),
             memberSearch: new forms_1.FormControl(''),
             memberName: new forms_1.FormControl(''),
-            email: new forms_1.FormControl(''),
-            dueDate: new forms_1.FormControl(''),
+            email: new forms_1.FormControl('', forms_1.Validators.required),
+            dueDate: new forms_1.FormControl('', forms_1.Validators.required),
             equipments: []
         });
         this.focus();
     };
     IssueComponent.prototype.setUser = function () {
-        if (this.loggedUser.usertype != 1) {
+        console.log(this.loggedUser);
+        if (this.loggedUser.userType != 1) {
             this.showSearchMemberDiv = false;
             var dt = new Date();
             dt.setDate(dt.getDate() + 15);
             this.issueForm.setValue({
                 id: 0,
-                userId: this.loggedUser.userid,
-                memberName: this.loggedUser.displayname,
+                userId: this.loggedUser.userId,
+                memberName: this.loggedUser.displayName,
                 email: this.loggedUser.email,
                 dueDate: dt.toLocaleDateString('en-US'),
                 memberSearch: null,
@@ -109,7 +110,7 @@ var IssueComponent = /** @class */ (function () {
             _this.issueForm.setValue({
                 id: 0,
                 userId: _this.user.userId,
-                memberName: _this.user.firstname + " " + _this.user.firstname,
+                memberName: _this.user.firstName + ' ' + _this.user.lastName,
                 email: _this.user.email,
                 dueDate: dt.toLocaleDateString('en-US'),
                 memberSearch: null,
@@ -163,21 +164,26 @@ var IssueComponent = /** @class */ (function () {
         this.issueForm.patchValue({
             equipments: this.equipmentChoosed
         });
-        console.log(this.equipmentChoosed);
         if (this.issueForm.invalid) {
             return;
         }
-        if (this.issueForm.value.userId > 0) {
-            this._dataService.saveWithUser(this.issueForm.value, this.loggedUser, this._saveUrl)
-                .subscribe(function (response) {
-                _this.loading = false;
-                _this.resMessage = response.message;
-                _this.alertMessage = "alert-outline-info";
-                _this.reset();
-                _this.focus();
-            }, function (error) {
-                //console.log(error);
-            });
+        if (this.issueForm.value.equipments.length != 0) {
+            if (this.issueForm.value.userId > 0) {
+                this._dataService.saveWithUser(this.issueForm.value, this.loggedUser, this._saveUrl)
+                    .subscribe(function (response) {
+                    _this.loading = false;
+                    _this.resMessage = response.message;
+                    _this.alertMessage = "alert-outline-info";
+                    _this.reset();
+                    _this.focus();
+                }, function (error) {
+                    //console.log(error);
+                });
+            }
+        }
+        else {
+            this.loading = false;
+            alert('Lütfen en az bir ekipmanı seçiniz');
         }
     };
     //equipmentlist to choose
@@ -223,7 +229,7 @@ var IssueComponent = /** @class */ (function () {
     };
     //Reset Form
     IssueComponent.prototype.reset = function () {
-        if (this.loggedUser.usertype == 1) {
+        if (this.loggedUser.userType == 1) {
             this.issueForm.setValue({
                 id: 0,
                 userId: 0,
@@ -238,6 +244,7 @@ var IssueComponent = /** @class */ (function () {
         this.availableEquipmentList = [];
         this.availableEquipmentListCopy = [];
         this.getAvailableEquipmentList();
+        this.equipmentByUserIssueedList = [];
         this.equipmentChoosed = [];
     };
     //Focus input

@@ -45,8 +45,21 @@ gulp.task('copy-lib-js', function () {
     gulp.src('./node_modules/xlsx/**.js')
         .pipe(gulp.dest(root_path.package_lib + 'xlsx'));
 
+    gulp.src('./node_modules/handsontable/**/*.js')
+        .pipe(gulp.dest(root_path.package_lib + 'handsontable'));
+
+    gulp.src('./node_modules/parcel-bundler/**/*.js')
+        .pipe(gulp.dest(root_path.package_lib + 'parcel-bundler'));
+
     gulp.src('./node_modules/file-saver/**/**.js')
         .pipe(gulp.dest(root_path.package_lib + 'file-saver'));
+
+    gulp.src('./node_modules/bcrypt/**/**.js')
+        .pipe(gulp.dest(root_path.package_lib + 'bcrypt'));
+
+    gulp.src('./node_modules/bcryptjs/**/**.js')
+        .pipe(gulp.dest(root_path.package_lib + 'bcryptjs'));
+
 });
 
 gulp.task("copy-all", ["copy-lib-js"]);

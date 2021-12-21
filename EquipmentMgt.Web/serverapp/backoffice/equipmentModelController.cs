@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
@@ -89,6 +90,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                         }
                     }
                 }
+                else
+                {
+                    serverPath=Request.Form["fileupload"].ToString();
+                }
 
                 //Save
                 EquipmentModel model = new EquipmentModel()
@@ -99,7 +104,12 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     EDocWebAddress = Request.Form["eDocWebAddress"].ToString(),
                     EDocLocalAddress = Request.Form["eDocLocalAddress"].ToString(),
                     Quantity = Convert.ToInt32(Request.Form["quantity"]),
-                    CoverImage = serverPath
+                    DepartmanId = Convert.ToInt32(Request.Form["departmanId"]),
+                    CoverImage = serverPath,
+                    CreateDate = DateTime.Now,
+                    LastUserId = Request.Form["LastUserId"].ToString(),
+                    Status = Convert.ToByte(Request.Form["Status"]),
+                    LockStatus = Convert.ToBoolean(Request.Form["LockStatus"].Contains("true")) 
                 };
 
                 _objequipmentModel = new EquipmentModels();
@@ -117,8 +127,34 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        [HttpPost("[action]")]
+        public async Task<object> updateStatus([FromBody]EquipmentModel model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                    if (model == null)
+                    {
+                        return BadRequest();
+                    }
 
-        // DELETE api/book/deletebyid/1
+                _objequipmentModel = new EquipmentModels();
+                message = await _objequipmentModel.create(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
+
+        // DELETE api/equipmentModel/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)
         {

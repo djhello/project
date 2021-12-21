@@ -11,18 +11,25 @@ import { DataService } from '../../../shared/service';
     providers: [DataService]
 })
 export class EquipmentModelsComponent implements OnInit {
+    public loggedUser: any;
     public loading: boolean = false;
     public equipmentModels: any[];
     public equipmentModel: any;
+    public departmans: any[];
     public equipmentModelForm: FormGroup;
     public resmessage: string;
     public alertmessage: string;
     public imageUrl: any;
+    public updatePicture: boolean = false;
 
     public _getUrl: string = '/api/equipmentmodel/getall';
     public _getbyIdUrl: string = '/api/equipmentmodel/getbyid';
     public _saveUrl: string = '/api/equipmentmodel/save';
     public _deleteUrl: string = '/api/equipmentmodel/deletebyid';
+
+    public _updateUrl: string = '/api/equipmentmodel/updateStatus';
+
+    public _getDepartmanUrl: string = '/api/departman/getall';
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -32,6 +39,7 @@ export class EquipmentModelsComponent implements OnInit {
         private titleService: Title,
         private formBuilder: FormBuilder,
         private _dataService: DataService) {
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
 
     ngOnInit() {
@@ -57,6 +65,7 @@ export class EquipmentModelsComponent implements OnInit {
     createForm() {
         this.equipmentModelForm = this.formBuilder.group({
             id: 0,
+            departmanId:0,
             name: new FormControl('', Validators.required),
             quantity: new FormControl(''),
             description: new FormControl(''),
@@ -70,10 +79,20 @@ export class EquipmentModelsComponent implements OnInit {
             let file = event.target.files[0];
             this.equipmentModelForm.get('fileupload').setValue(file);
         }
+        else {
+            let list = new DataTransfer();
+            var result = this.equipmentModel.coverImage.substr(this.equipmentModel.coverImage.indexOf("/") + 1);
+            let file = new File(["content"],result);
+            list.items.add(file);
+            let myFileList = list.files;
+            event.target.files = myFileList;
+        }
     }
+
+    
     //Pop Modal
     addNew() {
-        //debugger 
+        this.getDepartmanAll();
         $('#largesizemodal').modal('show');
         $("#largesizemodal").on('shown.bs.modal', function () {
             $(this).find('#name').focus();
@@ -82,14 +101,16 @@ export class EquipmentModelsComponent implements OnInit {
         this.reset();
         
     }
-    //Get LOcations 
+
+    //Get Models 
     getAll() {
+        
         //debugger
         this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
-                   
+                    console.log(response);           
                     this.equipmentModels = response;
                 }, error => {
                     console.log(error);
@@ -97,9 +118,23 @@ export class EquipmentModelsComponent implements OnInit {
         );
         this.loading = false;
     }
+    getDepartmanAll() {
+        this.loading = true;
+        this._dataService.getall(this._getDepartmanUrl)
+            .subscribe(
+                response => {
+                    this.loading = false;
+                    this.departmans = response;
+                    console.log(this.departmans);
+                }, error => {
+                    console.log(error);
+                }
+            );
+    }
     //Get by ID
     edit(e, m) {
         //debugger
+        this.getDepartmanAll();
         e.preventDefault();
         this.loading = true;
         this._dataService.getbyid(m.id, this._getbyIdUrl)
@@ -109,12 +144,22 @@ export class EquipmentModelsComponent implements OnInit {
                 this.equipmentModelForm.setValue({
                     id: this.equipmentModel.id,
                     name: this.equipmentModel.name,
+                    departmanId: this.equipmentModel.departmanId,
                     quantity: this.equipmentModel.quantity,
                     description: this.equipmentModel.description,
                     eDocWebAddress: this.equipmentModel.eDocWebAddress,
                     eDocLocalAddress: this.equipmentModel.eDocLocalAddress,
                     fileupload: this.equipmentModel.coverImage
                 });
+
+                var inputElement = <HTMLInputElement>document.getElementById("fileupload");
+                let list = new DataTransfer();
+                var result = this.equipmentModel.coverImage.substr(this.equipmentModel.coverImage.indexOf("/") + 1);
+                let file = new File(["content"], result);
+                list.items.add(file);
+                let myFileList = list.files;
+                inputElement.files = myFileList;
+
                 $('#largesizemodal').modal('show');
                 $("#largesizemodal").on('shown.bs.modal', function () {
                     $(this).find('#name').focus();
@@ -124,20 +169,50 @@ export class EquipmentModelsComponent implements OnInit {
                 console.log(error);
             });
     }
+    updateStatus(e, m) {
+        console.log(m);
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.equipmentModelName + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(response => {
+                    //console.log(response);
+                    this.resmessage = response.message;
+                    this.alertmessage = "alert-outline-info";
+                    this.getAll();
+                    this.reset();
+                    this.loading = false;
+                    $('#defaultsizemodal').modal('hide');
+                }, error => {
+                    console.log(error);
+                    this.loading = false;
+                });
+        }
+        this.loading = false;
+    }
     //Create
     onSubmit() {
         this.loading = true;
         if (this.equipmentModelForm.invalid) {
             return;
         }
+        console.log(this.equipmentModelForm.value.fileupload);
+        var now = new Date();
         const formModel = new FormData();
         formModel.append('id', this.equipmentModelForm.value.id);
         formModel.append('name', this.equipmentModelForm.value.name);
         formModel.append('quantity', this.equipmentModelForm.value.quantity);
         formModel.append('description', this.equipmentModelForm.value.description);
+        formModel.append('departmanId', this.equipmentModelForm.value.departmanId);
         formModel.append('eDocWebAddress', this.equipmentModelForm.value.eDocWebAddress);
         formModel.append('eDocLocalAddress', this.equipmentModelForm.value.eDocLocalAddress);
         formModel.append('fileupload', this.equipmentModelForm.value.fileupload);
+        formModel.append('Status', "1");
+        formModel.append('LastUserId', this.loggedUser.userId);
+        formModel.append('LockStatus', "1");
+        formModel.append('CreateDate', now.toString());
+
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(response => {
@@ -171,6 +246,7 @@ export class EquipmentModelsComponent implements OnInit {
     reset() {
         this.equipmentModelForm.setValue({
             id: 0,
+            departmanId:0,
             name: null,
             quantity: null,
             description:null,

@@ -18,8 +18,8 @@ namespace DataModels.EntityModels
         }
 
         public virtual DbSet<Calibration> Calibration { get; set; }
-        public virtual DbSet<Equipment> Equipment { get; set; }
         public virtual DbSet<vmEquipment> vEquipment { get; set; }
+        public virtual DbSet<Hardware> Equipment { get; set; }
         public virtual DbSet<vmAvailableEquipment> vAvailableEquipment { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Departman> Departman { get; set; }
@@ -51,9 +51,18 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.CalibrationName)
                     .HasColumnName("calibrationName")
                     .HasMaxLength(256);
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+
             });
 
-            modelBuilder.Entity<Equipment>(entity =>
+            modelBuilder.Entity<Hardware>(entity =>
             {
                 entity.ToTable("equipment");
 
@@ -64,6 +73,8 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.EquipmentModelId).HasColumnName("equipmentModelId");
 
                 entity.Property(e => e.CalibrationId).HasColumnName("calibrationId");
+
+                entity.Property(e => e.DepartmanId).HasColumnName("departmanId");
 
                 entity.Property(e => e.EquipmentName).HasColumnName("equipmentName");
 
@@ -129,6 +140,13 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.EDocLocalAddress).HasColumnName("eDocLocalAddress");
 
                 entity.Property(e => e.CoverImage).HasColumnName("coverImage");
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
 
 
             });
@@ -184,22 +202,6 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.EquipmentIssuereturnId).HasColumnName("equipment_issuereturn_id");
-
-                entity.Property(e => e.UserId).HasColumnName("userId");
-
-                entity.Property(e => e.OduncAlanAdi).HasColumnName("oduncAlanAdi");
-
-                entity.Property(e => e.OduncAlanSoyadi).HasColumnName("oduncAlanSoyadi");
-
-                entity.Property(e => e.IssueDate).HasColumnName("issueDate");
-
-                entity.Property(e => e.DueDate).HasColumnName("dueDate");
-
-                entity.Property(e => e.ReturnDate).HasColumnName("returnDate");
-
-                entity.Property(e => e.Status).HasColumnName("status");
-
                 entity.Property(e => e.EquipmentId).HasColumnName("equipmentId");
 
                 entity.Property(e => e.CalibrationId).HasColumnName("calibrationId");
@@ -238,6 +240,23 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.CoverImage).HasColumnName("coverImage");
 
+                entity.Property(e => e.EquipmentIssueReturnId).HasColumnName("equipment_issuereturn_id");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.OduncAlanAdi).HasColumnName("oduncAlanAdi");
+
+                entity.Property(e => e.OduncAlanSoyadi).HasColumnName("oduncAlanSoyadi");
+
+                entity.Property(e => e.EquipmentIssueReturnEquipmentId).HasColumnName("equipment_issuereturn_equipmentId");
+
+                entity.Property(e => e.IssueDate).HasColumnName("issueDate");
+
+                entity.Property(e => e.DueDate).HasColumnName("dueDate");
+
+                entity.Property(e => e.ReturnDate).HasColumnName("returnDate");
+
+                entity.Property(e => e.IsReturn).HasColumnName("isReturn");
             });
 
             modelBuilder.Entity<EquipmentIssueReturn>(entity =>
@@ -246,22 +265,26 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.DueDate)
-                    .HasColumnName("dueDate")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.EquipmentId).HasColumnName("equipmentId");
 
                 entity.Property(e => e.IssueDate)
                     .HasColumnName("issueDate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.UserId).HasColumnName("userId");
 
+                entity.Property(e => e.DueDate)
+                    .HasColumnName("dueDate")
+                    .HasColumnType("datetime");
+
+                
                 entity.Property(e => e.ReturnDate)
                     .HasColumnName("returnDate")
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.IsReturn)
-                    .HasColumnName("status")
+                    .HasColumnName("isReturn")
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Status).HasColumnName("Status");
@@ -281,6 +304,8 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.Name).HasColumnName("name");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.DepartmanId).HasColumnName("departmanId");
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
@@ -330,6 +355,14 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.DepartmanName)
                     .HasColumnName("departmanName")
                     .HasMaxLength(255);
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate");
+
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
             modelBuilder.Entity<User>(entity =>
             {
@@ -337,23 +370,23 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Email)
-                    .HasColumnName("email")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.FirstName)
-                    .HasColumnName("firstName")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .HasColumnName("lastName")
-                    .HasMaxLength(50);
-
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.Property(e => e.DepartmanId).HasColumnName("departmanId");
 
                 entity.Property(e => e.UserType).HasColumnName("userType");
+
+                entity.Property(e => e.FirstName)
+                   .HasColumnName("firstName")
+                   .HasMaxLength(50);
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("lastName")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Status).HasColumnName("Status");
 
@@ -371,20 +404,23 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Joindate)
-                    .HasColumnName("joindate")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.UserId).HasColumnName("userid");
 
-                entity.Property(e => e.Userid).HasColumnName("userid");
-
-                entity.Property(e => e.Username)
+                entity.Property(e => e.UserName)
                     .HasColumnName("username")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Userpass)
+                entity.Property(e => e.UserPass)
                     .HasColumnName("userpass")
                     .HasMaxLength(50);
 
+
+                entity.Property(e => e.JoinDate)
+                    .HasColumnName("joindate")
+                    .HasColumnType("datetime");
+            
+
+               
             });
 
             modelBuilder.Entity<UserType>(entity =>

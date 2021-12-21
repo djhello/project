@@ -72,21 +72,22 @@ var ReturnComponent = /** @class */ (function () {
     };
     ReturnComponent.prototype.setUser = function () {
         var _this = this;
-        if (this.loggedUser.usertype != 1) {
+        if (this.loggedUser.userType != 1) {
             this.showSearchMemberDiv = false;
             this.returnForm.setValue({
                 id: 0,
-                userId: this.loggedUser.userid,
-                memberName: this.loggedUser.displayname,
+                userId: this.loggedUser.userId,
+                memberName: this.loggedUser.displayName,
                 email: this.loggedUser.email,
                 memberSearch: null,
                 equipments: []
             });
             this.loading = true;
-            this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl)
+            this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl)
                 .subscribe(function (response) {
                 _this.loading = false;
                 if (response != null) {
+                    console.log(response);
                     _this.equipmentIssueedList = response;
                 }
                 _this.resMessage = null;
@@ -111,7 +112,7 @@ var ReturnComponent = /** @class */ (function () {
             _this.returnForm.setValue({
                 id: 0,
                 userId: _this.user.userId,
-                memberName: _this.user.firstname + " " + _this.user.firstname,
+                memberName: _this.user.firstName + ' ' + _this.user.lastName,
                 email: _this.user.email,
                 memberSearch: null,
                 equipments: []
@@ -141,17 +142,23 @@ var ReturnComponent = /** @class */ (function () {
         if (this.returnForm.invalid) {
             return;
         }
-        if (this.returnForm.value.userId > 0) {
-            this._dataService.saveWithUser(this.returnForm.value, this.loggedUser, this._saveUrl)
-                .subscribe(function (response) {
-                _this.loading = false;
-                _this.resMessage = response.message;
-                _this.alertMessage = "alert-outline-info";
-                _this.reset();
-                _this.focus();
-            }, function (error) {
-                //console.log(error);
-            });
+        if (this.returnForm.value.equipments.length != 0) {
+            if (this.returnForm.value.userId > 0) {
+                this._dataService.saveWithUser(this.returnForm.value, this.loggedUser, this._saveUrl)
+                    .subscribe(function (response) {
+                    _this.loading = false;
+                    _this.resMessage = response.message;
+                    _this.alertMessage = "alert-outline-info";
+                    _this.reset();
+                    _this.focus();
+                }, function (error) {
+                    //console.log(error);
+                });
+            }
+        }
+        else {
+            this.loading = false;
+            alert('Lütfen en az bir ekipmanı seçiniz');
         }
     };
     //Pop Modal
@@ -187,6 +194,7 @@ var ReturnComponent = /** @class */ (function () {
         else {
             this.removeArrayList(this.equipmentChoosed, i);
         }
+        console.log(this.equipmentChoosed);
     };
     ReturnComponent.prototype.removeArrayList = function (array, item) {
         array.forEach(function (element, index) {
@@ -198,7 +206,7 @@ var ReturnComponent = /** @class */ (function () {
     };
     //Reset Form
     ReturnComponent.prototype.reset = function () {
-        if (this.loggedUser.usertype == 1) {
+        if (this.loggedUser.userType == 1) {
             this.returnForm.setValue({
                 id: 0,
                 userId: 0,
@@ -209,6 +217,7 @@ var ReturnComponent = /** @class */ (function () {
             });
         }
         this.searchTerm = "";
+        this.equipmentChoosed = [];
         this.equipmentReturnedList = [];
         this.equipmentIssueedList = [];
     };

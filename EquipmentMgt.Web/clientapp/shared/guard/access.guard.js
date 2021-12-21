@@ -17,8 +17,8 @@ var AccessPermission = /** @class */ (function () {
     }
     AccessPermission.prototype.canActivate = function () {
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsertype = loggedUser.usertype;
-        if (this.loggedUsertype === 1) {
+        this.loggedUserType = loggedUser.userType;
+        if (this.loggedUserType === 1) {
             return true;
         }
         this.router.navigate(['/backoffice']);

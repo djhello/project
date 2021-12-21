@@ -36,6 +36,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Cover Image</th>
                                 <th scope="col">Model Name</th>
+                                <th scope="col">Departman</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">eDocWebAddress</th>
@@ -49,6 +50,7 @@
                                     <td hidden>{{item.id}}</td>
                                     <td><img src="{{item.coverImage}}" class="product-img" alt="cover img"></td>
                                     <td>{{item.name}}</td>
+                                    <td>{{item.departmanName}}</td>
                                     <td>{{item.quantity}}</td>
                                     <td>{{item.description}}</td>
                                     <td>{{item.eDocWebAddress}}</td>
@@ -59,7 +61,7 @@
                                             <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
-                                            <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
+                                            <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="updateStatus($event, item)">
                                                 <i class="fa fa-trash-o"></i> Delete
                                             </a>
                                         </div>
@@ -100,11 +102,19 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label for="departmanId">Departman</label><em class="text-danger">*</em>
+                                                            <select class="form-control" id="departmanId" name="departmanId" formControlName="departmanId" required tabindex="2">
+                                                                <option *ngFor="let item of departmans" value={{item.departmanId}}>
+                                                                    {{item.departmanName}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
                                                                 <div class="position-relative has-icon-left">
                                                                     <label for="quantity" class="sr-only"> Quantity</label>
-                                                                    <input type="text" id="quantity" name="quantity" formControlName="quantity" class="form-control" placeholder=" quantity" required
+                                                                    <input type="number" id="quantity" name="quantity" formControlName="quantity" class="form-control" placeholder=" quantity" required
                                                                            onfocus="this.placeholder=''" onblur="this.placeholder=' Quantity'" autocomplete="off" tabindex="1" />
                                                                     <div class="form-control-position">
                                                                         <i class="icon-info"></i><em class="text-danger">*</em>
@@ -116,7 +126,7 @@
                                                             <div class="form-group col-md-12">
                                                                 <div class="position-relative has-icon-left">
                                                                     <label for="description" class="sr-only"> Description</label>
-                                                                    <input type="text" id="description" name="description" formControlName="description" class="form-control" placeholder=" description" 
+                                                                    <input type="text" id="description" name="description" formControlName="description" class="form-control" placeholder=" description"
                                                                            onfocus="this.placeholder=''" onblur="this.placeholder=' Description'" autocomplete="off" tabindex="1" />
                                                                     <div class="form-control-position">
                                                                         <i class="icon-info"></i><em class="text-danger">*</em>
@@ -128,7 +138,7 @@
                                                             <div class="form-group col-md-12">
                                                                 <div class="position-relative has-icon-left">
                                                                     <label for="eDocWebAddress" class="sr-only"> eDocWebAddress</label>
-                                                                    <input type="text" id="eDocWebAddress" name="eDocWebAddress" formControlName="eDocWebAddress" class="form-control" placeholder=" eDocWebAddress" 
+                                                                    <input type="text" id="eDocWebAddress" name="eDocWebAddress" formControlName="eDocWebAddress" class="form-control" placeholder=" eDocWebAddress"
                                                                            onfocus="this.placeholder=''" onblur="this.placeholder=' eDocWebAddress'" autocomplete="off" tabindex="1" />
                                                                     <div class="form-control-position">
                                                                         <i class="icon-info"></i><em class="text-danger">*</em>
@@ -140,7 +150,7 @@
                                                             <div class="form-group col-md-12">
                                                                 <div class="position-relative has-icon-left">
                                                                     <label for="eDocLocalAddress" class="sr-only"> eDocLocalAddress</label>
-                                                                    <input type="text" id="eDocLocalAddress" name="eDocLocalAddress" formControlName="eDocLocalAddress" class="form-control" placeholder=" eDocLocalAddress" 
+                                                                    <input type="text" id="eDocLocalAddress" name="eDocLocalAddress" formControlName="eDocLocalAddress" class="form-control" placeholder=" eDocLocalAddress"
                                                                            onfocus="this.placeholder=''" onblur="this.placeholder=' eDocLocalAddress'" autocomplete="off" tabindex="1" />
                                                                     <div class="form-control-position">
                                                                         <i class="icon-info"></i><em class="text-danger">*</em>

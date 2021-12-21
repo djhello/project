@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DataService } from '../../shared/service';
 import { ConfirmedValidator } from '../../shared/confirmed.validator';
+import * as bcrypt from "bcryptjs";
+const saltround = 10;
 
 @Component({
     selector: 'app-register',
@@ -66,22 +68,42 @@ export class RegisterComponent implements OnInit {
             );
     }
     onSubmit() {
+       
         if (this.userForm.invalid) {
             return;
         }
-        this.loading = true;
-        //debugger
-        this._dataService.save(this.userForm.value, this._saveUrl)
-            .subscribe(response => {
-                this.loading = false;
-                this.resmessage = response.message;
-                this.alertmessage = "alert-outline-info";
-                if (this.resmessage == "Saved Successfully.") {
-                    this.reset();
-                    //this.router.navigate(['/login']);
-                }
-            }, error => {
-            });
+       
+        bcrypt.hash(this.userForm.value.password, saltround, (error: any, hash: string) => {
+            if (error) {
+                console.log("hata geldi");
+            }
+            else {
+                this.loading = true;
+                //debugger
+                this._dataService.save(
+                    {
+                        userId: this.userForm.value.userId,
+                        departmanId: this.userForm.value.departmanId ,
+                        firstName: this.userForm.value.firstName,
+                        lastName: this.userForm.value.lastName,
+                        email: this.userForm.value.email,
+                        password:hash
+                    }, this._saveUrl)
+                    .subscribe(response => {
+                        this.loading = false;
+                        this.resmessage = response.message;
+                        this.alertmessage = "alert-outline-info";
+                        if (this.resmessage == "Saved Successfully.") {
+                            this.reset();
+                            //this.router.navigate(['/login']);
+                        }
+                    }, error => {
+                    });
+            }
+        });
+
+
+
     }
 
     reset() {

@@ -27,8 +27,9 @@ namespace DataFactory.backoffice
                 using (_ctx)
                 {
                     departmanList = await (from t in _ctx.Departman
-
-                                      select new Departman
+                                           where t.Status==1
+                                   select new Departman
+                                   
                                    {
                                        DepartmanId = t.DepartmanId,
                                        DepartmanName = t.DepartmanName
@@ -79,6 +80,10 @@ namespace DataFactory.backoffice
                             if (entityUpdate != null)
                             {
                                 entityUpdate.DepartmanName = model.DepartmanName;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LockStatus = model.LockStatus;
                                 await _ctx.SaveChangesAsync();
                             }
                         }
@@ -86,7 +91,11 @@ namespace DataFactory.backoffice
                         {
                             var departmanModel = new Departman
                             {
-                                DepartmanName = model.DepartmanName
+                                DepartmanName = model.DepartmanName,
+                                CreateDate = model.CreateDate,
+                                LastUserId = model.LastUserId,
+                                Status = model.Status,
+                                LockStatus= model.LockStatus
                             };
                             _ctx.Departman.Add(departmanModel);
                             await _ctx.SaveChangesAsync();
@@ -94,6 +103,41 @@ namespace DataFactory.backoffice
 
                         _ctxTransaction.Commit();
                         message = MessageConstants.Saved;
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
+
+            return message;
+        }
+        public async Task<string> updateStatus(Departman model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.DepartmanId > 0)
+                        {
+                            var entityUpdate = _ctx.Departman.FirstOrDefault(x => x.DepartmanId == model.DepartmanId);
+                            if (entityUpdate != null)
+                            {
+                                entityUpdate.Status = model.Status;
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
                     }
                     catch (Exception e)
                     {

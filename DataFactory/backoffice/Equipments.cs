@@ -48,7 +48,11 @@ namespace DataFactory.backoffice
                                        EquipmentModelDescription = eq.EquipmentModelDescription,
                                        EDocWebAddress = eq.EDocWebAddress,
                                        EDocLocalAddress = eq.EDocLocalAddress,
-                                       CoverImage = eq.CoverImage
+                                       CoverImage = eq.CoverImage,
+                                       LastUserId=eq.LastUserId,
+                                       CreateDate=eq.CreateDate,
+                                       Status=eq.Status,
+                                       LockStatus=eq.LockStatus
                                    }).ToListAsync();
                 }
             }
@@ -65,16 +69,6 @@ namespace DataFactory.backoffice
 
             try
             {
-
-              
-
-                /*WHERE(id NOT IN
-                             (SELECT        equipmentId
-                               FROM            dbo.equipment_issuereturn
-                               WHERE(returnDate IS NULL) AND(status = 0)))
-
-    */
-
                 using (_ctx)
                 {
                     vEquipments = await (from eq in _ctx.vAvailableEquipment
@@ -160,7 +154,11 @@ namespace DataFactory.backoffice
                                              EquipmentModelDescription = eq.EquipmentModelDescription,
                                              EDocWebAddress = eq.EDocWebAddress,
                                              EDocLocalAddress = eq.EDocLocalAddress,
-                                             CoverImage = eq.CoverImage
+                                             CoverImage = eq.CoverImage,
+                                             LastUserId = eq.LastUserId,
+                                             CreateDate = eq.CreateDate,
+                                             Status = eq.Status,
+                                             LockStatus = eq.LockStatus
                                          }).ToListAsync();
                 }
             }
@@ -172,8 +170,10 @@ namespace DataFactory.backoffice
             return vEquipments;
         }
     
-        public async Task<string> create(Equipment model)
+        public async Task<string> create(Hardware model)
         {
+            _ctx = new EquipmentDBContext();
+
             string message = string.Empty;
 
             using (_ctx)
@@ -184,7 +184,7 @@ namespace DataFactory.backoffice
                     {
                         if (model.Id > 0)
                         {
-                            //Update calibration
+                            //Update Equipment
                             var entityUpdate = _ctx.Equipment.FirstOrDefault(x => x.Id == model.Id);
                             if (entityUpdate != null)
                             {
@@ -197,13 +197,16 @@ namespace DataFactory.backoffice
                                 entityUpdate.CurrentLocationId = model.PermanentLocationId;
                                 entityUpdate.PermanentLocationId = model.PermanentLocationId;
                                 entityUpdate.CurrentUserId = model.CurrentUserId;
-                                
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                entityUpdate.Status = model.Status;
                                 await _ctx.SaveChangesAsync();
                             }
                         }
                         else
                         {
-                            var equipmentModel = new Equipment
+                            var equipmentModel = new Hardware
                             {
                                 EquipmentId = model.EquipmentId,
                                 EquipmentModelId = model.EquipmentModelId,
@@ -213,7 +216,11 @@ namespace DataFactory.backoffice
                                 SerialPortUSB = model.SerialPortUSB,
                                 CurrentLocationId = model.PermanentLocationId,
                                 PermanentLocationId = model.PermanentLocationId,
-                                CurrentUserId = model.CurrentUserId
+                                CurrentUserId = model.CurrentUserId,
+                                LastUserId = model.LastUserId,
+                                CreateDate = model.CreateDate,
+                                LockStatus = model.LockStatus,
+                                Status = model.Status
                         };
                             _ctx.Equipment.Add(equipmentModel);
                             await _ctx.SaveChangesAsync();
@@ -233,7 +240,41 @@ namespace DataFactory.backoffice
 
             return message;
         }
+        public async Task<string> updateStatus(Hardware model)
+        {
+            string message = string.Empty;
+            using (_ctx)
+            {
+                using (var _ctxTransaction = _ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (model.Id > 0)
+                        {
+                            var entityUpdate = _ctx.Equipment.FirstOrDefault(x => x.Id == model.Id);
+                            if (entityUpdate != null)
+                            {
+                                entityUpdate.Status = Convert.ToByte((entityUpdate.Status == 1) ? 0 : 1);
+                                entityUpdate.LastUserId = model.LastUserId;
+                                entityUpdate.CreateDate = model.CreateDate;
+                                entityUpdate.LockStatus = model.LockStatus;
+                                await _ctx.SaveChangesAsync();
+                                message = MessageConstants.Saved;
+                            }
+                        }
+                        _ctxTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _ctxTransaction.Rollback();
+                        e.ToString();
+                        message = MessageConstants.SavedWarning;
+                    }
+                }
+            }
 
+            return message;
+        }
         public async Task<string> deletebyid(int id)
         {
             string message = string.Empty;

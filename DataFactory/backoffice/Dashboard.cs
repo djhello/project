@@ -27,10 +27,10 @@ namespace DataFactory.backoffice
                     var tmember = await (from u in _ctx.User select u).CountAsync();
                     var eEquipment = await (from b in _ctx.Equipment select b).CountAsync();
                     var tissued = await (from i in _ctx.EquipmentIssueReturn
-                                         where i.Status == false
+                                         where i.IsReturn == false
                                          select i).CountAsync();
                     var treturn = await (from r in _ctx.EquipmentIssueReturn
-                                         where r.Status == true
+                                         where r.IsReturn == true
                                          select r).CountAsync();
 
                     summary = new vmSummary()

@@ -7,14 +7,6 @@ namespace DataModels.ViewModels
     public class vmEquipmentIssuereturn
     {
         public int Id { get; set; }
-        public int EquipmentIssuereturnId { get; set; }
-        public int? UserId { get; set; }
-        public string OduncAlanAdi { get; set; }
-        public string OduncAlanSoyadi { get; set; }
-        public DateTime? IssueDate { get; set; }
-        public DateTime? DueDate { get; set; }
-        public DateTime? ReturnDate { get; set; }
-        public bool? Status { get; set; }
         public string EquipmentId { get; set; }
         public int CalibrationId { get; set; }
         public string CalibrationName { get; set; }
@@ -34,6 +26,16 @@ namespace DataModels.ViewModels
         public string EDocWebAddress { get; set; }
         public string EDocLocalAddress { get; set; }
         public string CoverImage { get; set; }
+        public int EquipmentIssueReturnId { get; set; }
+        public int? UserId { get; set; }
+        public string OduncAlanAdi { get; set; }
+        public string OduncAlanSoyadi { get; set; }
+        public int EquipmentIssueReturnEquipmentId { get; set; }
+        public DateTime? IssueDate { get; set; }
+        public DateTime? DueDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
+        public bool? IsReturn { get; set; }
+        
 
     }
 }

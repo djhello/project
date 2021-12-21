@@ -75,7 +75,33 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        [HttpPost("[action]")]
+        public async Task<object> updateStatus([FromBody]Calibration model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
 
+                //Save
+                _objcalibration = new Calibrations();
+                message = await _objcalibration.updateStatus(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
         // DELETE api/calibration/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "5VFCy1chzcUlrjp4ZQvCPHwyiH1h20pA90GgNLDqGznd7fhpxkVxH7QG6+tSFshsuZAiEAuXTs52p6QE/gH6ug==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Uyanık\\Documents\\Projects\\DataUtilities\\DataUtilities.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Uyanık\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Uyanık\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

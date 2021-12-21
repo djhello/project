@@ -15,6 +15,8 @@ var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var service_1 = require("../../shared/service");
 var confirmed_validator_1 = require("../../shared/confirmed.validator");
+var bcrypt = require("bcryptjs");
+var saltround = 10;
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(router, titleService, formBuilder, _dataService) {
         this.router = router;
@@ -64,18 +66,32 @@ var RegisterComponent = /** @class */ (function () {
         if (this.userForm.invalid) {
             return;
         }
-        this.loading = true;
-        //debugger
-        this._dataService.save(this.userForm.value, this._saveUrl)
-            .subscribe(function (response) {
-            _this.loading = false;
-            _this.resmessage = response.message;
-            _this.alertmessage = "alert-outline-info";
-            if (_this.resmessage == "Saved Successfully.") {
-                _this.reset();
-                //this.router.navigate(['/login']);
+        bcrypt.hash(this.userForm.value.password, saltround, function (error, hash) {
+            if (error) {
+                console.log("hata geldi");
             }
-        }, function (error) {
+            else {
+                _this.loading = true;
+                //debugger
+                _this._dataService.save({
+                    userId: _this.userForm.value.userId,
+                    departmanId: _this.userForm.value.departmanId,
+                    firstName: _this.userForm.value.firstName,
+                    lastName: _this.userForm.value.lastName,
+                    email: _this.userForm.value.email,
+                    password: hash
+                }, _this._saveUrl)
+                    .subscribe(function (response) {
+                    _this.loading = false;
+                    _this.resmessage = response.message;
+                    _this.alertmessage = "alert-outline-info";
+                    if (_this.resmessage == "Saved Successfully.") {
+                        _this.reset();
+                        //this.router.navigate(['/login']);
+                    }
+                }, function (error) {
+                });
+            }
         });
     };
     RegisterComponent.prototype.reset = function () {

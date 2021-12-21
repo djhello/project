@@ -40,7 +40,7 @@
 
                     <div class="form-row" >
                         <div class="form-group col-md-6" *ngIf="showSearchMemberDiv">
-                            <label for="memberName">Member Search</label>
+                            <label for="memberSearch">Member Search</label>
                             <div class="position-relative has-icon-left">
                                 <input type="text" id="memberSearch" name="memberSearch" formControlName="memberSearch" (change)="onChange($event, $event.target.value)"
                                        class="form-control" placeholder="Search Member"
@@ -70,7 +70,7 @@
                             <input type="text" id="memberName" name="memberName" formControlName="memberName" class="form-control" placeholder="Member Name" readonly />
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="memberName">Email</label>
+                            <label for="email">Email</label>
                             <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="Email" readonly />
                         </div>
                     </div>
@@ -147,7 +147,6 @@
                                 <th scope="row">{{sl+1}}</th>
                                 <td>{{item.equipmentModel}}</td>
                                 <td>{{item.equipmentId}}</td>
-
                                 <td>{{item.equipmentName}}</td>
                             </tr>
                         </tbody>

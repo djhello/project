@@ -15,6 +15,8 @@ var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var service_1 = require("../../../shared/service");
 var confirmed_validator_1 = require("../../../shared/confirmed.validator");
+var bcrypt = require("bcryptjs");
+var saltround = 10;
 var UserSettingsComponent = /** @class */ (function () {
     function UserSettingsComponent(router, titleService, formBuilder, passwordFormBuilder, _dataService) {
         this.router = router;
@@ -70,36 +72,43 @@ var UserSettingsComponent = /** @class */ (function () {
         });
     };
     UserSettingsComponent.prototype.onSubmitPassword = function () {
-        var _this = this;
+        var that = this;
         if (this.passwordForm.invalid) {
             return;
         }
-        this.loading = true;
-        this._dataService.saveWithUser({
-            userId: this.user.userId,
-            password: this.passwordForm.value.password
-        }, this.loggedUser, this._updatePasswordUrl)
-            .subscribe(function (response) {
-            _this.loading = false;
-            _this.resmessage = response.message;
-            _this.alertmessage = "alert-outline-info";
-            if (_this.resmessage == "Saved Successfully.") {
-                _this.passwordReset();
+        bcrypt.hash(this.passwordForm.value.password, saltround, function (error, hash) {
+            if (error) {
+                console.log("hata geldi");
             }
-        }, function (error) {
+            else {
+                that.loading = true;
+                that._dataService.saveWithUser({
+                    userId: that.user.userId,
+                    password: hash
+                }, that.loggedUser, that._updatePasswordUrl)
+                    .subscribe(function (response) {
+                    that.loading = false;
+                    that.resmessage = response.message;
+                    that.alertmessage = "alert-outline-info";
+                    if (that.resmessage == "Saved Successfully.") {
+                        that.passwordReset();
+                    }
+                }, function (error) {
+                });
+            }
         });
     };
     UserSettingsComponent.prototype.getbyIdUrl = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl)
+        this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.user = response;
             _this.userForm.setValue({
                 userId: _this.user.userId,
-                firstName: _this.user.firstname,
-                lastName: _this.user.lastname,
+                firstName: _this.user.firstName,
+                lastName: _this.user.lastName,
                 email: _this.user.email
             });
             $('#defaultsizemodal').modal('show');

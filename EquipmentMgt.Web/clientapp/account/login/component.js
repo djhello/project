@@ -14,14 +14,18 @@ var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var service_1 = require("../../shared/service");
+var bcrypt = require("bcryptjs");
+var saltround = 10;
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(router, titleService, formBuilder, _dataService) {
         this.router = router;
         this.titleService = titleService;
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
+        this.checked = false;
         this.loading = false;
         this._saveUrl = '/api/auth/loginusers';
+        this._checkPasswordUrl = '/api/auth/checkPassword';
         if (localStorage.getItem('isLoggedin')) {
             this.router.navigate(['/backoffice']);
         }
@@ -29,6 +33,7 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Login");
         this.createForm();
+        this.reset();
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     };
     LoginComponent.prototype.createForm = function () {
@@ -40,26 +45,38 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
+        this.resmessage = null;
         if (this.userForm.invalid) {
             return;
         }
+        var that = this;
         this.loading = true;
-        //debugger
-        this._dataService.save(this.userForm.value, this._saveUrl)
-            .subscribe(function (response) {
-            _this.loading = false;
-            var loggeduser = response.loggeduser;
-            if (loggeduser != null) {
-                localStorage.setItem('isLoggedin', 'true');
-                localStorage.setItem('loggedUser', JSON.stringify(loggeduser));
-                _this.router.navigate(['/backoffice']);
-            }
-            else {
-                _this.resmessage = "Login Faild";
-                _this.alertmessage = "alert-outline-danger";
-            }
-        }, function (error) {
-            //console.log(error);
+        this._dataService.saveForm({ userName: this.userForm.value.userName }, this._checkPasswordUrl)
+            .subscribe(function (loginCheckResponse) {
+            bcrypt.compare(_this.userForm.value.userPass, loginCheckResponse.loggedUser.userPass, function (err, matches) {
+                if (err)
+                    console.log('Error while checking password');
+                else if (matches) {
+                    that._dataService.saveForm({ userName: that.userForm.value.userName }, that._saveUrl)
+                        .subscribe(function (response) {
+                        that.loading = false;
+                        var loggedUser = response.loggedUser;
+                        if (loggedUser != null) {
+                            localStorage.setItem('isLoggedin', 'true');
+                            localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+                            that.router.navigate(['/backoffice']);
+                        }
+                    }, function (error) {
+                        //console.log(error);
+                    });
+                }
+                else {
+                    that.loading = false;
+                    that.resmessage = "Login Faild";
+                    that.alertmessage = "alert-outline-danger";
+                }
+                that.loading = false;
+            });
         });
     };
     LoginComponent.prototype.reset = function () {
@@ -73,7 +90,7 @@ var LoginComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'app-login',
             templateUrl: './app/account/login/component.html',
-            providers: [service_1.DataService]
+            providers: [service_1.DataService],
         }),
         __metadata("design:paramtypes", [router_1.Router,
             platform_browser_1.Title,

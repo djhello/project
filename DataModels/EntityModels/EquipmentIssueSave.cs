@@ -12,9 +12,9 @@ namespace DataModels.EntityModels
         public DateTime? DueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
         public bool? IsResturn { get; set; }
-        public bool? Status { get; set; }
+        public byte? Status { get; set; }
         public bool? LockStatus { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string LastUserId { get; set; }
 
     }

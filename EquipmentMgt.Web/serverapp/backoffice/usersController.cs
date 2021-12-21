@@ -79,6 +79,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        // POST: api/users/updateUserInfos
         [HttpPost("[action]")]
         public async Task<object> updateUserInfos([FromBody]vmUser model)
         {
@@ -106,6 +107,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        // POST: api/users/updateStatus
         [HttpPost("[action]")]
         public async Task<object> updateStatus([FromBody]vmUser model)
         {

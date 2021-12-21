@@ -47,7 +47,8 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.catchError(this.handleError));
     };
     DataService.prototype.saveWithUser = function (model, loggedUser, _saveUrl) {
-        var body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() }));
+        console.log(model);
+        var body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userId, Status: 1, LockStatus: 0, CreateDate: new Date() }));
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this._http.post(_saveUrl, body, options)
@@ -60,9 +61,9 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
     };
-    DataService.prototype.updateStatus = function (id, loggedUser, _updateUrl) {
-        console.log(_updateUrl);
-        var body = JSON.stringify({ id: id, LastUserId: loggedUser.userid, Status: 0, LockStatus: 1, CreateDate: new Date() });
+    //updateStatus
+    DataService.prototype.updateStatus = function (model, loggedUser, _updateUrl) {
+        var body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 0, LockStatus: 1, CreateDate: new Date() }));
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         return this._http.post(_updateUrl, body, options)

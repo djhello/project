@@ -86,21 +86,22 @@ export class ReturnComponent implements OnInit {
     }
 
     setUser() {
-        if (this.loggedUser.usertype != 1) {
+        if (this.loggedUser.userType != 1) {
             this.showSearchMemberDiv = false;
             this.returnForm.setValue({
                 id: 0,
-                userId: this.loggedUser.userid,
-                memberName: this.loggedUser.displayname,
+                userId: this.loggedUser.userId,
+                memberName: this.loggedUser.displayName,
                 email: this.loggedUser.email,
                 memberSearch: null,
                 equipments: []
             });
             this.loading = true;
-            this._dataService.getbyid(this.loggedUser.userid, this._getbyIdUrl)
+            this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl)
                 .subscribe(response => {
                     this.loading = false;
                     if (response != null) {
+                        console.log(response);
                         this.equipmentIssueedList = response;
                     }
                     this.resMessage = null;
@@ -124,7 +125,7 @@ export class ReturnComponent implements OnInit {
                 this.returnForm.setValue({
                     id: 0,
                     userId: this.user.userId,
-                    memberName: this.user.firstname + " " + this.user.firstname,
+                    memberName: this.user.firstName + ' ' + this.user.lastName,
                     email: this.user.email,
                     memberSearch: null,
                     equipments: []
@@ -157,17 +158,24 @@ export class ReturnComponent implements OnInit {
         if (this.returnForm.invalid) {
             return;
         }
-        if (this.returnForm.value.userId > 0) {
-            this._dataService.saveWithUser(this.returnForm.value, this.loggedUser, this._saveUrl)
-                .subscribe(response => {
-                    this.loading = false;
-                    this.resMessage = response.message;
-                    this.alertMessage = "alert-outline-info";
-                    this.reset();
-                    this.focus();
-                }, error => {
-                    //console.log(error);
-                });
+        if (this.returnForm.value.equipments.length != 0) {
+
+            if (this.returnForm.value.userId > 0) {
+                this._dataService.saveWithUser(this.returnForm.value, this.loggedUser, this._saveUrl)
+                    .subscribe(response => {
+                        this.loading = false;
+                        this.resMessage = response.message;
+                        this.alertMessage = "alert-outline-info";
+                        this.reset();
+                        this.focus();
+                    }, error => {
+                        //console.log(error);
+                    });
+            }
+        }
+        else {
+            this.loading = false;
+            alert('Lütfen en az bir ekipmanı seçiniz');
         }
     }
 
@@ -199,6 +207,7 @@ export class ReturnComponent implements OnInit {
     oncheckChange(e, i) {
         e.preventDefault();
         if (e.currentTarget.checked) {
+            
             this.equipmentChoosed.push({
                 id: i
             });
@@ -206,6 +215,7 @@ export class ReturnComponent implements OnInit {
         else {
             this.removeArrayList(this.equipmentChoosed, i);
         }
+        console.log(this.equipmentChoosed);
     }
     removeArrayList(array, item) {
         array.forEach((element, index) => {
@@ -217,7 +227,7 @@ export class ReturnComponent implements OnInit {
     }
     //Reset Form
     reset() {
-        if (this.loggedUser.usertype == 1) {
+        if (this.loggedUser.userType == 1) {
             this.returnForm.setValue({
                 id: 0,
                 userId: 0,
@@ -228,6 +238,7 @@ export class ReturnComponent implements OnInit {
             });
         }
         this.searchTerm = "";
+        this.equipmentChoosed = [];
         this.equipmentReturnedList = [];
         this.equipmentIssueedList = [];
     }

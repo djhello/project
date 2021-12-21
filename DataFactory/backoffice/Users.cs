@@ -94,9 +94,10 @@ namespace DataFactory.backoffice
                     {
                         if (model.UserId > 0 && model.Id > 0)
                         {
-                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
+                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.Id == model.Id);
                             if (entityUpdate != null)
                             {
+                                entityUpdate.UserId = model.UserId;
                                 entityUpdate.FirstName = model.FirstName;
                                 entityUpdate.LastName = model.LastName;
                                 entityUpdate.DepartmanId = model.DepartmanId;
@@ -132,10 +133,10 @@ namespace DataFactory.backoffice
                                 //Save UserAuth
                                 var UserAuthModel = new UserAuthentication
                                 {
-                                    Userid = model.UserId,
-                                    Username = model.Email,
-                                    Userpass = model.Password,
-                                    Joindate = Extension.Today
+                                    UserId = model.UserId,
+                                    UserName = model.Email,
+                                    UserPass = model.Password,
+                                    JoinDate = Extension.Today
                                 };
                                 _ctx.UserAuthentication.Add(UserAuthModel);
 
@@ -170,9 +171,9 @@ namespace DataFactory.backoffice
                 {
                     try
                     {
-                        if (model.UserId > 0)
+                        if (model.Id > 0)
                         {
-                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.UserId == model.UserId);
+                            var entityUpdate = _ctx.User.FirstOrDefault(x => x.Id == model.Id);
                             if (entityUpdate != null)
                             {
                                 entityUpdate.Status = model.Status;
@@ -242,17 +243,11 @@ namespace DataFactory.backoffice
                     {
                         if (model.UserId > 0)
                         {
-                            var entityUpdate = _ctx.UserAuthentication.FirstOrDefault(x => x.Userid == model.UserId);
+                            var entityUpdate = _ctx.UserAuthentication.FirstOrDefault(x => x.UserId == model.UserId);
                             if (entityUpdate != null)
                             {
-                                var UserAuthModel = new UserAuthentication
-                                {
-                                   Userpass = model.Password
-                                };
-                                _ctx.UserAuthentication.Add(UserAuthModel);
-
+                                entityUpdate.UserPass = model.Password;
                                 await _ctx.SaveChangesAsync();
-
                                 message = MessageConstants.Saved;
                             }
                         }

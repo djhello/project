@@ -53,7 +53,8 @@ export class DataService {
             .pipe(catchError(this.handleError));
     }
     saveWithUser(model: any, loggedUser: any, _saveUrl: string): Observable<any> {
-        let body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 1, LockStatus: 0, CreateDate: new Date() }));
+        console.log(model);
+        let body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userId, Status: 1, LockStatus: 0, CreateDate: new Date() }));
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -67,12 +68,12 @@ export class DataService {
             .pipe(map(res => res.json()))
             .pipe(catchError(this.handleError));
     }
-    updateStatus(id: string, loggedUser: any, _updateUrl: string): Observable<any> {
-        console.log(_updateUrl);
-        let body = JSON.stringify({ id: id, LastUserId: loggedUser.userid, Status: 0, LockStatus:1, CreateDate: new Date() });
+    //updateStatus
+
+    updateStatus(model: any, loggedUser: any, _updateUrl: string): Observable<any> {
+        let body = JSON.stringify(Object.assign({}, model, { LastUserId: loggedUser.userid, Status: 0, LockStatus: 1, CreateDate: new Date() }));
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-
         return this._http.post(_updateUrl, body, options)
             .pipe(map(res => res.json()))
             .pipe(catchError(this.handleError));

@@ -56,7 +56,7 @@
                         <tbody>
                             <tr *ngFor="let item of equipments;let sl = index">
                                 <th scope="row">{{sl+1}}</th>
-                                <td><img src="{{item.coverimage}}" class="product-img" alt="cover img"></td>
+                                <td><img src="{{item.coverImage}}" class="product-img" alt="cover img"></td>
                                 <td>{{item.equipmentModel}}</td>
                                 <td>{{item.equipmentId}}</td>
                                 <td>{{item.calibrationName}}</td>
@@ -74,15 +74,21 @@
                                         <a href="#" title="Edit Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="edit($event, item)">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
-                                        <a href="#" title="Delete Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="delete($event, item)">
-                                            <i class="fa fa-trash-o"></i> Delete
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <a href="#" title="Active Passive Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="updateStatus($event, item)">
+                                            <ng-template [ngIf]="item.status=='1'">
+                                <td> Passive</td>
+                                </ng-template>
+                                <ng-template [ngIf]="item.status=='0'">
+                                    <td> Active</td>
+                                </ng-template>
+                                </a>
                 </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                <div id="example"></div>
+            </div>
             </div>
         </div>
     </div>
@@ -155,7 +161,6 @@
                         <div class="form-group col-md-6">
                             <label for="equipmentModelId">Equipment Model</label><em class="text-danger">*</em>
                             <select class="form-control" id="equipmentModelId" name="equipmentModelId" formControlName="equipmentModelId" required tabindex="2">
-                                <option value="">--Select Equipment Model--</option>
                                 <option *ngFor="let equipmentModel of equipmentModels" value={{equipmentModel.id}}>
                                     {{equipmentModel.name}}
                                 </option>
@@ -164,7 +169,6 @@
                         <div class="form-group col-md-6">
                             <label for="calibrationId">Calibration</label><em class="text-danger">*</em>
                             <select class="form-control" id="calibrationId" name="calibrationId" formControlName="calibrationId" required tabindex="2">
-                                <option value="">--Select Calibration--</option>
                                 <option *ngFor="let calibration of calibrations" value={{calibration.id}}>
                                     {{calibration.calibrationName}}
                                 </option>
@@ -173,7 +177,6 @@
                         <div class="form-group col-md-6">
                             <label for="permanentLocationId">Permanent Location</label><em class="text-danger">*</em>
                             <select class="form-control" id="permanentLocationId" name="permanentLocationId" formControlName="permanentLocationId" required tabindex="2">
-                                <option value="">--Select Permanent Location--</option>
                                 <option *ngFor="let location of locations" value={{location.id}}>
                                     {{location.name}}
                                 </option>
@@ -182,9 +185,8 @@
                         <div class="form-group col-md-6">
                             <label for="currentUserId">Permanent Users</label><em class="text-danger">*</em>
                             <select class="form-control" id="currentUserId" name="currentUserId" formControlName="currentUserId" required tabindex="2">
-                                <option value="">--Select Permanent Users--</option>
                                 <option *ngFor="let user of users" value={{user.id}}>
-                                    {{user.firstname}}   {{user.lastname}}
+                                    {{user.firstName}}   {{user.lastName}}
                                 </option>
                             </select>
                         </div>

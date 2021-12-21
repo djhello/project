@@ -4,7 +4,7 @@ import { Router, CanActivate } from '@angular/router';
 @Injectable()
 
 export class AccessPermission implements CanActivate {
-    public loggedUsertype: number;
+    public loggedUserType: number;
 
     constructor(
         private router: Router) {
@@ -12,9 +12,8 @@ export class AccessPermission implements CanActivate {
 
     canActivate() {
         var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsertype = loggedUser.usertype;
-
-        if (this.loggedUsertype === 1) {
+        this.loggedUserType = loggedUser.userType;
+        if (this.loggedUserType === 1) {
             return true;
         }
 

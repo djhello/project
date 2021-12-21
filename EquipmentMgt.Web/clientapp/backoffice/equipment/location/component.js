@@ -27,21 +27,14 @@ var LocationsComponent = /** @class */ (function () {
         this._getbyIdUrl = '/api/location/getbyid';
         this._saveUrl = '/api/location/save';
         this._deleteUrl = '/api/location/deletebyid';
-        var loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-        this.loggedUsername = loggedUser.displayname;
-        this.loggedemail = loggedUser.email;
-        this.loggedUsertype = loggedUser.usertype;
+        this._updateUrl = '/api/location/updateStatus';
+        this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     LocationsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Location");
         this.loadScripts();
         this.createForm();
         this.getAll();
-        if (this.loggedUsertype != 1) {
-            localStorage.removeItem('isLoggedin');
-            localStorage.removeItem('loggedUser');
-            this.router.navigate(['/login']);
-        }
     };
     LocationsComponent.prototype.loadScripts = function () {
         var libScripts = [
@@ -116,7 +109,7 @@ var LocationsComponent = /** @class */ (function () {
         formModel.append('id', this.locationForm.value.id);
         formModel.append('name', this.locationForm.value.name);
         //debugger
-        this._dataService.saveForm(formModel, this._saveUrl)
+        this._dataService.saveWithUser(this.locationForm.value, this.loggedUser, this._saveUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.resmessage = response.message;
@@ -128,12 +121,34 @@ var LocationsComponent = /** @class */ (function () {
             console.log(error);
         });
     };
+    LocationsComponent.prototype.updateStatus = function (e, m) {
+        var _this = this;
+        this.loading = true;
+        e.preventDefault();
+        var IsConf = confirm('You are about to delete ' + m.name + '. Are you sure?');
+        if (IsConf) {
+            this._dataService.updateStatus(m, this.loggedUser, this._updateUrl)
+                .subscribe(function (response) {
+                //console.log(response);
+                _this.resmessage = response.message;
+                _this.alertmessage = "alert-outline-info";
+                _this.getAll();
+                _this.reset();
+                _this.loading = false;
+                $('#defaultsizemodal').modal('hide');
+            }, function (error) {
+                console.log(error);
+                _this.loading = false;
+            });
+        }
+        this.loading = false;
+    };
     //Delete
     LocationsComponent.prototype.delete = function (e, m) {
         var _this = this;
         this.loading = true;
         e.preventDefault();
-        var IsConf = confirm('You are about to delete ' + m.locationName + '. Are you sure?');
+        var IsConf = confirm('You are about to delete ' + m.name + '. Are you sure?');
         if (IsConf) {
             this._dataService.delete(m.id, this._deleteUrl)
                 .subscribe(function (response) {

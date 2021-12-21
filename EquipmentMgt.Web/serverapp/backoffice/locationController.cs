@@ -14,7 +14,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class locationController : ControllerBase
     {
-        private Locations _objtest = null;
+        private Locations _objLocation = null;
         private IHostingEnvironment _hostingEnvironment;
 
         public locationController(IHostingEnvironment env)
@@ -29,8 +29,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             List<vmLocation> locations = null;
             try
             {
-                _objtest = new Locations();
-                locations = await _objtest.getall();
+                _objLocation = new Locations();
+                locations = await _objLocation.getall();
             }
             catch (Exception ex)
             {
@@ -46,8 +46,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             Location location = null;
             try
             {
-                _objtest = new Locations();
-                location = await _objtest.getbyid(id);
+                _objLocation = new Locations();
+                location = await _objLocation.getbyid(id);
             }
             catch (Exception ex)
             {
@@ -58,22 +58,18 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
         // POST: api/book/save
         [HttpPost("[action]")]
-        public async Task<object> save()
+        public async Task<object> save([FromBody]Location model)
         {
             object result = null; string message = string.Empty;
             try
             {
 
-                //Save
-                Location model = new Location()
+                if (model == null)
                 {
-                    Id = Convert.ToInt32(Request.Form["id"]),
-                    Name = Request.Form["name"].ToString()
-
-                };
-
-                _objtest = new Locations();
-                message = await _objtest.create(model);
+                    return BadRequest();
+                }
+                _objLocation = new Locations();
+                message = await _objLocation.create(model);
             }
             catch (Exception ex)
             {
@@ -87,7 +83,33 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
+        [HttpPost("[action]")]
+        public async Task<object> updateStatus([FromBody]Location model)
+        {
+            object result = null; string message = string.Empty;
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
 
+                //Save
+                _objLocation = new Locations();
+                message = await _objLocation.updateStatus(model);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            result = new
+            {
+                message
+            };
+
+            return result;
+        }
         // DELETE api/book/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)
@@ -95,8 +117,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             object result = null; string message = string.Empty;
             try
             {
-                _objtest = new Locations();
-                message = await _objtest.deletebyid(id);
+                _objLocation = new Locations();
+                message = await _objLocation.deletebyid(id);
             }
             catch (Exception ex)
             {

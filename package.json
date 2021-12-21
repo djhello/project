@@ -1,7 +1,21 @@
 {
   "dependencies": {
     "@angular/material": "^5.2.4",
+    "@types/bcrypt": "^5.0.0",
+    "@types/handsontable": "^0.35.0",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.1.1",
+    "datatables.net-dt": "^1.11.3",
     "file-saver": "^2.0.5",
+    "handsontable": "^11.0.1",
+    "jquery": "^3.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "parcel-bundler": "^1.12.5",
+    "save-dev": "^0.0.1-security",
     "xlsx": "^0.17.4"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.9"
   }
 }
