@@ -93,7 +93,6 @@ var EquipmentModelsComponent = /** @class */ (function () {
         this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
-            console.log(response);
             _this.equipmentModels = response;
         }, function (error) {
             console.log(error);
@@ -107,7 +106,6 @@ var EquipmentModelsComponent = /** @class */ (function () {
             .subscribe(function (response) {
             _this.loading = false;
             _this.departmans = response;
-            console.log(_this.departmans);
         }, function (error) {
             console.log(error);
         });
@@ -194,6 +192,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
         formModel.append('LastUserId', this.loggedUser.userId);
         formModel.append('LockStatus', "1");
         formModel.append('CreateDate', now.toString());
+        //burak yerine loggeduser ekle düzelttmeyi unutma 
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(function (response) {
@@ -236,6 +235,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
             eDocLocalAddress: null,
             fileupload: null
         });
+        this.equipmentModelForm.get('fileupload').setValue(null);
         this.fileInput.nativeElement.value = '';
         this.resmessage = null;
         $('#name').focus();

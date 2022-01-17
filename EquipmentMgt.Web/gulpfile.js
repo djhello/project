@@ -60,6 +60,12 @@ gulp.task('copy-lib-js', function () {
     gulp.src('./node_modules/bcryptjs/**/**.js')
         .pipe(gulp.dest(root_path.package_lib + 'bcryptjs'));
 
+    gulp.src('./node_modules/@handsontable/angular/**/*.js')
+        .pipe(gulp.dest(root_path.package_lib + '@handsontable/angular'));
+
+    gulp.src('./node_modules/angular-ui-grid/**/*.js')
+        .pipe(gulp.dest(root_path.package_lib + 'angular-ui-grid'));
+
 });
 
 gulp.task("copy-all", ["copy-lib-js"]);

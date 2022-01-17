@@ -85,7 +85,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             }
             return equipments;
         }
-        // POST: api/book/save
+        // POST: api/equipment/save
         [HttpPost("[action]")]
         public async Task<object> save([FromBody]Hardware model)
         {

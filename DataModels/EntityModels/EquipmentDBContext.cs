@@ -18,6 +18,20 @@ namespace DataModels.EntityModels
         }
 
         public virtual DbSet<Calibration> Calibration { get; set; }
+        public virtual DbSet<Capacitor> Capacitors { get; set; }
+        public virtual DbSet<Connector> Connectors { get; set; }
+        public virtual DbSet<Diode> Diodes { get; set; }
+        public virtual DbSet<ICregulator> ICregulators { get; set; }
+        public virtual DbSet<Inductor> Inductors { get; set; }
+        public virtual DbSet<Mosfet> Mosfet { get; set; }
+        public virtual DbSet<Opamp> Opamp { get; set; }
+        public virtual DbSet<Other> Other { get; set; }
+        public virtual DbSet<HardwareLog> HardwareLogs { get; set; }
+        public virtual DbSet<OtherIC> OtherIC { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<Relay> Relay { get; set; }
+        public virtual DbSet<Resistor> Resistor { get; set; }
+        public virtual DbSet<Transistor> Transistor { get; set; }
         public virtual DbSet<vmEquipment> vEquipment { get; set; }
         public virtual DbSet<Hardware> Equipment { get; set; }
         public virtual DbSet<vmAvailableEquipment> vAvailableEquipment { get; set; }
@@ -62,6 +76,396 @@ namespace DataModels.EntityModels
 
             });
 
+            modelBuilder.Entity<Capacitor>(entity =>
+            {
+                entity.ToTable("capacitors");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Diode>(entity =>
+            {
+                entity.ToTable("diodes");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.ManufacturePartNumber).HasColumnName("manufacturePartNumber");
+
+                entity.Property(e => e.Value).HasColumnName("value");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Voltage).HasColumnName("voltage");
+
+                entity.Property(e => e.Power).HasColumnName("power");
+                
+                entity.Property(e => e.Current).HasColumnName("current");
+                
+                entity.Property(e => e.Package).HasColumnName("package");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<ICregulator>(entity =>
+            {
+                entity.ToTable("ICregulators");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Inductor>(entity =>
+            {
+                entity.ToTable("inductors");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Mosfet>(entity =>
+            {
+                entity.ToTable("mosfet");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Opamp>(entity =>
+            {
+                entity.ToTable("opamp");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Other>(entity =>
+            {
+                entity.ToTable("other");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<OtherIC>(entity =>
+            {
+                entity.ToTable("otherIC");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.ToTable("project");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ProjectName).HasColumnName("projectName");
+
+               
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Relay>(entity =>
+            {
+                entity.ToTable("relay");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Resistor>(entity =>
+            {
+                entity.ToTable("resistor");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.ManufacturePartNumber).HasColumnName("manufacturePartNumber");
+
+                entity.Property(e => e.Value).HasColumnName("value");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Voltage).HasColumnName("voltage");
+
+                entity.Property(e => e.Power).HasColumnName("power");
+
+                entity.Property(e => e.Current).HasColumnName("current");
+
+                entity.Property(e => e.Package).HasColumnName("package");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Transistor>(entity =>
+            {
+                entity.ToTable("transistor");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Supplier).HasColumnName("supplier");
+
+                entity.Property(e => e.SPN).HasColumnName("SPN");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.MFPN).HasColumnName("MFPN");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+            modelBuilder.Entity<Connector>(entity =>
+            {
+                entity.ToTable("connectors");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LocationId).HasColumnName("locationId");
+
+                entity.Property(e => e.TeiPartNumber).HasColumnName("TEIPartNumber");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Manufacturer).HasColumnName("manufacturer");
+
+                entity.Property(e => e.ManufacturePartNumber).HasColumnName("manufacturePartNumber");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Package).HasColumnName("package");
+
+                entity.Property(e => e.ProjectId).HasColumnName("projectId");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+
             modelBuilder.Entity<Hardware>(entity =>
             {
                 entity.ToTable("equipment");
@@ -94,6 +498,29 @@ namespace DataModels.EntityModels
 
                 entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
                                 .HasDefaultValueSql("getdate()");   
+                entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
+            });
+
+            modelBuilder.Entity<HardwareLog>(entity =>
+            {
+                entity.ToTable("hardware_log");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.Property(e => e.HardwareClassId).HasColumnName("hardwareClassId");
+
+                entity.Property(e => e.HardwareId).HasColumnName("hardwareId");
+
+                entity.Property(e => e.ReceiveQuantity).HasColumnName("receiveQuantity");
+
+                entity.Property(e => e.Status).HasColumnName("Status");
+
+                entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
+
+                entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
+                                .HasDefaultValueSql("getdate()");
                 entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
             });
 
@@ -140,12 +567,14 @@ namespace DataModels.EntityModels
                 entity.Property(e => e.EDocLocalAddress).HasColumnName("eDocLocalAddress");
 
                 entity.Property(e => e.CoverImage).HasColumnName("coverImage");
+
                 entity.Property(e => e.Status).HasColumnName("Status");
 
                 entity.Property(e => e.LockStatus).HasColumnName("LockStatus");
 
                 entity.Property(e => e.CreateDate).HasColumnName("CreateDate")
                                 .HasDefaultValueSql("getdate()");
+
                 entity.Property(e => e.LastUserId).HasColumnName("LastUserId");
 
 

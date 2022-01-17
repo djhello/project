@@ -23,8 +23,10 @@
     "xlsx": "^0.17.4",
     "file-saver": "^2.0.5",
     "bcrypt": "^5.0.1",
-    "handsontable": "^11.0.1"
-    
+    "handsontable": "^11.0.1",
+    "parcel-bundler": "^1.12.5",
+    "@handsontable/angular": "^11.0.1"
+
 
   },
   "devDependencies": {

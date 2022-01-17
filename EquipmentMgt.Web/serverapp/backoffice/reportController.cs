@@ -14,7 +14,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     {
         private Report _objchart = null;
 
-        // GET: api/report/getbookchart
+        // GET: api/report/getequipmentchart
         [HttpGet("[action]")]
         public async Task<List<vmEquipmentchart>> getequipmentchart()
         {

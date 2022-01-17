@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HotTableModule } from '@handsontable/angular';
+
 
 //Components
 import { EquipmentsComponent } from './component';
@@ -16,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [CommonModule, HttpModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(routes)],
+    imports: [CommonModule, HttpModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(routes), HotTableModule ],
     declarations: [EquipmentsComponent]
 })
 

@@ -1,5 +1,6 @@
 ﻿import { Injectable, Component } from '@angular/core';
 import { HttpModule, Http, Request, RequestMethod, Response, RequestOptions, Headers } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { text } from '@angular/core/src/render3/instructions';
@@ -26,7 +27,11 @@ export class DataService {
             .pipe(map(res => <any[]>res.json()))
             .pipe(catchError(this.handleError));
     }
-
+    getTestall(_getUrl: string): Observable<any[]> {
+        console.log(_getUrl);
+        return this._http.get(_getUrl)
+            .pipe(map(res => <any[]>res.json()));
+    }
     //GetByID
     getbyid(id: string, _getByIdUrl: string): Observable<any> {
         var getByIdUrl = _getByIdUrl + '/' + id;
@@ -62,6 +67,18 @@ export class DataService {
             .pipe(map(res => res.json()))
             .pipe(catchError(this.handleError));
     }
+    receiveWithUser(model: any, receiveQuantity: any, loggedUser: any, _receiveUrl: string): Observable<any> {
+        console.log(model);
+        console.log(_receiveUrl);
+        console.log(receiveQuantity);
+        let body = JSON.stringify(Object.assign({}, model, { receiveQuantity: receiveQuantity, LastUserId: loggedUser.userId, Status: 1, LockStatus: 0, CreateDate: new Date() }));
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this._http.post(_receiveUrl, body, options)
+            .pipe(map(res => res.json()))
+            .pipe(catchError(this.handleError));
+    }
     //PostFormData
     saveForm(model: any, _saveUrl: string): Observable<any> {
         return this._http.post(_saveUrl, model)
@@ -88,6 +105,9 @@ export class DataService {
     }
 
     private handleError(error: Response) {
+        console.log("geldi hata");
+        console.log(error);
+        console.log(error.json());
         return Observable.throw(error.json().error || 'Opps!! Server error');
     }
 }

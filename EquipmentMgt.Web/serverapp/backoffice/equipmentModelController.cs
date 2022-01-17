@@ -25,7 +25,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/book/getall
+        // GET: api/equipmentModel/getall
         [HttpGet("[action]")]
         public async Task<List<vmEquipmentModel>> getall()
         {
@@ -42,7 +42,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipmentModels;
         }
 
-        // GET api/book/getbyid/1
+        // GET api/equipmentModel/getbyid/1
         [HttpGet("[action]/{id}")]
         public async Task<EquipmentModel> getbyid(int id)
         {
@@ -59,7 +59,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipmentModel;
         }
 
-        // POST: api/book/save
+        // POST: api/equipmentModel/save
         [HttpPost("[action]")]
         public async Task<object> save()
         {

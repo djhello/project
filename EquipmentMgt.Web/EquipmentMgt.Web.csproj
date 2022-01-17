@@ -11,6 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="clientapp\backoffice\hardware\ICregulator\" />
+    <Folder Include="clientapp\backoffice\hardware\connector\" />
+    <Folder Include="clientapp\backoffice\hardware\diode\" />
+    <Folder Include="clientapp\backoffice\hardware\ICregulator\" />
+    <Folder Include="clientapp\backoffice\hardware\inductor\" />
+    <Folder Include="clientapp\backoffice\hardware\mosfet\" />
+    <Folder Include="clientapp\backoffice\hardware\opamp\" />
+    <Folder Include="clientapp\backoffice\hardware\otherIC\" />
+    <Folder Include="clientapp\backoffice\hardware\other\" />
+    <Folder Include="clientapp\backoffice\hardware\project\" />
+    <Folder Include="clientapp\backoffice\hardware\relay\" />
+    <Folder Include="clientapp\backoffice\hardware\resistor\" />
+    <Folder Include="clientapp\backoffice\hardware\transistor\" />
     <Folder Include="wwwroot\app\" />
   </ItemGroup>
 

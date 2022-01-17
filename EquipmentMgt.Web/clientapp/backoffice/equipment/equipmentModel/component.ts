@@ -104,13 +104,11 @@ export class EquipmentModelsComponent implements OnInit {
 
     //Get Models 
     getAll() {
-        
         //debugger
         this.loading = true;
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
-                    console.log(response);           
                     this.equipmentModels = response;
                 }, error => {
                     console.log(error);
@@ -125,7 +123,6 @@ export class EquipmentModelsComponent implements OnInit {
                 response => {
                     this.loading = false;
                     this.departmans = response;
-                    console.log(this.departmans);
                 }, error => {
                     console.log(error);
                 }
@@ -212,7 +209,7 @@ export class EquipmentModelsComponent implements OnInit {
         formModel.append('LastUserId', this.loggedUser.userId);
         formModel.append('LockStatus', "1");
         formModel.append('CreateDate', now.toString());
-
+        //burak yerine loggeduser ekle düzelttmeyi unutma 
         //debugger
         this._dataService.saveForm(formModel, this._saveUrl)
             .subscribe(response => {
@@ -255,6 +252,7 @@ export class EquipmentModelsComponent implements OnInit {
             fileupload: null
         });
 
+        this.equipmentModelForm.get('fileupload').setValue(null);
         this.fileInput.nativeElement.value = '';
         this.resmessage = null;
         $('#name').focus();

@@ -38,7 +38,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return departmans;
         }
 
-        // GET api/book/getbyid/1
+        // GET api/departman/getbyid/1
         [HttpGet("[action]/{id}")]
         public async Task<Departman> getbyid(int id)
         {

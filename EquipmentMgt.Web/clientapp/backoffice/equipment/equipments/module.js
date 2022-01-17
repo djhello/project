@@ -11,6 +11,7 @@ var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
+var angular_1 = require("@handsontable/angular");
 //Components
 var component_1 = require("./component");
 var routes = [
@@ -24,7 +25,7 @@ var EquipmentsModule = /** @class */ (function () {
     }
     EquipmentsModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, http_1.HttpModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, router_1.RouterModule.forChild(routes)],
+            imports: [common_1.CommonModule, http_1.HttpModule, forms_1.FormsModule, forms_1.ReactiveFormsModule, router_1.RouterModule.forChild(routes), angular_1.HotTableModule],
             declarations: [component_1.EquipmentsComponent]
         })
     ], EquipmentsModule);

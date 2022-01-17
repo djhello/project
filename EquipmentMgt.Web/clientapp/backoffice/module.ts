@@ -20,6 +20,19 @@ import { UsersComponent } from './system/users/component';
 import { DepartmansComponent } from './system/departmans/component';
 import { EquipmentReportsComponent } from './reports/equipment/component';
 import { LocationsComponent } from './equipment/location/component';
+import { CapacitorComponent } from './hardware/capacitor/component';
+import { DiodeComponent } from './hardware/diode/component';
+import { ICregulatorComponent } from './hardware/ICregulator/component';
+import { InductorComponent } from './hardware/inductor/component';
+import { MosfetComponent } from './hardware/mosfet/component';
+import { OpampComponent } from './hardware/opamp/component';
+import { OtherComponent } from './hardware/other/component';
+import { OtherICComponent } from './hardware/otherIC/component';
+import { ProjectComponent } from './hardware/project/component';
+import { RelayComponent } from './hardware/relay/component';
+import { ResistorComponent } from './hardware/resistor/component';
+import { TransistorComponent } from './hardware/transistor/component';
+import { ConnectorComponent } from './hardware/connector/component';
 
 const routes: Routes = [
     {
@@ -37,7 +50,21 @@ const routes: Routes = [
             { path: 'system/users', component: UsersComponent, canActivate: [AccessPermission] },
             { path: 'system/departmans', component: DepartmansComponent, canActivate: [AccessPermission] },
             { path: 'system/settings', component: UserSettingsComponent, canActivate: [AccessPermission] },
-            { path: 'reports/equipment', component: EquipmentReportsComponent }
+            { path: 'reports/equipment', component: EquipmentReportsComponent },
+            { path: 'hardware/capacitor', component: CapacitorComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/diode', component: DiodeComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/ICregulator', component: ICregulatorComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/inductor', component: InductorComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/mosfet', component: MosfetComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/opamp', component: OpampComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/other', component: OtherComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/otherIC', component: OtherICComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/project', component: ProjectComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/relay', component: RelayComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/resistor', component: ResistorComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/transistor', component: TransistorComponent, canActivate: [AccessPermission] },
+            { path: 'hardware/connector', component: ConnectorComponent, canActivate: [AccessPermission] }
+
         ]
     }
 ];
@@ -56,7 +83,22 @@ const routes: Routes = [
         UsersComponent,
         DepartmansComponent,
         UserSettingsComponent,
-        EquipmentReportsComponent
+        EquipmentReportsComponent,
+        CapacitorComponent,
+        DiodeComponent,
+        ICregulatorComponent,
+        InductorComponent,
+        MosfetComponent,
+        OpampComponent ,
+        OtherComponent,
+        OtherICComponent,
+        ProjectComponent,
+        RelayComponent ,
+        ResistorComponent ,
+        TransistorComponent,
+        ConnectorComponent 
+
+
     ],
     providers: [AccessPermission],
     bootstrap: [BackofficeComponent]

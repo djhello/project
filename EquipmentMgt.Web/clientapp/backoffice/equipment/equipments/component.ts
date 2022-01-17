@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { DataService } from '../../../shared/service';
 import Handsontable from 'handsontable';
 
+
 @Component({
     selector: 'ng-equipments',
     templateUrl: './app/backoffice/equipment/equipments/component.html',
@@ -18,7 +19,6 @@ export class EquipmentsComponent implements OnInit {
     public equipments: any[];
     public equipment: any;
     public calibrations: any[];
-    public categories: any[];
     public locations: any[];
     public users: any[];
     public equipmentModels: any[];
@@ -71,16 +71,8 @@ export class EquipmentsComponent implements OnInit {
             equipmentModelId: new FormControl('', Validators.required)
         });
     }
-    setupHandsontable() {
-        var container = document.getElementById('example');
-        var hot = new Handsontable(container, {
-            data: this.equipments,
-            rowHeaders: true,
-            colHeaders: true,
-            filters: true,
-            dropdownMenu: true
-        });
-    }
+    
+    
     //Pop Modal
     addNew() {
         //debugger 
@@ -97,19 +89,17 @@ export class EquipmentsComponent implements OnInit {
 
     getAll() {
         this.loading = true;
-        //debugger
         this._dataService.getall(this._getUrl)
             .subscribe(
                 response => {
                     this.equipments = response;
-                    this.setupHandsontable();
                     this.loading = false;
                 }, error => {
                     console.log(error);
                 }
             );
     }
-
+    
     //Get by ID
     edit(e, m) {
         this.loading = true;
@@ -294,9 +284,4 @@ export class EquipmentsComponent implements OnInit {
         this.resmessage = null;
         $('#equipmentId').focus();
     }
-
-    //clearFile() {
-    //    this.bookForm.get('fileupload').setValue(null);
-    //    this.fileInput.nativeElement.value = '';
-    //}
 }

@@ -15,7 +15,6 @@ var http_1 = require("@angular/http");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
 var service_1 = require("../../../shared/service");
-var handsontable_1 = require("handsontable");
 var EquipmentsComponent = /** @class */ (function () {
     function EquipmentsComponent(_http, router, titleService, formBuilder, _dataService) {
         this._http = _http;
@@ -55,16 +54,6 @@ var EquipmentsComponent = /** @class */ (function () {
             equipmentModelId: new forms_1.FormControl('', forms_1.Validators.required)
         });
     };
-    EquipmentsComponent.prototype.setupHandsontable = function () {
-        var container = document.getElementById('example');
-        var hot = new handsontable_1.default(container, {
-            data: this.equipments,
-            rowHeaders: true,
-            colHeaders: true,
-            filters: true,
-            dropdownMenu: true
-        });
-    };
     //Pop Modal
     EquipmentsComponent.prototype.addNew = function () {
         //debugger 
@@ -81,11 +70,9 @@ var EquipmentsComponent = /** @class */ (function () {
     EquipmentsComponent.prototype.getAll = function () {
         var _this = this;
         this.loading = true;
-        //debugger
         this._dataService.getall(this._getUrl)
             .subscribe(function (response) {
             _this.equipments = response;
-            _this.setupHandsontable();
             _this.loading = false;
         }, function (error) {
             console.log(error);

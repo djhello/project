@@ -24,6 +24,11 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
     };
+    DataService.prototype.getTestall = function (_getUrl) {
+        console.log(_getUrl);
+        return this._http.get(_getUrl)
+            .pipe(operators_1.map(function (res) { return res.json(); }));
+    };
     //GetByID
     DataService.prototype.getbyid = function (id, _getByIdUrl) {
         var getByIdUrl = _getByIdUrl + '/' + id;
@@ -55,6 +60,17 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
     };
+    DataService.prototype.receiveWithUser = function (model, receiveQuantity, loggedUser, _receiveUrl) {
+        console.log(model);
+        console.log(_receiveUrl);
+        console.log(receiveQuantity);
+        var body = JSON.stringify(Object.assign({}, model, { receiveQuantity: receiveQuantity, LastUserId: loggedUser.userId, Status: 1, LockStatus: 0, CreateDate: new Date() }));
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this._http.post(_receiveUrl, body, options)
+            .pipe(operators_1.map(function (res) { return res.json(); }))
+            .pipe(operators_1.catchError(this.handleError));
+    };
     //PostFormData
     DataService.prototype.saveForm = function (model, _saveUrl) {
         return this._http.post(_saveUrl, model)
@@ -78,6 +94,9 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.catchError(this.handleError));
     };
     DataService.prototype.handleError = function (error) {
+        console.log("geldi hata");
+        console.log(error);
+        console.log(error.json());
         return rxjs_1.Observable.throw(error.json().error || 'Opps!! Server error');
     };
     DataService = __decorate([

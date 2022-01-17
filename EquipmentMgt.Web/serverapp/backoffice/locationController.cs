@@ -22,7 +22,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/book/getall
+        // GET: api/ location/getall
         [HttpGet("[action]")]
         public async Task<List<vmLocation>> getall()
         {
@@ -39,7 +39,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return locations;
         }
 
-        // GET api/book/getbyid/1
+        // GET api/ location/getbyid/1
         [HttpGet("[action]/{id}")]
         public async Task<Location> getbyid(int id)
         {
@@ -56,7 +56,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return location;
         }
 
-        // POST: api/book/save
+        // POST: api/ location/save
         [HttpPost("[action]")]
         public async Task<object> save([FromBody]Location model)
         {
@@ -110,7 +110,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/book/deletebyid/1
+        // DELETE api/ location/deletebyid/1
         [HttpDelete("[action]/{id}")]
         public async Task<object> deletebyid(int id)
         {
