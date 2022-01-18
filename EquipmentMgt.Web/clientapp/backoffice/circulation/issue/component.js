@@ -28,12 +28,12 @@ var IssueComponent = /** @class */ (function () {
         this.equipmentByUserIssueedList = [];
         this.loading = false;
         this.showSearchMemberDiv = false;
-        this._getUrl = '/api/circulation/getissueall';
-        this._getbyIdUrl = '/api/circulation/getissuebyid';
-        this._saveUrl = '/api/circulation/issueequipment';
-        this._getEquipmentUrl = '/api/circulation/getallequipment';
-        this._getAvailableallEquipmentUrl = '/api/equipment/getavailableallequipment';
-        this._getbyUserIdUrl = '/api/users/getbyid';
+        this._getUrl = '/api/circulation/getIssueAll';
+        this._getbyIdUrl = '/api/circulation/getIssueById';
+        this._saveUrl = '/api/circulation/issueEquipment';
+        this._getEquipmentUrl = '/api/circulation/getAllequipment';
+        this._getAvailableallEquipmentUrl = '/api/equipment/getAvailableallEquipment';
+        this._getbyUserIdUrl = '/api/users/getById';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     IssueComponent.prototype.handleKeyboardEvent = function (event) {
@@ -102,7 +102,7 @@ var IssueComponent = /** @class */ (function () {
         this.loading = true;
         this.reset();
         e.preventDefault();
-        this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
+        this._dataService.getById(searchValue, this._getbyUserIdUrl)
             .subscribe(function (response) {
             _this.user = response;
             var dt = new Date();
@@ -119,7 +119,7 @@ var IssueComponent = /** @class */ (function () {
         }, function (error) {
             //console.log(error);
         });
-        this._dataService.getbyid(searchValue, this._getbyIdUrl)
+        this._dataService.getById(searchValue, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             if (response != null) {
@@ -190,7 +190,7 @@ var IssueComponent = /** @class */ (function () {
     IssueComponent.prototype.equipmentList = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getEquipmentUrl)
+        this._dataService.getAll(this._getEquipmentUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.equipmentsList = response;
@@ -201,7 +201,7 @@ var IssueComponent = /** @class */ (function () {
     IssueComponent.prototype.getAvailableEquipmentList = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getAvailableallEquipmentUrl)
+        this._dataService.getAll(this._getAvailableallEquipmentUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.availableEquipmentList = response;
@@ -215,7 +215,7 @@ var IssueComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.equipmentIssueedList = response;

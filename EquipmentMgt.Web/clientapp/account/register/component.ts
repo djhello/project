@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     public resmessage: string;
     public alertmessage: string;
     public _saveUrl: string = '/api/auth/regusers';
-    public _getDepartmanUrl: string = '/api/departman/getall';
+    public _getDepartmanUrl: string = '/api/departman/getAll';
 
     constructor(
         private router: Router,
@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
     }
     getDepartmanAll() {
         this.loading = true;
-        this._dataService.getall(this._getDepartmanUrl)
+        this._dataService.getAll(this._getDepartmanUrl)
             .subscribe(
                 response => {
                     this.loading = false;

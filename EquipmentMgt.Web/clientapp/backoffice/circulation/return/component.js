@@ -27,9 +27,9 @@ var ReturnComponent = /** @class */ (function () {
         this.loading = false;
         this.showSearchMemberDiv = false;
         this._getUrl = '/api/circulation/getreturnall';
-        this._getbyIdUrl = '/api/circulation/getreturnbyid';
-        this._saveUrl = '/api/circulation/returnequipment';
-        this._getbyUserIdUrl = '/api/users/getbyid';
+        this._getbyIdUrl = '/api/circulation/getReturnById';
+        this._saveUrl = '/api/circulation/returnEquipment';
+        this._getbyUserIdUrl = '/api/users/getById';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     ReturnComponent.prototype.handleKeyboardEvent = function (event) {
@@ -83,7 +83,7 @@ var ReturnComponent = /** @class */ (function () {
                 equipments: []
             });
             this.loading = true;
-            this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl)
+            this._dataService.getById(this.loggedUser.userId, this._getbyIdUrl)
                 .subscribe(function (response) {
                 _this.loading = false;
                 if (response != null) {
@@ -105,7 +105,7 @@ var ReturnComponent = /** @class */ (function () {
         this.loading = true;
         this.reset();
         e.preventDefault();
-        this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
+        this._dataService.getById(searchValue, this._getbyUserIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.user = response;
@@ -121,7 +121,7 @@ var ReturnComponent = /** @class */ (function () {
             //console.log(error);
         });
         this.loading = true;
-        this._dataService.getbyid(searchValue, this._getbyIdUrl)
+        this._dataService.getById(searchValue, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             if (response != null) {
@@ -166,7 +166,7 @@ var ReturnComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.equipmentReturned = response;

@@ -18,10 +18,10 @@ export class DepartmansComponent implements OnInit {
     public alertmessage: string;
     public booleanValue: any = false;
     public loading: boolean = false; 
-    public _getUrl: string = '/api/departman/getall';
-    public _getbyIdUrl: string = '/api/departman/getbyid';
+    public _getUrl: string = '/api/departman/getAll';
+    public _getbyIdUrl: string = '/api/departman/getById';
     public _saveUrl: string = '/api/departman/save';
-    public _deleteUrl: string = '/api/departman/deletebyid';
+    public _deleteUrl: string = '/api/departman/deleteById';
 
     public _updateUrl: string = '/api/departman/updateStatus';
 
@@ -59,7 +59,7 @@ export class DepartmansComponent implements OnInit {
     //Get All Departman
     getAll() {
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -74,7 +74,7 @@ export class DepartmansComponent implements OnInit {
     edit(e, m) {
         this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.departmanId, this._getbyIdUrl)
+        this._dataService.getById(m.departmanId, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.departman = response;

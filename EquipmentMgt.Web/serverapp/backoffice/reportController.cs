@@ -10,19 +10,19 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class reportController : ControllerBase
+    public class ReportController : ControllerBase
     {
-        private Report _objchart = null;
+        private dbReport _objChart = null;
 
-        // GET: api/report/getequipmentchart
+        // GET: api/report/getEquipmentChart
         [HttpGet("[action]")]
-        public async Task<List<vmEquipmentchart>> getequipmentchart()
+        public async Task<List<vmEquipmentchart>> getEquipmentChart()
         {
             List<vmEquipmentchart> bchart = null;
             try
             {
-                _objchart = new Report();
-                bchart = await _objchart.getequipmentchart();
+                _objChart = new dbReport();
+                bchart = await _objChart.getEquipmentChart();
             }
             catch (Exception ex)
             {
@@ -31,15 +31,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return bchart;
         }
 
-        // GET: api/report/getmemberchart
+        // GET: api/report/getMemberChart
         [HttpGet("[action]")]
-        public async Task<List<vmMemberchart>> getmemberchart()
+        public async Task<List<vmMemberchart>> getMemberChart()
         {
             List<vmMemberchart> mchart = null;
             try
             {
-                _objchart = new Report();
-                mchart = await _objchart.getmemberchart();
+                _objChart = new dbReport();
+                mchart = await _objChart.getMemberChart();
             }
             catch (Exception ex)
             {

@@ -25,13 +25,13 @@ var CapacitorComponent = /** @class */ (function () {
         this.loading = false;
         this.adet = 0;
         this._getUrl = '/api/Capacitor/getAll';
-        this._getbyIdUrl = '/api/capacitor/getbyid';
+        this._getbyIdUrl = '/api/capacitor/getById';
         this._saveUrl = '/api/capacitor/save';
-        this._deleteUrl = '/api/capacitor/deletebyid';
+        this._deleteUrl = '/api/capacitor/deleteById';
         this._updateUrl = '/api/capacitor/updateStatus';
         this._receiveUrl = '/api/capacitor/receive';
-        this._getLocationUrl = '/api/location/getall';
-        this._getProjectUrl = '/api/project/getall';
+        this._getLocationUrl = '/api/location/getAll';
+        this._getProjectUrl = '/api/project/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUserName = this.loggedUser.displayName;
         this.loggedEmail = this.loggedUser.email;
@@ -100,7 +100,7 @@ var CapacitorComponent = /** @class */ (function () {
         this.getLocations();
         this.getProjects();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.capacitor = response;
@@ -218,7 +218,7 @@ var CapacitorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(function (response) {
             _this.locations = response;
             _this.loading = false;
@@ -230,7 +230,7 @@ var CapacitorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(function (response) {
             _this.projects = response;
             _this.loading = false;

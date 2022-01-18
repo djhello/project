@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class ConnectorController : ControllerBase
     {
-        private Connectors _objconnector = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbConnector _objConnector = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
         private IHostingEnvironment _hostingEnvironment;
 
@@ -25,15 +25,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/connector/getall
+        // GET: api/connector/getAll
         [HttpGet("[action]")]
         public async Task<List<vmConnector>> getAll()
         {
             List<vmConnector> connectors = null;
             try
             {
-                _objconnector = new Connectors();
-                connectors = await _objconnector.getall();
+                _objConnector = new dbConnector();
+                connectors = await _objConnector.getAll();
             }
             catch (Exception ex)
             {
@@ -42,15 +42,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return connectors;
         }
 
-        // GET api/connector/getbyid/1
+        // GET api/connector/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmConnector> getbyid(int id)
+        public async Task<vmConnector> getById(int id)
         {
             vmConnector connector = null;
             try
             {
-                _objconnector = new Connectors();
-                connector = await _objconnector.getbyid(id);
+                _objConnector = new dbConnector();
+                connector = await _objConnector.getById(id);
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objconnector = new Connectors();
-                message = await _objconnector.create(model);
+                _objConnector = new dbConnector();
+                message = await _objConnector.create(model);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objconnector = new Connectors();
-                message = await _objconnector.updateStatus(model);
+                _objConnector = new dbConnector();
+                message = await _objConnector.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -129,10 +129,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objconnector = new Connectors();
-                _objHardwareLogs = new HardwareLogs();
+                _objConnector = new dbConnector();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objconnector.receive(model);
+                message = await _objConnector.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -158,15 +158,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/connector/deletebyid/1
+        // DELETE api/connector/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objconnector = new Connectors();
-                message = await _objconnector.deletebyid(id);
+                _objConnector = new dbConnector();
+                message = await _objConnector.deleteById(id);
             }
             catch (Exception ex)
             {

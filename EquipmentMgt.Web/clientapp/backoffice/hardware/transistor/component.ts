@@ -29,14 +29,14 @@ export class TransistorComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/Transistor/getAll';
-    public _getbyIdUrl: string = '/api/transistor/getbyid';
+    public _getbyIdUrl: string = '/api/transistor/getById';
     public _saveUrl: string = '/api/transistor/save';
-    public _deleteUrl: string = '/api/transistor/deletebyid';
+    public _deleteUrl: string = '/api/transistor/deleteById';
     public _updateUrl: string = '/api/transistor/updateStatus';
     public _receiveUrl: string = '/api/transistor/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
     constructor(
         private _http: Http,
@@ -101,7 +101,7 @@ export class TransistorComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.transistors = response;
@@ -119,7 +119,7 @@ export class TransistorComponent implements OnInit {
         this.loading = true;
         this.getProjects();
         this.getLocations();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.transistor = response;
@@ -241,7 +241,7 @@ export class TransistorComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -254,7 +254,7 @@ export class TransistorComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

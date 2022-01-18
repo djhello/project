@@ -23,9 +23,9 @@ var EquipmentReportsComponent = /** @class */ (function () {
         this.equipmentreturned = [];
         this.equipmentissued = [];
         this.loading = false;
-        this._getUrl = '/api/report/getequipmentchart';
+        this._getUrl = '/api/report/getEquipmentChart';
         this._getRUrl = '/api/circulation/getreturnall';
-        this._getIUrl = '/api/circulation/getissueall';
+        this._getIUrl = '/api/circulation/getIssueAll';
     }
     EquipmentReportsComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Rapor");
@@ -37,7 +37,7 @@ var EquipmentReportsComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getUrl).subscribe(function (response) {
+        this._dataService.getAll(this._getUrl).subscribe(function (response) {
             _this.echart = response;
             var chartData = [];
             for (var i = 0; i < _this.echart.length; i++) {
@@ -95,14 +95,14 @@ var EquipmentReportsComponent = /** @class */ (function () {
     EquipmentReportsComponent.prototype.returnedList = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getRUrl)
+        this._dataService.getAll(this._getRUrl)
             .subscribe(function (response) {
             console.log(response);
             _this.equipmentreturned = response;
         }, function (error) {
             //console.log(error);
         });
-        this._dataService.getall(this._getIUrl)
+        this._dataService.getAll(this._getIUrl)
             .subscribe(function (response) {
             console.log(response);
             _this.equipmentissued = response;

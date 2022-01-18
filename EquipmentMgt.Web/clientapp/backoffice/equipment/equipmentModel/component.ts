@@ -22,14 +22,14 @@ export class EquipmentModelsComponent implements OnInit {
     public imageUrl: any;
     public updatePicture: boolean = false;
 
-    public _getUrl: string = '/api/equipmentmodel/getall';
-    public _getbyIdUrl: string = '/api/equipmentmodel/getbyid';
+    public _getUrl: string = '/api/equipmentmodel/getAll';
+    public _getbyIdUrl: string = '/api/equipmentmodel/getById';
     public _saveUrl: string = '/api/equipmentmodel/save';
-    public _deleteUrl: string = '/api/equipmentmodel/deletebyid';
+    public _deleteUrl: string = '/api/equipmentmodel/deleteById';
 
     public _updateUrl: string = '/api/equipmentmodel/updateStatus';
 
-    public _getDepartmanUrl: string = '/api/departman/getall';
+    public _getDepartmanUrl: string = '/api/departman/getAll';
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -106,7 +106,7 @@ export class EquipmentModelsComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.equipmentModels = response;
@@ -118,7 +118,7 @@ export class EquipmentModelsComponent implements OnInit {
     }
     getDepartmanAll() {
         this.loading = true;
-        this._dataService.getall(this._getDepartmanUrl)
+        this._dataService.getAll(this._getDepartmanUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -134,7 +134,7 @@ export class EquipmentModelsComponent implements OnInit {
         this.getDepartmanAll();
         e.preventDefault();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 console.log(response);
                 this.equipmentModel = response;

@@ -19,7 +19,7 @@ var DataService = /** @class */ (function () {
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     //Get
-    DataService.prototype.getall = function (_getUrl) {
+    DataService.prototype.getAll = function (_getUrl) {
         return this._http.get(_getUrl)
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
@@ -30,13 +30,13 @@ var DataService = /** @class */ (function () {
             .pipe(operators_1.map(function (res) { return res.json(); }));
     };
     //GetByID
-    DataService.prototype.getbyid = function (id, _getByIdUrl) {
+    DataService.prototype.getById = function (id, _getByIdUrl) {
         var getByIdUrl = _getByIdUrl + '/' + id;
         return this._http.get(getByIdUrl)
             .pipe(operators_1.map(function (res) { return res.json(); }))
             .pipe(operators_1.catchError(this.handleError));
     };
-    DataService.prototype.getbytext = function (text, _getByIdUrl) {
+    DataService.prototype.getByText = function (text, _getByIdUrl) {
         var getByIdUrl = _getByIdUrl + '/' + text;
         return this._http.get(getByIdUrl)
             .pipe(operators_1.map(function (res) { return res.json(); }))

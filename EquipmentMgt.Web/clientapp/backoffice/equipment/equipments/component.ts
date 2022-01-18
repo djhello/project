@@ -27,18 +27,18 @@ export class EquipmentsComponent implements OnInit {
     public alertmessage: string;
     public imageUrl: any;
 
-    public _getUrl: string = '/api/equipment/getall';
-    public _getbyIdUrl: string = '/api/equipment/getbyid';
+    public _getUrl: string = '/api/equipment/getAll';
+    public _getbyIdUrl: string = '/api/equipment/getById';
     public _saveUrl: string = '/api/equipment/save';
-    public _deleteUrl: string = '/api/equipment/deletebyid';
-    public _getbyEquipmentIdUrl: string = '/api/equipment/getbytext';
+    public _deleteUrl: string = '/api/equipment/deleteById';
+    public _getbyEquipmentIdUrl: string = '/api/equipment/getByText';
     public _updateUrl: string = '/api/equipment/updateStatus';
 
 
-    public _getCalibrationUrl: string = '/api/calibration/getall';
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getEquipmentModelUrl: string = '/api/equipmentmodel/getall';
-    public _getUserUrl: string = '/api/users/getall';
+    public _getCalibrationUrl: string = '/api/calibration/getAll';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getEquipmentModelUrl: string = '/api/equipmentmodel/getAll';
+    public _getUserUrl: string = '/api/users/getAll';
 
     @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -89,7 +89,7 @@ export class EquipmentsComponent implements OnInit {
 
     getAll() {
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.equipments = response;
@@ -109,7 +109,7 @@ export class EquipmentsComponent implements OnInit {
         this.getLocations();
         this.getEquipmentModels();
         this.getUserAll();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 console.log(response);
                 this.equipment = response;
@@ -141,7 +141,7 @@ export class EquipmentsComponent implements OnInit {
     }
     getEquipments(e, m) {
         this.loading = true;
-        this._dataService.getbytext(m, this._getbyEquipmentIdUrl)
+        this._dataService.getByText(m, this._getbyEquipmentIdUrl)
             .subscribe(
                 response => {
                     this.equipments = response;
@@ -218,7 +218,7 @@ export class EquipmentsComponent implements OnInit {
     getCalibration() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getCalibrationUrl)
+        this._dataService.getAll(this._getCalibrationUrl)
             .subscribe(
                 response => {
                     this.calibrations = response;
@@ -231,7 +231,7 @@ export class EquipmentsComponent implements OnInit {
     getEquipmentModels() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getEquipmentModelUrl)
+        this._dataService.getAll(this._getEquipmentModelUrl)
             .subscribe(
                 response => {
                     this.equipmentModels = response;
@@ -244,7 +244,7 @@ export class EquipmentsComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -257,7 +257,7 @@ export class EquipmentsComponent implements OnInit {
    
     getUserAll() {
         this.loading = true;
-        this._dataService.getall(this._getUserUrl)
+        this._dataService.getAll(this._getUserUrl)
             .subscribe(
                 response => {
                     this.users = response;

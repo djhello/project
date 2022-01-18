@@ -29,14 +29,14 @@ export class ICregulatorComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/ICregulator/getAll';
-    public _getbyIdUrl: string = '/api/ICregulator/getbyid';
+    public _getbyIdUrl: string = '/api/ICregulator/getById';
     public _saveUrl: string = '/api/ICregulator/save';
-    public _deleteUrl: string = '/api/ICregulator/deletebyid';
+    public _deleteUrl: string = '/api/ICregulator/deleteById';
     public _updateUrl: string = '/api/ICregulator/updateStatus';
     public _receiveUrl: string = '/api/ICregulator/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
     constructor(
         private _http: Http,
@@ -101,7 +101,7 @@ export class ICregulatorComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.ICregulators = response;
@@ -120,7 +120,7 @@ export class ICregulatorComponent implements OnInit {
         this.loading = true;
         this.getProjects();
         this.getLocations();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.ICregulator = response;
@@ -242,7 +242,7 @@ export class ICregulatorComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -255,7 +255,7 @@ export class ICregulatorComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

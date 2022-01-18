@@ -12,20 +12,20 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class circulationController : ControllerBase
+    public class CirculationController : ControllerBase
     {
-        private Circulation _objcirculation = null;
+        private dbCirculation _objCirculation = null;
 
         #region --Return
         // GET: api/circulation/getreturnall
         [HttpGet("[action]")]
-        public async Task<List<vmEquipmentIssuereturn>> getreturnall()
+        public async Task<List<vmEquipmentIssueReturn>> getReturnAll()
         {
-            List<vmEquipmentIssuereturn> equipmentIssuereturn = null;
+            List<vmEquipmentIssueReturn> equipmentIssuereturn = null;
             try
             {
-                _objcirculation = new Circulation();
-                equipmentIssuereturn = await _objcirculation.getreturnall();
+                _objCirculation = new dbCirculation();
+                equipmentIssuereturn = await _objCirculation.getReturnAll();
             }
             catch (Exception ex)
             {
@@ -34,15 +34,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipmentIssuereturn;
         }
 
-        // GET api/circulation/getreturnbyid/1
+        // GET api/circulation/getReturnById/1
         [HttpGet("[action]/{id}")]
-        public async Task<List<vmEquipmentIssuereturn>> getreturnbyid(int id)
+        public async Task<List<vmEquipmentIssueReturn>> getReturnById(int id)
         {
-            List<vmEquipmentIssuereturn> equipmentIssuereturn = null;
+            List<vmEquipmentIssueReturn> equipmentIssuereturn = null;
             try
             {
-                _objcirculation = new Circulation();
-                equipmentIssuereturn = await _objcirculation.getreturnbyid(id);
+                _objCirculation = new dbCirculation();
+                equipmentIssuereturn = await _objCirculation.getReturnById(id);
             }
             catch (Exception ex)
             {
@@ -51,9 +51,9 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipmentIssuereturn;
         }
 
-        // POST: api/circulation/returnequipment
+        // POST: api/circulation/returnEquipment
         [HttpPost("[action]")]
-        public async Task<object> returnequipment([FromBody] EquipmentIssueReturn model)
+        public async Task<object> returnEquipment([FromBody] EquipmentIssueReturn model)
         {
             object result = null; string message = string.Empty;
             try
@@ -65,8 +65,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
                 //var equipmentReturned = JsonConvert.DeserializeObject<EquipmentIssueReturn>(model.ToString());
                 //Save
-                _objcirculation = new Circulation();
-                message = await _objcirculation.returnequipment(model);
+                _objCirculation = new dbCirculation();
+                message = await _objCirculation.returnEquipment(model);
             }
             catch (Exception ex)
             {
@@ -84,15 +84,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
 
         #region --Issue
-        // GET: api/circulation/getissueall
+        // GET: api/circulation/getIssueAll
         [HttpGet("[action]")]
-        public async Task<List<vmEquipmentIssuereturn>> getissueall()
+        public async Task<List<vmEquipmentIssueReturn>> getIssueAll()
         {
-            List<vmEquipmentIssuereturn> equipmentIssueissue = null;
+            List<vmEquipmentIssueReturn> equipmentIssueissue = null;
             try
             {
-                _objcirculation = new Circulation();
-                equipmentIssueissue = await _objcirculation.getissueall();
+                _objCirculation = new dbCirculation();
+                equipmentIssueissue = await _objCirculation.getIssueAll();
             }
             catch (Exception ex)
             {
@@ -101,15 +101,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipmentIssueissue;
         }
 
-        // GET api/circulation/getissuebyid/1
+        // GET api/circulation/getIssueById/1
         [HttpGet("[action]/{id}")]
-        public async Task<List<vmEquipmentIssuereturn>> getissuebyid(int id)
+        public async Task<List<vmEquipmentIssueReturn>> getIssueById(int id)
         {
-            List<vmEquipmentIssuereturn> equipmentIssueissueList = null;
+            List<vmEquipmentIssueReturn> equipmentIssueissueList = null;
             try
             {
-                _objcirculation = new Circulation();
-                equipmentIssueissueList = await _objcirculation.getissuebyid(id);
+                _objCirculation = new dbCirculation();
+                equipmentIssueissueList = await _objCirculation.getIssueById(id);
             }
             catch (Exception ex)
             {
@@ -119,9 +119,9 @@ namespace EquipmentMgt.Web.serverapp.backoffice
         }
 
 
-        // POST: api/circulation/issueequipment
+        // POST: api/circulation/issueEquipment
         [HttpPost("[action]")]
-        public async Task<object> issueequipment([FromBody] object model)
+        public async Task<object> issueEquipment([FromBody] object model)
         {
             object result = null; string message = string.Empty;
             try
@@ -134,8 +134,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 var equipmentIssued = JsonConvert.DeserializeObject<EquipmentIssueReturn>(model.ToString());
 
                 //Save
-                _objcirculation = new Circulation();
-                message = await _objcirculation.issueequipment(equipmentIssued);
+                _objCirculation = new dbCirculation();
+                message = await _objCirculation.issueEquipment(equipmentIssued);
             }
             catch (Exception ex)
             {

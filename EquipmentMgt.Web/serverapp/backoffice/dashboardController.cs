@@ -9,19 +9,19 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class dashboardController : ControllerBase
+    public class DashboardController : ControllerBase
     {
-        private Dashboard _objdashboard = null;
+        private dbDashboard _objDashboard = null;
 
-        // GET: api/dashboard/getallsummary
+        // GET: api/dashboard/getAllSummary
         [HttpGet("[action]")]
-        public async Task<vmSummary> getallsummary()
+        public async Task<vmSummary> getAllSummary()
         {
             vmSummary summary = null;
             try
             {
-                _objdashboard = new Dashboard();
-                summary = await _objdashboard.getallsummary();
+                _objDashboard = new dbDashboard();
+                summary = await _objDashboard.getAllSummary();
             }
             catch (Exception ex)
             {

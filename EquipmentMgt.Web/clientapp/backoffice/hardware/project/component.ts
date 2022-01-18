@@ -22,9 +22,9 @@ export class ProjectComponent implements OnInit {
 
 
     public _getUrl: string = '/api/Project/getAll';
-    public _getbyIdUrl: string = '/api/project/getbyid';
+    public _getbyIdUrl: string = '/api/project/getById';
     public _saveUrl: string = '/api/project/save';
-    public _deleteUrl: string = '/api/project/deletebyid';
+    public _deleteUrl: string = '/api/project/deleteById';
     public _updateUrl: string = '/api/project/updateStatus';
 
    
@@ -80,7 +80,7 @@ export class ProjectComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     console.log(response);
@@ -96,7 +96,7 @@ export class ProjectComponent implements OnInit {
     edit(e, m) {
         e.preventDefault();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.project = response;

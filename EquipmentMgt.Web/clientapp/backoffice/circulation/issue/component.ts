@@ -30,12 +30,12 @@ export class IssueComponent implements OnInit {
     public showSearchMemberDiv: boolean = false;
 
 
-    public _getUrl: string = '/api/circulation/getissueall';
-    public _getbyIdUrl: string = '/api/circulation/getissuebyid';
-    public _saveUrl: string = '/api/circulation/issueequipment';
-    public _getEquipmentUrl: string = '/api/circulation/getallequipment';
-    public _getAvailableallEquipmentUrl: string = '/api/equipment/getavailableallequipment';
-    public _getbyUserIdUrl: string = '/api/users/getbyid';
+    public _getUrl: string = '/api/circulation/getIssueAll';
+    public _getbyIdUrl: string = '/api/circulation/getIssueById';
+    public _saveUrl: string = '/api/circulation/issueEquipment';
+    public _getEquipmentUrl: string = '/api/circulation/getAllequipment';
+    public _getAvailableallEquipmentUrl: string = '/api/equipment/getAvailableallEquipment';
+    public _getbyUserIdUrl: string = '/api/users/getById';
     
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -115,7 +115,7 @@ export class IssueComponent implements OnInit {
         this.loading = true;
         this.reset();
         e.preventDefault();
-        this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
+        this._dataService.getById(searchValue, this._getbyUserIdUrl)
             .subscribe(response => {
                 this.user = response;
                 var dt = new Date();
@@ -135,7 +135,7 @@ export class IssueComponent implements OnInit {
                 //console.log(error);
             });
 
-        this._dataService.getbyid(searchValue, this._getbyIdUrl)
+        this._dataService.getById(searchValue, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 if (response != null) {
@@ -208,7 +208,7 @@ export class IssueComponent implements OnInit {
     //equipmentlist to choose
     equipmentList() {
         this.loading = true;
-        this._dataService.getall(this._getEquipmentUrl)
+        this._dataService.getAll(this._getEquipmentUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -220,7 +220,7 @@ export class IssueComponent implements OnInit {
     }
     getAvailableEquipmentList() {
         this.loading = true;
-        this._dataService.getall(this._getAvailableallEquipmentUrl)
+        this._dataService.getAll(this._getAvailableallEquipmentUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -235,7 +235,7 @@ export class IssueComponent implements OnInit {
     issueedList() {
         this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.loading = false;

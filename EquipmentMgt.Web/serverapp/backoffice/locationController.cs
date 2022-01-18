@@ -12,25 +12,25 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class locationController : ControllerBase
+    public class LocationController : ControllerBase
     {
-        private Locations _objLocation = null;
+        private dbLocation _objLocation = null;
         private IHostingEnvironment _hostingEnvironment;
 
-        public locationController(IHostingEnvironment env)
+        public LocationController(IHostingEnvironment env)
         {
             _hostingEnvironment = env;
         }
 
-        // GET: api/ location/getall
+        // GET: api/ location/getAll
         [HttpGet("[action]")]
-        public async Task<List<vmLocation>> getall()
+        public async Task<List<vmLocation>> getAll()
         {
             List<vmLocation> locations = null;
             try
             {
-                _objLocation = new Locations();
-                locations = await _objLocation.getall();
+                _objLocation = new dbLocation();
+                locations = await _objLocation.getAll();
             }
             catch (Exception ex)
             {
@@ -39,15 +39,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return locations;
         }
 
-        // GET api/ location/getbyid/1
+        // GET api/ location/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<Location> getbyid(int id)
+        public async Task<Location> getById(int id)
         {
             Location location = null;
             try
             {
-                _objLocation = new Locations();
-                location = await _objLocation.getbyid(id);
+                _objLocation = new dbLocation();
+                location = await _objLocation.getById(id);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 {
                     return BadRequest();
                 }
-                _objLocation = new Locations();
+                _objLocation = new dbLocation();
                 message = await _objLocation.create(model);
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objLocation = new Locations();
+                _objLocation = new dbLocation();
                 message = await _objLocation.updateStatus(model);
             }
             catch (Exception ex)
@@ -110,15 +110,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/ location/deletebyid/1
+        // DELETE api/ location/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objLocation = new Locations();
-                message = await _objLocation.deletebyid(id);
+                _objLocation = new dbLocation();
+                message = await _objLocation.deleteById(id);
             }
             catch (Exception ex)
             {

@@ -22,9 +22,9 @@ export class DashboardComponent implements OnInit {
     public totalIssued: number = 0;
     public totalReturned: number = 0;
 
-    private _getEUrl: string = '/api/report/getequipmentchart';
-    private _getMUrl: string = '/api/report/getmemberchart';
-    private _getSUrl: string = '/api/dashboard/getallsummary';
+    private _getEUrl: string = '/api/report/getEquipmentChart';
+    private _getMUrl: string = '/api/report/getMemberChart';
+    private _getSUrl: string = '/api/dashboard/getAllSummary';
 
     constructor(
         private router: Router,
@@ -58,10 +58,9 @@ export class DashboardComponent implements OnInit {
     //Get Summary 
     getSummary() {
         //debugger
-        this._dataService.getall(this._getSUrl)
+        this._dataService.getAll(this._getSUrl)
             .subscribe(
                 response => {
-                    //console.log(response);
                     this.summaryTotal = response;
                     this.totalEquipment = this.summaryTotal.totalEquipment;
                     this.totalMember = this.summaryTotal.totalMember;
@@ -77,7 +76,7 @@ export class DashboardComponent implements OnInit {
     getEquipmentChart() {
 
         //debugger
-        this._dataService.getall(this._getEUrl).subscribe(
+        this._dataService.getAll(this._getEUrl).subscribe(
             response => {
                 this.echart = response;
                 let chartData = [];
@@ -139,7 +138,7 @@ export class DashboardComponent implements OnInit {
     getMemberChart() {
 
         //debugger
-        this._dataService.getall(this._getMUrl).subscribe(
+        this._dataService.getAll(this._getMUrl).subscribe(
             response => {
                 this.mchart = response;
                 let chartData = [];

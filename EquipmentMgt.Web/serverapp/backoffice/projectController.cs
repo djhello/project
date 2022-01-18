@@ -14,7 +14,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        private Projects _objproject = null;
+        private dbProject _objProject = null;
         private IHostingEnvironment _hostingEnvironment;
 
         public ProjectController(IHostingEnvironment env)
@@ -22,15 +22,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/project/getall
+        // GET: api/project/getAll
         [HttpGet("[action]")]
         public async Task<List<Project>> getAll()
         {
             List<Project> projects = null;
             try
             {
-                _objproject = new Projects();
-                projects = await _objproject.getall();
+                _objProject = new dbProject();
+                projects = await _objProject.getAll();
             }
             catch (Exception ex)
             {
@@ -39,15 +39,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return projects;
         }
 
-        // GET api/project/getbyid/1
+        // GET api/project/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<Project> getbyid(int id)
+        public async Task<Project> getById(int id)
         {
             Project project = null;
             try
             {
-                _objproject = new Projects();
-                project = await _objproject.getbyid(id);
+                _objProject = new dbProject();
+                project = await _objProject.getById(id);
             }
             catch (Exception ex)
             {
@@ -69,8 +69,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objproject = new Projects();
-                message = await _objproject.create(model);
+                _objProject = new dbProject();
+                message = await _objProject.create(model);
             }
             catch (Exception ex)
             {
@@ -97,8 +97,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objproject = new Projects();
-                message = await _objproject.updateStatus(model);
+                _objProject = new dbProject();
+                message = await _objProject.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -112,15 +112,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/project/deletebyid/1
+        // DELETE api/project/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objproject = new Projects();
-                message = await _objproject.deletebyid(id);
+                _objProject = new dbProject();
+                message = await _objProject.deleteById(id);
             }
             catch (Exception ex)
             {

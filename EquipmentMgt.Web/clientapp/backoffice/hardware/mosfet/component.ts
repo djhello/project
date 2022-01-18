@@ -29,14 +29,14 @@ export class MosfetComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/Mosfet/getAll';
-    public _getbyIdUrl: string = '/api/mosfet/getbyid';
+    public _getbyIdUrl: string = '/api/mosfet/getById';
     public _saveUrl: string = '/api/mosfet/save';
-    public _deleteUrl: string = '/api/mosfet/deletebyid';
+    public _deleteUrl: string = '/api/mosfet/deleteById';
     public _updateUrl: string = '/api/mosfet/updateStatus';
     public _receiveUrl: string = '/api/mosfet/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
     constructor(
         private _http: Http,
@@ -101,7 +101,7 @@ export class MosfetComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.mosfets = response;
@@ -121,7 +121,7 @@ export class MosfetComponent implements OnInit {
         this.getProjects();
         this.getLocations();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.mosfet = response;
@@ -243,7 +243,7 @@ export class MosfetComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -256,7 +256,7 @@ export class MosfetComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

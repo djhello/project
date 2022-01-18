@@ -21,10 +21,10 @@ var CalibrationsComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
         this.loading = false;
-        this._getUrl = '/api/calibration/getall';
-        this._getbyIdUrl = '/api/calibration/getbyid';
+        this._getUrl = '/api/calibration/getAll';
+        this._getbyIdUrl = '/api/calibration/getById';
         this._saveUrl = '/api/calibration/save';
-        this._deleteUrl = '/api/calibration/deletebyid';
+        this._deleteUrl = '/api/calibration/deleteById';
         this._updateUrl = '/api/calibration/updateStatus';
     }
     CalibrationsComponent.prototype.ngOnInit = function () {
@@ -53,7 +53,7 @@ var CalibrationsComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.calibrations = response;
         }, function (error) {
@@ -67,7 +67,7 @@ var CalibrationsComponent = /** @class */ (function () {
         //debugger
         this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.calibration = response;
             //console.log(this.calibration.calibrationName);

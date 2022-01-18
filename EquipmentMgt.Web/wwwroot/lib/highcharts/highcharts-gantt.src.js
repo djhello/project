@@ -24989,10 +24989,10 @@
 		     * @return {Array<Highcharts.Point|Highcharts.Series>}
 		     *         The current items in the legend.
 		     *
-		     * @fires Highcharts.Legend#event:afterGetAllItems
+		     * @fires Highcharts.Legend#event:aftergetAllItems
 		     *
 		     * @todo
-		     * Make events official: Fires the event `afterGetAllItems`.
+		     * Make events official: Fires the event `aftergetAllItems`.
 		     */
 		    getAllItems: function () {
 		        var allItems = [];
@@ -25019,7 +25019,7 @@
 		            }
 		        });
 
-		        fireEvent(this, 'afterGetAllItems', { allItems: allItems });
+		        fireEvent(this, 'aftergetAllItems', { allItems: allItems });
 
 		        return allItems;
 		    },

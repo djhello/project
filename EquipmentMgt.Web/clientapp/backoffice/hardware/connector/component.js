@@ -25,13 +25,13 @@ var ConnectorComponent = /** @class */ (function () {
         this.adet = 0;
         this.loading = false;
         this._getUrl = '/api/Connector/getAll';
-        this._getbyIdUrl = '/api/connector/getbyid';
+        this._getbyIdUrl = '/api/connector/getById';
         this._saveUrl = '/api/connector/save';
-        this._deleteUrl = '/api/connector/deletebyid';
+        this._deleteUrl = '/api/connector/deleteById';
         this._updateUrl = '/api/connector/updateStatus';
         this._receiveUrl = '/api/connector/receive';
-        this._getLocationUrl = '/api/location/getall';
-        this._getProjectUrl = '/api/project/getall';
+        this._getLocationUrl = '/api/location/getAll';
+        this._getProjectUrl = '/api/project/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUserName = this.loggedUser.displayName;
         this.loggedEmail = this.loggedUser.email;
@@ -85,7 +85,7 @@ var ConnectorComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.connectors = response;
             _this.connectorsCopy = response;
@@ -101,7 +101,7 @@ var ConnectorComponent = /** @class */ (function () {
         this.loading = true;
         this.getLocations();
         this.getProjects();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.connector = response;
@@ -219,7 +219,7 @@ var ConnectorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(function (response) {
             _this.locations = response;
             _this.loading = false;
@@ -231,7 +231,7 @@ var ConnectorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(function (response) {
             _this.projects = response;
             _this.loading = false;

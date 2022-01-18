@@ -25,7 +25,7 @@ var RegisterComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.loading = false;
         this._saveUrl = '/api/auth/regusers';
-        this._getDepartmanUrl = '/api/departman/getall';
+        this._getDepartmanUrl = '/api/departman/getAll';
     }
     RegisterComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Register");
@@ -53,7 +53,7 @@ var RegisterComponent = /** @class */ (function () {
     RegisterComponent.prototype.getDepartmanAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getDepartmanUrl)
+        this._dataService.getAll(this._getDepartmanUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.departmans = response;

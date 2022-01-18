@@ -1,5 +1,6 @@
 ﻿using DataModels.EntityModels;
 using DataUtilities;
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,11 @@ namespace EquipmentMgt.Web
 
 
             services.AddDbContext<EquipmentDBContext>(options => options.UseSqlServer(StaticInfos.conString));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Envanter Management System", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +58,13 @@ namespace EquipmentMgt.Web
             app.UseStaticFiles();
             app.UseFileServer(enableDirectoryBrowsing: false);
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger");
+            });
+
         }
     }
 }

@@ -10,9 +10,9 @@ namespace EquipmentMgt.Web.serverapp.account
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class authController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private AuthUsers _objUsers = null;
+        private dbAuthUser _objUsers = null;
 
         // POST: api/auth/regusers
         [HttpPost("[action]")]
@@ -26,7 +26,7 @@ namespace EquipmentMgt.Web.serverapp.account
                     return BadRequest();
                 }
                 //Save
-                _objUsers = new AuthUsers();
+                _objUsers = new dbAuthUser();
                 message = await _objUsers.regUsers(model);
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace EquipmentMgt.Web.serverapp.account
                 }
 
                 //Save
-                _objUsers = new AuthUsers();
+                _objUsers = new dbAuthUser();
                 loggedUser = await _objUsers.loginUsers(model);
             }
             catch (Exception ex)
@@ -86,7 +86,7 @@ namespace EquipmentMgt.Web.serverapp.account
                 }
 
                 //Save
-                _objUsers = new AuthUsers();
+                _objUsers = new dbAuthUser();
                 loggedUser = await _objUsers.checkPassword(model);
             }
             catch (Exception ex)

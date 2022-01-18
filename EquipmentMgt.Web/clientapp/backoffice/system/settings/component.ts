@@ -22,7 +22,7 @@ export class UserSettingsComponent implements OnInit {
     public loading: boolean = false;
     public resmessage: string;
     public alertmessage: string;
-    public _getbyIdUrl: string = '/api/users/getbyid';
+    public _getbyIdUrl: string = '/api/users/getById';
     public _updateUrl: string = '/api/users/updateUserInfos';
     public _updatePasswordUrl: string = '/api/users/updatePasswordUrl';
     
@@ -106,7 +106,7 @@ export class UserSettingsComponent implements OnInit {
     }
     getbyIdUrl() {
         this.loading = true;
-        this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl )
+        this._dataService.getById(this.loggedUser.userId, this._getbyIdUrl )
             .subscribe(response => {
                 this.loading = false;
                 this.user = response;

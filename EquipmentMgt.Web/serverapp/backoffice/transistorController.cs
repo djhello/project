@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class TransistorController : ControllerBase
     {
-        private Transistors _objtransistor = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbTransistor _objTransistor = null;
+        private dbHardwareLog _objHardwareLogs = null;
         private IHostingEnvironment _hostingEnvironment;
 
         public TransistorController(IHostingEnvironment env)
@@ -24,15 +24,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/transistor/getall
+        // GET: api/transistor/getAll
         [HttpGet("[action]")]
         public async Task<List<vmTransistor>> getAll()
         {
             List<vmTransistor> transistors = null;
             try
             {
-                _objtransistor = new Transistors();
-                transistors = await _objtransistor.getall();
+                _objTransistor = new dbTransistor();
+                transistors = await _objTransistor.getAll();
             }
             catch (Exception ex)
             {
@@ -41,15 +41,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return transistors;
         }
 
-        // GET api/transistor/getbyid/1
+        // GET api/transistor/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmTransistor> getbyid(int id)
+        public async Task<vmTransistor> getById(int id)
         {
             vmTransistor transistor = null;
             try
             {
-                _objtransistor = new Transistors();
-                transistor = await _objtransistor.getbyid(id);
+                _objTransistor = new dbTransistor();
+                transistor = await _objTransistor.getById(id);
             }
             catch (Exception ex)
             {
@@ -71,8 +71,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objtransistor = new Transistors();
-                message = await _objtransistor.create(model);
+                _objTransistor = new dbTransistor();
+                message = await _objTransistor.create(model);
             }
             catch (Exception ex)
             {
@@ -99,10 +99,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objtransistor = new Transistors();
-                _objHardwareLogs = new HardwareLogs();
+                _objTransistor = new dbTransistor();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objtransistor.receive(model);
+                message = await _objTransistor.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -141,8 +141,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objtransistor = new Transistors();
-                message = await _objtransistor.updateStatus(model);
+                _objTransistor = new dbTransistor();
+                message = await _objTransistor.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -156,15 +156,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/transistor/deletebyid/1
+        // DELETE api/transistor/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objtransistor = new Transistors();
-                message = await _objtransistor.deletebyid(id);
+                _objTransistor = new dbTransistor();
+                message = await _objTransistor.deleteById(id);
             }
             catch (Exception ex)
             {

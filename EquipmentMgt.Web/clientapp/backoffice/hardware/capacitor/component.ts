@@ -29,14 +29,14 @@ export class CapacitorComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/Capacitor/getAll';
-    public _getbyIdUrl: string = '/api/capacitor/getbyid';
+    public _getbyIdUrl: string = '/api/capacitor/getById';
     public _saveUrl: string = '/api/capacitor/save';
-    public _deleteUrl: string = '/api/capacitor/deletebyid';
+    public _deleteUrl: string = '/api/capacitor/deleteById';
     public _updateUrl: string = '/api/capacitor/updateStatus';
     public _receiveUrl: string = '/api/capacitor/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
     constructor(
         private _http: Http,
@@ -118,7 +118,7 @@ export class CapacitorComponent implements OnInit {
         this.getLocations();
         this.getProjects();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.capacitor = response;
@@ -241,7 +241,7 @@ export class CapacitorComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -254,7 +254,7 @@ export class CapacitorComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

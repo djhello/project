@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class OtherICController : ControllerBase
     {
-        private OtherICs _objotherIC = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbOtherIC _objOtherIC = null;
+        private dbHardwareLog _objHardwareLogs = null;
         private IHostingEnvironment _hostingEnvironment;
 
         public OtherICController(IHostingEnvironment env)
@@ -24,15 +24,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/otherIC/getall
+        // GET: api/otherIC/getAll
         [HttpGet("[action]")]
         public async Task<List<vmOtherIC>> getAll()
         {
             List<vmOtherIC> otherICs = null;
             try
             {
-                _objotherIC = new OtherICs();
-                otherICs = await _objotherIC.getall();
+                _objOtherIC = new dbOtherIC();
+                otherICs = await _objOtherIC.getAll();
             }
             catch (Exception ex)
             {
@@ -41,15 +41,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return otherICs;
         }
 
-        // GET api/otherIC/getbyid/1
+        // GET api/otherIC/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmOtherIC> getbyid(int id)
+        public async Task<vmOtherIC> getById(int id)
         {
             vmOtherIC otherIC = null;
             try
             {
-                _objotherIC = new OtherICs();
-                otherIC = await _objotherIC.getbyid(id);
+                _objOtherIC = new dbOtherIC();
+                otherIC = await _objOtherIC.getById(id);
             }
             catch (Exception ex)
             {
@@ -71,8 +71,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objotherIC = new OtherICs();
-                message = await _objotherIC.create(model);
+                _objOtherIC = new dbOtherIC();
+                message = await _objOtherIC.create(model);
             }
             catch (Exception ex)
             {
@@ -99,8 +99,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objotherIC = new OtherICs();
-                message = await _objotherIC.updateStatus(model);
+                _objOtherIC = new dbOtherIC();
+                message = await _objOtherIC.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -127,10 +127,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objotherIC = new OtherICs();
-                _objHardwareLogs = new HardwareLogs();
+                _objOtherIC = new dbOtherIC();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objotherIC.receive(model);
+                message = await _objOtherIC.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -156,15 +156,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/otherIC/deletebyid/1
+        // DELETE api/otherIC/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objotherIC = new OtherICs();
-                message = await _objotherIC.deletebyid(id);
+                _objOtherIC = new dbOtherIC();
+                message = await _objOtherIC.deleteById(id);
             }
             catch (Exception ex)
             {

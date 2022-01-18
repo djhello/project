@@ -10,19 +10,19 @@ namespace EquipmentMgt.Web.serverapp.common
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class dropdownController : ControllerBase
+    public class DropdownController : ControllerBase
     {
-        private Dropdown _objddl = null;
+        private dbDropdown _objDropdown = null;
 
-        // GET: api/dropdown/getallcalibration
+        // GET: api/dropdown/getAllCalibration
         [HttpGet("[action]")]
-        public async Task<List<Calibration>> getallcalibration()
+        public async Task<List<Calibration>> getAllCalibration()
         {
             List<Calibration> calibrations = null;
             try
             {
-                _objddl = new Dropdown();
-                calibrations = await _objddl.getallcalibration();
+                _objDropdown = new dbDropdown();
+                calibrations = await _objDropdown.getAllCalibration();
             }
             catch (Exception ex)
             {

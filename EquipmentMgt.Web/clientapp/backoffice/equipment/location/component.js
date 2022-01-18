@@ -23,10 +23,10 @@ var LocationsComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
         this.loading = false;
-        this._getUrl = '/api/location/getall';
-        this._getbyIdUrl = '/api/location/getbyid';
+        this._getUrl = '/api/location/getAll';
+        this._getbyIdUrl = '/api/location/getById';
         this._saveUrl = '/api/location/save';
-        this._deleteUrl = '/api/location/deletebyid';
+        this._deleteUrl = '/api/location/deleteById';
         this._updateUrl = '/api/location/updateStatus';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
@@ -69,7 +69,7 @@ var LocationsComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.locations = response;
@@ -82,7 +82,7 @@ var LocationsComponent = /** @class */ (function () {
         var _this = this;
         e.preventDefault();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.location = response;

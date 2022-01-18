@@ -27,9 +27,9 @@ export class ReturnComponent implements OnInit {
     public showSearchMemberDiv: boolean = false;
 
     public _getUrl: string = '/api/circulation/getreturnall';
-    public _getbyIdUrl: string = '/api/circulation/getreturnbyid';
-    public _saveUrl: string = '/api/circulation/returnequipment';
-    public _getbyUserIdUrl: string = '/api/users/getbyid';
+    public _getbyIdUrl: string = '/api/circulation/getReturnById';
+    public _saveUrl: string = '/api/circulation/returnEquipment';
+    public _getbyUserIdUrl: string = '/api/users/getById';
 
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -97,7 +97,7 @@ export class ReturnComponent implements OnInit {
                 equipments: []
             });
             this.loading = true;
-            this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl)
+            this._dataService.getById(this.loggedUser.userId, this._getbyIdUrl)
                 .subscribe(response => {
                     this.loading = false;
                     if (response != null) {
@@ -118,7 +118,7 @@ export class ReturnComponent implements OnInit {
         this.loading = true;
         this.reset();
         e.preventDefault();
-        this._dataService.getbyid(searchValue, this._getbyUserIdUrl)
+        this._dataService.getById(searchValue, this._getbyUserIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.user = response;
@@ -136,7 +136,7 @@ export class ReturnComponent implements OnInit {
                 //console.log(error);
             });
         this.loading = true;
-        this._dataService.getbyid(searchValue, this._getbyIdUrl)
+        this._dataService.getById(searchValue, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 if (response != null) {
@@ -183,7 +183,7 @@ export class ReturnComponent implements OnInit {
     returnedList() {
         this.loading = true;
         $('#largesizemodal').modal({ backdrop: 'static', keyboard: false, show: true });
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.loading = false;

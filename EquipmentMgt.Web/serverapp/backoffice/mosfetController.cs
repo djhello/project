@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class MosfetController : ControllerBase
     {
-        private Mosfets _objmosfet = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbMosfet _objMosfet = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
         private IHostingEnvironment _hostingEnvironment;
 
@@ -25,15 +25,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/mosfet/getall
+        // GET: api/mosfet/getAll
         [HttpGet("[action]")]
         public async Task<List<vmMosfet>> getAll()
         {
             List<vmMosfet> mosfets = null;
             try
             {
-                _objmosfet = new Mosfets();
-                mosfets = await _objmosfet.getall();
+                _objMosfet = new dbMosfet();
+                mosfets = await _objMosfet.getAll();
             }
             catch (Exception ex)
             {
@@ -42,15 +42,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return mosfets;
         }
 
-        // GET api/mosfet/getbyid/1
+        // GET api/mosfet/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmMosfet> getbyid(int id)
+        public async Task<vmMosfet> getById(int id)
         {
             vmMosfet mosfet = null;
             try
             {
-                _objmosfet = new Mosfets();
-                mosfet = await _objmosfet.getbyid(id);
+                _objMosfet = new dbMosfet();
+                mosfet = await _objMosfet.getById(id);
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objmosfet = new Mosfets();
-                message = await _objmosfet.create(model);
+                _objMosfet = new dbMosfet();
+                message = await _objMosfet.create(model);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objmosfet = new Mosfets();
-                message = await _objmosfet.updateStatus(model);
+                _objMosfet = new dbMosfet();
+                message = await _objMosfet.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -128,10 +128,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objmosfet = new Mosfets();
-                _objHardwareLogs = new HardwareLogs();
+                _objMosfet = new dbMosfet();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objmosfet.receive(model);
+                message = await _objMosfet.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -157,15 +157,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/mosfet/deletebyid/1
+        // DELETE api/mosfet/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objmosfet = new Mosfets();
-                message = await _objmosfet.deletebyid(id);
+                _objMosfet = new dbMosfet();
+                message = await _objMosfet.deleteById(id);
             }
             catch (Exception ex)
             {

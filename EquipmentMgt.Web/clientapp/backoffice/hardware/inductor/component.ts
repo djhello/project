@@ -29,14 +29,14 @@ export class InductorComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/Inductor/getAll';
-    public _getbyIdUrl: string = '/api/inductor/getbyid';
+    public _getbyIdUrl: string = '/api/inductor/getById';
     public _saveUrl: string = '/api/inductor/save';
-    public _deleteUrl: string = '/api/inductor/deletebyid';
+    public _deleteUrl: string = '/api/inductor/deleteById';
     public _updateUrl: string = '/api/inductor/updateStatus';
     public _receiveUrl: string = '/api/inductor/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
     constructor(
         private _http: Http,
@@ -101,7 +101,7 @@ export class InductorComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.inductors = response;
@@ -120,7 +120,7 @@ export class InductorComponent implements OnInit {
         this.loading = true;
         this.getProjects();
         this.getLocations();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.inductor = response;
@@ -242,7 +242,7 @@ export class InductorComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -255,7 +255,7 @@ export class InductorComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

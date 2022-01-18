@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class ResistorController : ControllerBase
     {
-        private Resistors _objresistor = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbResistor _objResistor = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
         private IHostingEnvironment _hostingEnvironment;
 
@@ -25,15 +25,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/resistor/getall
+        // GET: api/resistor/getAll
         [HttpGet("[action]")]
         public async Task<List<vmResistor>> getAll()
         {
             List<vmResistor> resistors = null;
             try
             {
-                _objresistor = new Resistors();
-                resistors = await _objresistor.getall();
+                _objResistor = new dbResistor();
+                resistors = await _objResistor.getAll();
             }
             catch (Exception ex)
             {
@@ -42,15 +42,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return resistors;
         }
 
-        // GET api/resistor/getbyid/1
+        // GET api/resistor/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmResistor> getbyid(int id)
+        public async Task<vmResistor> getById(int id)
         {
             vmResistor resistor = null;
             try
             {
-                _objresistor = new Resistors();
-                resistor = await _objresistor.getbyid(id);
+                _objResistor = new dbResistor();
+                resistor = await _objResistor.getById(id);
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objresistor = new Resistors();
-                message = await _objresistor.create(model);
+                _objResistor = new dbResistor();
+                message = await _objResistor.create(model);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objresistor = new Resistors();
-                message = await _objresistor.updateStatus(model);
+                _objResistor = new dbResistor();
+                message = await _objResistor.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -128,10 +128,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objresistor = new Resistors();
-                _objHardwareLogs = new HardwareLogs();
+                _objResistor = new dbResistor();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objresistor.receive(model);
+                message = await _objResistor.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -157,15 +157,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/resistor/deletebyid/1
+        // DELETE api/resistor/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objresistor = new Resistors();
-                message = await _objresistor.deletebyid(id);
+                _objResistor = new dbResistor();
+                message = await _objResistor.deleteById(id);
             }
             catch (Exception ex)
             {

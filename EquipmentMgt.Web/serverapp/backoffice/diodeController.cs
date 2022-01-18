@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class DiodeController : ControllerBase
     {
-        private Diodes _objdiode = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbDiode _objDiode = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
         private IHostingEnvironment _hostingEnvironment;
 
@@ -25,15 +25,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/diode/getall
+        // GET: api/diode/getAll
         [HttpGet("[action]")]
         public async Task<List<vmDiode>> getAll()
         {
             List<vmDiode> diodes = null;
             try
             {
-                _objdiode = new Diodes();
-                diodes = await _objdiode.getall();
+                _objDiode = new dbDiode();
+                diodes = await _objDiode.getAll();
             }
             catch (Exception ex)
             {
@@ -42,15 +42,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return diodes;
         }
 
-        // GET api/diode/getbyid/1
+        // GET api/diode/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmDiode> getbyid(int id)
+        public async Task<vmDiode> getById(int id)
         {
             vmDiode diode = null;
             try
             {
-                _objdiode = new Diodes();
-                diode = await _objdiode.getbyid(id);
+                _objDiode = new dbDiode();
+                diode = await _objDiode.getById(id);
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objdiode = new Diodes();
-                message = await _objdiode.create(model);
+                _objDiode = new dbDiode();
+                message = await _objDiode.create(model);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objdiode = new Diodes();
-                message = await _objdiode.updateStatus(model);
+                _objDiode = new dbDiode();
+                message = await _objDiode.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -128,10 +128,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objdiode = new Diodes();
-                _objHardwareLogs = new HardwareLogs();
+                _objDiode = new dbDiode();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objdiode.receive(model);
+                message = await _objDiode.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -157,15 +157,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/diode/deletebyid/1
+        // DELETE api/diode/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objdiode = new Diodes();
-                message = await _objdiode.deletebyid(id);
+                _objDiode = new dbDiode();
+                message = await _objDiode.deleteById(id);
             }
             catch (Exception ex)
             {

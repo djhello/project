@@ -15,18 +15,18 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class CapacitorController : ControllerBase
     {
-        private Capacitors _objcapacitor = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbCapacitor _objCapacitor = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
-        // GET: api/capacitor/getall
+        // GET: api/capacitor/getAll
         [HttpGet("[action]")]
         public async Task<List<vmCapacitor>> getAll()
         {
             List<vmCapacitor> capacitors = null;
             try
             {
-                _objcapacitor = new Capacitors();
-                capacitors = await _objcapacitor.getall();
+                _objCapacitor = new dbCapacitor();
+                capacitors = await _objCapacitor.getAll();
             }
             catch (Exception ex)
             {
@@ -35,15 +35,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return capacitors;
         }
 
-        // GET api/capacitor/getbyid/1
+        // GET api/capacitor/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmCapacitor> getbyid(int id)
+        public async Task<vmCapacitor> getById(int id)
         {
             vmCapacitor capacitor = null;
             try
             {
-                _objcapacitor = new Capacitors();
-                capacitor = await _objcapacitor.getbyid(id);
+                _objCapacitor = new dbCapacitor();
+                capacitor = await _objCapacitor.getById(id);
             }
             catch (Exception ex)
             {
@@ -65,8 +65,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objcapacitor = new Capacitors();
-                message = await _objcapacitor.create(model);
+                _objCapacitor = new dbCapacitor();
+                message = await _objCapacitor.create(model);
             }
             catch (Exception ex)
             {
@@ -93,8 +93,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objcapacitor = new Capacitors();
-                message = await _objcapacitor.updateStatus(model);
+                _objCapacitor = new dbCapacitor();
+                message = await _objCapacitor.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -121,10 +121,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objcapacitor = new Capacitors();
-                _objHardwareLogs = new HardwareLogs();
+                _objCapacitor = new dbCapacitor();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objcapacitor.receive(model);
+                message = await _objCapacitor.receive(model);
                 if(message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -150,15 +150,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/capacitor/deletebyid/1
+        // DELETE api/capacitor/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objcapacitor = new Capacitors();
-                message = await _objcapacitor.deletebyid(id);
+                _objCapacitor = new dbCapacitor();
+                message = await _objCapacitor.deleteById(id);
             }
             catch (Exception ex)
             {

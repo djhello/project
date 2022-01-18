@@ -20,10 +20,10 @@ export class CalibrationsComponent implements OnInit {
     public alertmessage: string;
     public loading: boolean = false; 
 
-    public _getUrl: string = '/api/calibration/getall';
-    public _getbyIdUrl: string = '/api/calibration/getbyid';
+    public _getUrl: string = '/api/calibration/getAll';
+    public _getbyIdUrl: string = '/api/calibration/getById';
     public _saveUrl: string = '/api/calibration/save';
-    public _deleteUrl: string = '/api/calibration/deletebyid';
+    public _deleteUrl: string = '/api/calibration/deleteById';
 
     public _updateUrl: string = '/api/calibration/updateStatus';
 
@@ -65,7 +65,7 @@ export class CalibrationsComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.calibrations = response;
@@ -81,7 +81,7 @@ export class CalibrationsComponent implements OnInit {
         //debugger
         this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 
                 this.calibration = response;

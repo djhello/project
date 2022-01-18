@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataModels.ViewModels
 {
-    public class vmEquipmentIssuereturn
+    public class vmEquipmentIssueReturn
     {
         public int Id { get; set; }
         public string EquipmentId { get; set; }

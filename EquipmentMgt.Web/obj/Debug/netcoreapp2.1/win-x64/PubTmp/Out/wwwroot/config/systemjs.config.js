@@ -39,7 +39,15 @@
 
             'bcrypt': 'npm:bcrypt/bcrypt.js',
 
-            'bcryptjs': 'npm:bcryptjs/index.js'
+            'bcryptjs': 'npm:bcryptjs/index.js',
+
+            'handsontable': 'npm:handsontable/dist/handsontable.full.min.js',
+
+            'parcel-bundler': 'npm:parcel-bundler/index.js',
+
+            '@handsontable/angular': 'npm:@handsontable/angular/bundles/handsontable-angular.umd.js',
+
+            'angular-ui-grid': 'npm:angular-ui-grid/index.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

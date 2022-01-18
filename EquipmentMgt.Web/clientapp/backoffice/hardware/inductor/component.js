@@ -25,13 +25,13 @@ var InductorComponent = /** @class */ (function () {
         this.adet = 0;
         this.loading = false;
         this._getUrl = '/api/Inductor/getAll';
-        this._getbyIdUrl = '/api/inductor/getbyid';
+        this._getbyIdUrl = '/api/inductor/getById';
         this._saveUrl = '/api/inductor/save';
-        this._deleteUrl = '/api/inductor/deletebyid';
+        this._deleteUrl = '/api/inductor/deleteById';
         this._updateUrl = '/api/inductor/updateStatus';
         this._receiveUrl = '/api/inductor/receive';
-        this._getLocationUrl = '/api/location/getall';
-        this._getProjectUrl = '/api/project/getall';
+        this._getLocationUrl = '/api/location/getAll';
+        this._getProjectUrl = '/api/project/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUserName = this.loggedUser.displayName;
         this.loggedEmail = this.loggedUser.email;
@@ -86,7 +86,7 @@ var InductorComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.inductors = response;
             _this.inductorsCopy = response;
@@ -103,7 +103,7 @@ var InductorComponent = /** @class */ (function () {
         this.loading = true;
         this.getProjects();
         this.getLocations();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.inductor = response;
@@ -221,7 +221,7 @@ var InductorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(function (response) {
             _this.locations = response;
             _this.loading = false;
@@ -233,7 +233,7 @@ var InductorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(function (response) {
             _this.projects = response;
             _this.loading = false;

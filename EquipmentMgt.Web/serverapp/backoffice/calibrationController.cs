@@ -10,19 +10,19 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class calibrationController : ControllerBase
+    public class CalibrationController : ControllerBase
     {
-        private Calibrations _objcalibration = null;
+        private dbCalibration _objCalibration = null;
 
-        // GET: api/calibration/getall
+        // GET: api/calibration/getAll
         [HttpGet("[action]")]
-        public async Task<List<Calibration>> getall()
+        public async Task<List<Calibration>> getAll()
         {
             List<Calibration> calibrations = null;
             try
             {
-                _objcalibration = new Calibrations();
-                calibrations = await _objcalibration.getall();
+                _objCalibration = new dbCalibration();
+                calibrations = await _objCalibration.getAll();
             }
             catch (Exception ex)
             {
@@ -31,15 +31,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return calibrations;
         }
 
-        // GET api/calibration/getbyid/1
+        // GET api/calibration/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<Calibration> getbyid(int id)
+        public async Task<Calibration> getById(int id)
         {
             Calibration calibration = null;
             try
             {
-                _objcalibration = new Calibrations();
-                calibration = await _objcalibration.getbyid(id);
+                _objCalibration = new dbCalibration();
+                calibration = await _objCalibration.getById(id);
             }
             catch (Exception ex)
             {
@@ -60,8 +60,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
                 //Save
-                _objcalibration = new Calibrations();
-                message = await _objcalibration.create(model);
+                _objCalibration = new dbCalibration();
+                message = await _objCalibration.create(model);
             }
             catch (Exception ex)
             {
@@ -87,8 +87,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objcalibration = new Calibrations();
-                message = await _objcalibration.updateStatus(model);
+                _objCalibration = new dbCalibration();
+                message = await _objCalibration.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -102,15 +102,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/calibration/deletebyid/1
+        // DELETE api/calibration/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objcalibration = new Calibrations();
-                message = await _objcalibration.deletebyid(id);
+                _objCalibration = new dbCalibration();
+                message = await _objCalibration.deleteById(id);
             }
             catch (Exception ex)
             {

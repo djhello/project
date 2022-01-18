@@ -17,32 +17,32 @@ namespace DataModels.EntityModels
         {
         }
 
-        public virtual DbSet<Calibration> Calibration { get; set; }
-        public virtual DbSet<Capacitor> Capacitors { get; set; }
-        public virtual DbSet<Connector> Connectors { get; set; }
-        public virtual DbSet<Diode> Diodes { get; set; }
-        public virtual DbSet<ICregulator> ICregulators { get; set; }
-        public virtual DbSet<Inductor> Inductors { get; set; }
-        public virtual DbSet<Mosfet> Mosfet { get; set; }
-        public virtual DbSet<Opamp> Opamp { get; set; }
-        public virtual DbSet<Other> Other { get; set; }
-        public virtual DbSet<HardwareLog> HardwareLogs { get; set; }
-        public virtual DbSet<OtherIC> OtherIC { get; set; }
-        public virtual DbSet<Project> Project { get; set; }
-        public virtual DbSet<Relay> Relay { get; set; }
-        public virtual DbSet<Resistor> Resistor { get; set; }
-        public virtual DbSet<Transistor> Transistor { get; set; }
-        public virtual DbSet<vmEquipment> vEquipment { get; set; }
-        public virtual DbSet<Hardware> Equipment { get; set; }
-        public virtual DbSet<vmAvailableEquipment> vAvailableEquipment { get; set; }
-        public virtual DbSet<Location> Location { get; set; }
-        public virtual DbSet<Departman> Departman { get; set; }
-        public virtual DbSet<EquipmentModel> EquipmentModel { get; set; }
-        public virtual DbSet<vmEquipmentIssuereturn> vEquipmentIssueReturn { get; set; }
-        public virtual DbSet<EquipmentIssueReturn> EquipmentIssueReturn { get; set; }
+        public virtual DbSet<Calibration> dsCalibration { get; set; }
+        public virtual DbSet<Capacitor> dsCapacitor { get; set; }
+        public virtual DbSet<Connector> dsConnector { get; set; }
+        public virtual DbSet<Diode> dsDiode { get; set; }
+        public virtual DbSet<ICregulator> dsICregulator { get; set; }
+        public virtual DbSet<Inductor> dsInductor { get; set; }
+        public virtual DbSet<Mosfet> dsMosfet { get; set; }
+        public virtual DbSet<Opamp> dsOpamp { get; set; }
+        public virtual DbSet<Other> dsOther { get; set; }
+        public virtual DbSet<HardwareLog> dsHardwareLog { get; set; }
+        public virtual DbSet<OtherIC> dsOtherIC { get; set; }
+        public virtual DbSet<Project> dsProject { get; set; }
+        public virtual DbSet<Relay> dsRelay { get; set; }
+        public virtual DbSet<Resistor> dsResistor { get; set; }
+        public virtual DbSet<Transistor> dsTransistor { get; set; }
+        public virtual DbSet<vmEquipment> dsvmEquipment { get; set; }
+        public virtual DbSet<Hardware> dsEquipment { get; set; }
+        public virtual DbSet<vmAvailableEquipment> dsvmAvailableEquipment { get; set; }
+        public virtual DbSet<Location> dsLocation { get; set; }
+        public virtual DbSet<Departman> dsDepartman { get; set; }
+        public virtual DbSet<EquipmentModel> dsEquipmentModel { get; set; }
+        public virtual DbSet<vmEquipmentIssueReturn> dsvmEquipmentIssueReturn { get; set; }
+        public virtual DbSet<EquipmentIssueReturn> dsEquipmentIssueReturn { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserAuthentication> UserAuthentication { get; set; }
-        public virtual DbSet<UserType> UserType { get; set; }
+        public virtual DbSet<UserAuthentication> dsUserAuthentication { get; set; }
+        public virtual DbSet<UserType> dsUserType { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -625,7 +625,7 @@ namespace DataModels.EntityModels
 
             });
 
-            modelBuilder.Entity<vmEquipmentIssuereturn>(entity =>
+            modelBuilder.Entity<vmEquipmentIssueReturn>(entity =>
             {
                 entity.ToTable("v_equipment_issuereturn");
 

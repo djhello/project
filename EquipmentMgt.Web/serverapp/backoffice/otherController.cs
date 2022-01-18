@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class OtherController : ControllerBase
     {
-        private Others _objother = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbOther _objOther = null;
+        private dbHardwareLog _objHardwareLogs = null;
         private IHostingEnvironment _hostingEnvironment;
 
         public OtherController(IHostingEnvironment env)
@@ -24,15 +24,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/other/getall
+        // GET: api/other/getAll
         [HttpGet("[action]")]
         public async Task<List<vmOther>> getAll()
         {
             List<vmOther> others = null;
             try
             {
-                _objother = new Others();
-                others = await _objother.getall();
+                _objOther = new dbOther();
+                others = await _objOther.getAll();
             }
             catch (Exception ex)
             {
@@ -41,15 +41,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return others;
         }
 
-        // GET api/book/getbyid/1
+        // GET api/book/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmOther> getbyid(int id)
+        public async Task<vmOther> getById(int id)
         {
             vmOther other = null;
             try
             {
-                _objother = new Others();
-                other = await _objother.getbyid(id);
+                _objOther = new dbOther();
+                other = await _objOther.getById(id);
             }
             catch (Exception ex)
             {
@@ -71,8 +71,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objother = new Others();
-                message = await _objother.create(model);
+                _objOther = new dbOther();
+                message = await _objOther.create(model);
             }
             catch (Exception ex)
             {
@@ -99,8 +99,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objother = new Others();
-                message = await _objother.updateStatus(model);
+                _objOther = new dbOther();
+                message = await _objOther.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -129,10 +129,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objother = new Others();
-                _objHardwareLogs = new HardwareLogs();
+                _objOther = new dbOther();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objother.receive(model);
+                message = await _objOther.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -158,15 +158,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/other/deletebyid/1
+        // DELETE api/other/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objother = new Others();
-                message = await _objother.deletebyid(id);
+                _objOther = new dbOther();
+                message = await _objOther.deleteById(id);
             }
             catch (Exception ex)
             {

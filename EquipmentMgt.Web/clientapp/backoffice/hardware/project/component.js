@@ -24,9 +24,9 @@ var ProjectComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.loading = false;
         this._getUrl = '/api/Project/getAll';
-        this._getbyIdUrl = '/api/project/getbyid';
+        this._getbyIdUrl = '/api/project/getById';
         this._saveUrl = '/api/project/save';
-        this._deleteUrl = '/api/project/deletebyid';
+        this._deleteUrl = '/api/project/deleteById';
         this._updateUrl = '/api/project/updateStatus';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
@@ -69,7 +69,7 @@ var ProjectComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             console.log(response);
             _this.projects = response;
@@ -83,7 +83,7 @@ var ProjectComponent = /** @class */ (function () {
         var _this = this;
         e.preventDefault();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.project = response;

@@ -22,10 +22,10 @@ var DepartmansComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.booleanValue = false;
         this.loading = false;
-        this._getUrl = '/api/departman/getall';
-        this._getbyIdUrl = '/api/departman/getbyid';
+        this._getUrl = '/api/departman/getAll';
+        this._getbyIdUrl = '/api/departman/getById';
         this._saveUrl = '/api/departman/save';
-        this._deleteUrl = '/api/departman/deletebyid';
+        this._deleteUrl = '/api/departman/deleteById';
         this._updateUrl = '/api/departman/updateStatus';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
@@ -54,7 +54,7 @@ var DepartmansComponent = /** @class */ (function () {
     DepartmansComponent.prototype.getAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.departmans = response;
@@ -67,7 +67,7 @@ var DepartmansComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.departmanId, this._getbyIdUrl)
+        this._dataService.getById(m.departmanId, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.departman = response;

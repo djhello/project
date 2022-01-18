@@ -25,13 +25,13 @@ var ResistorComponent = /** @class */ (function () {
         this.adet = 0;
         this.loading = false;
         this._getUrl = '/api/Resistor/getAll';
-        this._getbyIdUrl = '/api/resistor/getbyid';
+        this._getbyIdUrl = '/api/resistor/getById';
         this._saveUrl = '/api/resistor/save';
-        this._deleteUrl = '/api/resistor/deletebyid';
+        this._deleteUrl = '/api/resistor/deleteById';
         this._updateUrl = '/api/resistor/updateStatus';
         this._receiveUrl = '/api/resistor/receive';
-        this._getLocationUrl = '/api/location/getall';
-        this._getProjectUrl = '/api/project/getall';
+        this._getLocationUrl = '/api/location/getAll';
+        this._getProjectUrl = '/api/project/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUserName = this.loggedUser.displayName;
         this.loggedEmail = this.loggedUser.email;
@@ -89,7 +89,7 @@ var ResistorComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.resistors = response;
             _this.resistorsCopy = response;
@@ -105,7 +105,7 @@ var ResistorComponent = /** @class */ (function () {
         this.loading = true;
         this.getProjects();
         this.getLocations();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.resistor = response;
@@ -229,7 +229,7 @@ var ResistorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(function (response) {
             _this.locations = response;
             _this.loading = false;
@@ -241,7 +241,7 @@ var ResistorComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(function (response) {
             _this.projects = response;
             _this.loading = false;

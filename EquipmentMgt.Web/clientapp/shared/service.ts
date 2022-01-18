@@ -22,7 +22,7 @@ export class DataService {
     
 
     //Get
-    getall(_getUrl: string): Observable<any[]> {
+    getAll(_getUrl: string): Observable<any[]> {
         return this._http.get(_getUrl)
             .pipe(map(res => <any[]>res.json()))
             .pipe(catchError(this.handleError));
@@ -33,14 +33,14 @@ export class DataService {
             .pipe(map(res => <any[]>res.json()));
     }
     //GetByID
-    getbyid(id: string, _getByIdUrl: string): Observable<any> {
+    getById(id: string, _getByIdUrl: string): Observable<any> {
         var getByIdUrl = _getByIdUrl + '/' + id;
 
         return this._http.get(getByIdUrl)
             .pipe(map(res => <any>res.json()))
             .pipe(catchError(this.handleError));
     }
-    getbytext(text: string, _getByIdUrl: string): Observable<any> {
+    getByText(text: string, _getByIdUrl: string): Observable<any> {
         var getByIdUrl = _getByIdUrl + '/' + text;
 
         return this._http.get(getByIdUrl)

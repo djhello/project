@@ -12,25 +12,25 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class equipmentController : ControllerBase
+    public class EquipmentController : ControllerBase
     {
-        private Equipments _objEquipment = null;
+        private dbEquipment _objEquipment = null;
         private IHostingEnvironment _hostingEnvironment;
 
-        public equipmentController(IHostingEnvironment env)
+        public EquipmentController(IHostingEnvironment env)
         {
             _hostingEnvironment = env;
         }
 
-        // GET: api/equipments/getall
+        // GET: api/equipments/getAll
         [HttpGet("[action]")]
-        public async Task<List<vmEquipment>> getall()
+        public async Task<List<vmEquipment>> getAll()
         {
             List<vmEquipment> equipments = null;
             try
             {
-                _objEquipment = new Equipments();
-                equipments = await _objEquipment.getall();
+                _objEquipment = new dbEquipment();
+                equipments = await _objEquipment.getAll();
             }
             catch (Exception ex)
             {
@@ -39,13 +39,13 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipments;
         }
         [HttpGet("[action]")]
-        public async Task<List<vmAvailableEquipment>> getavailableallequipment()
+        public async Task<List<vmAvailableEquipment>> getAvailableallEquipment()
         {
             List<vmAvailableEquipment> equipments = null;
             try
             {
-                _objEquipment = new Equipments();
-                equipments = await _objEquipment.getavailableallequipment();
+                _objEquipment = new dbEquipment();
+                equipments = await _objEquipment.getAvailableallEquipment();
             }
             catch (Exception ex)
             {
@@ -53,15 +53,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             }
             return equipments;
         }
-        // GET api/equipment/getbyid/1
+        // GET api/equipment/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmEquipment> getbyid(int id)
+        public async Task<vmEquipment> getById(int id)
         {
             vmEquipment equipment = null;
             try
             {
-                _objEquipment = new Equipments();
-                equipment = await _objEquipment.getbyid(id);
+                _objEquipment = new dbEquipment();
+                equipment = await _objEquipment.getById(id);
             }
             catch (Exception ex)
             {
@@ -70,14 +70,14 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return equipment;
         }
         [HttpGet("[action]/{text}")]
-        public async Task<List<vmEquipment>> getbytext(string text)
+        public async Task<List<vmEquipment>> getByText(string text)
         {
 
             List<vmEquipment> equipments = null;
             try
             {
-                _objEquipment = new Equipments();
-                equipments = await _objEquipment.getbytext(text);
+                _objEquipment = new dbEquipment();
+                equipments = await _objEquipment.getByText(text);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 {
                     return BadRequest();
                 }
-                _objEquipment = new Equipments();
+                _objEquipment = new dbEquipment();
                 message = await _objEquipment.create(model);
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objEquipment = new Equipments();
+                _objEquipment = new dbEquipment();
                 message = await _objEquipment.updateStatus(model);
             }
             catch (Exception ex)
@@ -139,15 +139,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/equipment/deletebyid/1
+        // DELETE api/equipment/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objEquipment = new Equipments();
-                message = await _objEquipment.deletebyid(id);
+                _objEquipment = new dbEquipment();
+                message = await _objEquipment.deleteById(id);
             }
             catch (Exception ex)
             {

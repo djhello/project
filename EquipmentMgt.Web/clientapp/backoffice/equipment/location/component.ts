@@ -23,10 +23,10 @@ export class LocationsComponent implements OnInit {
     public alertmessage: string;
     public imageUrl: any;
 
-    public _getUrl: string = '/api/location/getall';
-    public _getbyIdUrl: string = '/api/location/getbyid';
+    public _getUrl: string = '/api/location/getAll';
+    public _getbyIdUrl: string = '/api/location/getById';
     public _saveUrl: string = '/api/location/save';
-    public _deleteUrl: string = '/api/location/deletebyid';
+    public _deleteUrl: string = '/api/location/deleteById';
 
     public _updateUrl: string = '/api/location/updateStatus';
 
@@ -82,7 +82,7 @@ export class LocationsComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -97,7 +97,7 @@ export class LocationsComponent implements OnInit {
     edit(e, m) {
         e.preventDefault();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.location = response;

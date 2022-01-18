@@ -4,7 +4,7 @@
         <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
             <div class="brand-logo">
                 <a href="JavaScript:Void(0);" [routerLink]="['/backoffice']">
-                    <img src="assets/images/gallery/tei2.gif" class="logo-icon" style="margin-left: 78px;width: 76px;"alt="">
+                    <img src="assets/images/gallery/tei2.gif" class="logo-icon" alt="">
                     <h5 class="logo-text">  </h5>
                 </a>
             </div>
@@ -37,6 +37,27 @@
                         <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/equipment/calibration']"><i class="fa fa-circle-o"></i> Calibrations</a></li>
                         <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/equipment/equipments']"><i class="fa fa-circle-o"></i> Equipments</a></li>
                         <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/equipment/location']"><i class="fa fa-circle-o"></i> Locations</a></li>
+                    </ul>
+                </li>
+                <li *ngIf="loggedUserType === 1">
+                    <a href="javaScript:void();" class="waves-effect">
+                        <i class="icon-folder-alt"></i> <span>Donanım</span>
+                        <i class="fa fa-angle-left float-right"></i>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/capacitor']"><i class="fa fa-circle-o"></i> Capacitor</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/connector']"><i class="fa fa-circle-o"></i> Connector</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/diode']"><i class="fa fa-circle-o"></i> Diode</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/ICregulator']"><i class="fa fa-circle-o"></i> ICregulator</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/inductor']"><i class="fa fa-circle-o"></i> Inductor</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/mosfet']"><i class="fa fa-circle-o"></i> Mosfet</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/opamp']"><i class="fa fa-circle-o"></i> Opamp</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/other']"><i class="fa fa-circle-o"></i> Other</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/otherIC']"><i class="fa fa-circle-o"></i> OtherIC</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/project']"><i class="fa fa-circle-o"></i> Project</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/relay']"><i class="fa fa-circle-o"></i> Relay</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/resistor']"><i class="fa fa-circle-o"></i> Resistor</a></li>
+                        <li><a href="JavaScript:Void(0);" [routerLink]="['/backoffice/hardware/transistor']"><i class="fa fa-circle-o"></i> Transistor</a></li>
                     </ul>
                 </li>
                 <li class="sidebar-header">İşlemler</li>

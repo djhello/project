@@ -30,14 +30,14 @@ export class RelayComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/Relay/getAll';
-    public _getbyIdUrl: string = '/api/relay/getbyid';
+    public _getbyIdUrl: string = '/api/relay/getById';
     public _saveUrl: string = '/api/relay/save';
-    public _deleteUrl: string = '/api/relay/deletebyid';
+    public _deleteUrl: string = '/api/relay/deleteById';
     public _updateUrl: string = '/api/relay/updateStatus';
     public _receiveUrl: string = '/api/relay/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
     constructor(
         private _http: Http,
@@ -102,7 +102,7 @@ export class RelayComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.relays = response;
@@ -120,7 +120,7 @@ export class RelayComponent implements OnInit {
         this.getProjects();
         this.getLocations();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.relay = response;
@@ -242,7 +242,7 @@ export class RelayComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -255,7 +255,7 @@ export class RelayComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

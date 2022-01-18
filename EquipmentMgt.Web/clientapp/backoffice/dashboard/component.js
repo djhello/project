@@ -23,9 +23,9 @@ var DashboardComponent = /** @class */ (function () {
         this.totalMember = 0;
         this.totalIssued = 0;
         this.totalReturned = 0;
-        this._getEUrl = '/api/report/getequipmentchart';
-        this._getMUrl = '/api/report/getmemberchart';
-        this._getSUrl = '/api/dashboard/getallsummary';
+        this._getEUrl = '/api/report/getEquipmentChart';
+        this._getMUrl = '/api/report/getMemberChart';
+        this._getSUrl = '/api/dashboard/getAllSummary';
     }
     DashboardComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle("Envanter Takip Sistemi | Dashboard");
@@ -51,9 +51,8 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.getSummary = function () {
         var _this = this;
         //debugger
-        this._dataService.getall(this._getSUrl)
+        this._dataService.getAll(this._getSUrl)
             .subscribe(function (response) {
-            //console.log(response);
             _this.summaryTotal = response;
             _this.totalEquipment = _this.summaryTotal.totalEquipment;
             _this.totalMember = _this.summaryTotal.totalMember;
@@ -67,7 +66,7 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.getEquipmentChart = function () {
         var _this = this;
         //debugger
-        this._dataService.getall(this._getEUrl).subscribe(function (response) {
+        this._dataService.getAll(this._getEUrl).subscribe(function (response) {
             _this.echart = response;
             var chartData = [];
             for (var i = 0; i < _this.echart.length; i++) {
@@ -124,7 +123,7 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.getMemberChart = function () {
         var _this = this;
         //debugger
-        this._dataService.getall(this._getMUrl).subscribe(function (response) {
+        this._dataService.getAll(this._getMUrl).subscribe(function (response) {
             _this.mchart = response;
             var chartData = [];
             for (var i = 0; i < _this.mchart.length; i++) {

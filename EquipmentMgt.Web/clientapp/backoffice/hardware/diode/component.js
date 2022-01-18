@@ -25,13 +25,13 @@ var DiodeComponent = /** @class */ (function () {
         this.adet = 0;
         this.loading = false;
         this._getUrl = '/api/Diode/getAll';
-        this._getbyIdUrl = '/api/diode/getbyid';
+        this._getbyIdUrl = '/api/diode/getById';
         this._saveUrl = '/api/diode/save';
-        this._deleteUrl = '/api/diode/deletebyid';
+        this._deleteUrl = '/api/diode/deleteById';
         this._updateUrl = '/api/diode/updateStatus';
         this._receiveUrl = '/api/diode/receive';
-        this._getLocationUrl = '/api/location/getall';
-        this._getProjectUrl = '/api/project/getall';
+        this._getLocationUrl = '/api/location/getAll';
+        this._getProjectUrl = '/api/project/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
         this.loggedUserName = this.loggedUser.displayName;
         this.loggedEmail = this.loggedUser.email;
@@ -89,7 +89,7 @@ var DiodeComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.diodes = response;
             _this.diodesCopy = response;
@@ -105,7 +105,7 @@ var DiodeComponent = /** @class */ (function () {
         this.getProjects();
         this.getLocations();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.diode = response;
@@ -173,7 +173,7 @@ var DiodeComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(function (response) {
             _this.locations = response;
             _this.loading = false;
@@ -185,7 +185,7 @@ var DiodeComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(function (response) {
             _this.projects = response;
             _this.loading = false;

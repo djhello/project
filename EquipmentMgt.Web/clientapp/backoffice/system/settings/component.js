@@ -25,7 +25,7 @@ var UserSettingsComponent = /** @class */ (function () {
         this.passwordFormBuilder = passwordFormBuilder;
         this._dataService = _dataService;
         this.loading = false;
-        this._getbyIdUrl = '/api/users/getbyid';
+        this._getbyIdUrl = '/api/users/getById';
         this._updateUrl = '/api/users/updateUserInfos';
         this._updatePasswordUrl = '/api/users/updatePasswordUrl';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
@@ -101,7 +101,7 @@ var UserSettingsComponent = /** @class */ (function () {
     UserSettingsComponent.prototype.getbyIdUrl = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getbyid(this.loggedUser.userId, this._getbyIdUrl)
+        this._dataService.getById(this.loggedUser.userId, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.user = response;

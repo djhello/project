@@ -76,18 +76,20 @@
                                         </a>
                                         <a href="#" title="Active Passive Record" class="btn btn-outline-secondary btn-sm waves-effect waves-light m-1" (click)="updateStatus($event, item)">
                                             <ng-template [ngIf]="item.status=='1'">
-                                            <td> Passive</td>
-                                            </ng-template>
-                                            <ng-template [ngIf]="item.status=='0'">
-                                                <td> Active</td>
-                                            </ng-template>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <td> Passive</td>
+                                </ng-template>
+                                <ng-template [ngIf]="item.status=='0'">
+                                    <td> Active</td>
+                                </ng-template>
+                                </a>
                 </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+                <div id="example"></div>
+
+            </div>
             </div>
         </div>
     </div>

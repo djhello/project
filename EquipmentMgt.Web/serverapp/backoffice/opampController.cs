@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class OpampController : ControllerBase
     {
-        private Opamps _objopamp = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbOpamp _objOpamp = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
         private IHostingEnvironment _hostingEnvironment;
 
@@ -25,15 +25,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/opamp/getall
+        // GET: api/opamp/getAll
         [HttpGet("[action]")]
         public async Task<List<vmOpamp>> getAll()
         {
             List<vmOpamp> opamps = null;
             try
             {
-                _objopamp = new Opamps();
-                opamps = await _objopamp.getall();
+                _objOpamp = new dbOpamp();
+                opamps = await _objOpamp.getAll();
             }
             catch (Exception ex)
             {
@@ -42,15 +42,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return opamps;
         }
 
-        // GET api/opamp/getbyid/1
+        // GET api/opamp/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmOpamp> getbyid(int id)
+        public async Task<vmOpamp> getById(int id)
         {
             vmOpamp opamp = null;
             try
             {
-                _objopamp = new Opamps();
-                opamp = await _objopamp.getbyid(id);
+                _objOpamp = new dbOpamp();
+                opamp = await _objOpamp.getById(id);
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objopamp = new Opamps();
-                message = await _objopamp.create(model);
+                _objOpamp = new dbOpamp();
+                message = await _objOpamp.create(model);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objopamp = new Opamps();
-                message = await _objopamp.updateStatus(model);
+                _objOpamp = new dbOpamp();
+                message = await _objOpamp.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -128,10 +128,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objopamp = new Opamps();
-                _objHardwareLogs = new HardwareLogs();
+                _objOpamp = new dbOpamp();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objopamp.receive(model);
+                message = await _objOpamp.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -157,15 +157,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/opamp/deletebyid/1
+        // DELETE api/opamp/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objopamp = new Opamps();
-                message = await _objopamp.deletebyid(id);
+                _objOpamp = new dbOpamp();
+                message = await _objOpamp.deleteById(id);
             }
             catch (Exception ex)
             {

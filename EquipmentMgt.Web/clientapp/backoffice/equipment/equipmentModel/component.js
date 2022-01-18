@@ -24,12 +24,12 @@ var EquipmentModelsComponent = /** @class */ (function () {
         this._dataService = _dataService;
         this.loading = false;
         this.updatePicture = false;
-        this._getUrl = '/api/equipmentmodel/getall';
-        this._getbyIdUrl = '/api/equipmentmodel/getbyid';
+        this._getUrl = '/api/equipmentmodel/getAll';
+        this._getbyIdUrl = '/api/equipmentmodel/getById';
         this._saveUrl = '/api/equipmentmodel/save';
-        this._deleteUrl = '/api/equipmentmodel/deletebyid';
+        this._deleteUrl = '/api/equipmentmodel/deleteById';
         this._updateUrl = '/api/equipmentmodel/updateStatus';
-        this._getDepartmanUrl = '/api/departman/getall';
+        this._getDepartmanUrl = '/api/departman/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     EquipmentModelsComponent.prototype.ngOnInit = function () {
@@ -91,7 +91,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
         var _this = this;
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.equipmentModels = response;
         }, function (error) {
@@ -102,7 +102,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
     EquipmentModelsComponent.prototype.getDepartmanAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getDepartmanUrl)
+        this._dataService.getAll(this._getDepartmanUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.departmans = response;
@@ -117,7 +117,7 @@ var EquipmentModelsComponent = /** @class */ (function () {
         this.getDepartmanAll();
         e.preventDefault();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             console.log(response);
             _this.equipmentModel = response;

@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class RelayController : ControllerBase
     {
-        private Relays _objrelay = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbRelay _objRelay = null;
+        private dbHardwareLog _objHardwareLogs = null;
         private IHostingEnvironment _hostingEnvironment;
 
         public RelayController(IHostingEnvironment env)
@@ -24,15 +24,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/relay/getall
+        // GET: api/relay/getAll
         [HttpGet("[action]")]
         public async Task<List<vmRelay>> getAll()
         {
             List<vmRelay> relays = null;
             try
             {
-                _objrelay = new Relays();
-                relays = await _objrelay.getall();
+                _objRelay = new dbRelay();
+                relays = await _objRelay.getAll();
             }
             catch (Exception ex)
             {
@@ -41,15 +41,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return relays;
         }
 
-        // GET api/relay/getbyid/1
+        // GET api/relay/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmRelay> getbyid(int id)
+        public async Task<vmRelay> getById(int id)
         {
             vmRelay relay = null;
             try
             {
-                _objrelay = new Relays();
-                relay = await _objrelay.getbyid(id);
+                _objRelay = new dbRelay();
+                relay = await _objRelay.getById(id);
             }
             catch (Exception ex)
             {
@@ -71,8 +71,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objrelay = new Relays();
-                message = await _objrelay.create(model);
+                _objRelay = new dbRelay();
+                message = await _objRelay.create(model);
             }
             catch (Exception ex)
             {
@@ -99,8 +99,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objrelay = new Relays();
-                message = await _objrelay.updateStatus(model);
+                _objRelay = new dbRelay();
+                message = await _objRelay.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -127,10 +127,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objrelay = new Relays();
-                _objHardwareLogs = new HardwareLogs();
+                _objRelay = new dbRelay();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objrelay.receive(model);
+                message = await _objRelay.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -156,15 +156,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/relay/deletebyid/1
+        // DELETE api/relay/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objrelay = new Relays();
-                message = await _objrelay.deletebyid(id);
+                _objRelay = new dbRelay();
+                message = await _objRelay.deleteById(id);
             }
             catch (Exception ex)
             {

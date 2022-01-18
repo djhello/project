@@ -21,13 +21,13 @@ export class UsersComponent implements OnInit {
     public alertmessage: string;
     public loading: boolean = false; 
 
-    public _getUrl: string = '/api/users/getall';
-    public _getbyIdUrl: string = '/api/users/getbyid';
+    public _getUrl: string = '/api/users/getAll';
+    public _getbyIdUrl: string = '/api/users/getById';
     public _saveUrl: string = '/api/users/save';
-    public _deleteUrl: string = '/api/users/deletebyid';
+    public _deleteUrl: string = '/api/users/deleteById';
     public _updateUrl: string = '/api/users/updateStatus';
 
-    public _getDepartmanUrl: string = '/api/departman/getall';
+    public _getDepartmanUrl: string = '/api/departman/getAll';
 
     constructor(
         private router: Router,
@@ -80,7 +80,7 @@ export class UsersComponent implements OnInit {
     //Get All User
     getAll() {
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit {
     }
     getDepartmanAll() {
         this.loading = true;
-        this._dataService.getall(this._getDepartmanUrl)
+        this._dataService.getAll(this._getDepartmanUrl)
             .subscribe(
                 response => {
                     this.loading = false;
@@ -108,7 +108,7 @@ export class UsersComponent implements OnInit {
         this.getDepartmanAll();
         this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.userId, this._getbyIdUrl)
+        this._dataService.getById(m.userId, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.user = response;

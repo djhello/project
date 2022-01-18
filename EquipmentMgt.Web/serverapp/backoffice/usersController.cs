@@ -11,20 +11,20 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class usersController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private Users _objusers = null;
+        private dbUser _objUsers = null;
 
-        // GET: api/users/getall
+        // GET: api/users/getAll
         [HttpGet("[action]")]
-        public async Task<List<vmUserDepartman>> getall()
+        public async Task<List<vmUserDepartman>> getAll()
         {
             List<vmUserDepartman> users = null;
             try
             {
-                _objusers = new Users();
-                users = await _objusers.getall();
-               // users = _objusers.getAllUser();
+                _objUsers = new dbUser();
+                users = await _objUsers.getAll();
+               // users = _objUsers.getAllUser();
                 
             }
             catch (Exception ex)
@@ -34,15 +34,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return users;
         }
 
-        // GET api/users/getbyid/1
+        // GET api/users/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmUserDepartman> getbyid(int id)
+        public async Task<vmUserDepartman> getById(int id)
         {
             vmUserDepartman user = null;
             try
             {
-                _objusers = new Users();
-                user = await _objusers.getbyid(id);
+                _objUsers = new dbUser();
+                user = await _objUsers.getById(id);
             }
             catch (Exception ex)
             {
@@ -64,8 +64,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objusers = new Users();
-                message = await _objusers.create(model);
+                _objUsers = new dbUser();
+                message = await _objUsers.create(model);
             }
             catch (Exception ex)
             {
@@ -92,8 +92,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objusers = new Users();
-                message = await _objusers.updateUserInfos(model);
+                _objUsers = new dbUser();
+                message = await _objUsers.updateUserInfos(model);
             }
             catch (Exception ex)
             {
@@ -120,8 +120,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objusers = new Users();
-                message = await _objusers.updateStatus(model);
+                _objUsers = new dbUser();
+                message = await _objUsers.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -147,8 +147,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objusers = new Users();
-                message = await _objusers.updatePasswordUrl(model);
+                _objUsers = new dbUser();
+                message = await _objUsers.updatePasswordUrl(model);
             }
             catch (Exception ex)
             {
@@ -164,15 +164,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
         }
 
 
-        // DELETE api/users/deletebyid/1
+        // DELETE api/users/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objusers = new Users();
-                message = await _objusers.deletebyid(id);
+                _objUsers = new dbUser();
+                message = await _objUsers.deleteById(id);
             }
             catch (Exception ex)
             {

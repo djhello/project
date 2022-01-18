@@ -29,14 +29,14 @@ export class DiodeComponent implements OnInit {
     public projects: any[];
 
     public _getUrl: string = '/api/Diode/getAll';
-    public _getbyIdUrl: string = '/api/diode/getbyid';
+    public _getbyIdUrl: string = '/api/diode/getById';
     public _saveUrl: string = '/api/diode/save';
-    public _deleteUrl: string = '/api/diode/deletebyid';
+    public _deleteUrl: string = '/api/diode/deleteById';
     public _updateUrl: string = '/api/diode/updateStatus';
     public _receiveUrl: string = '/api/diode/receive';
 
-    public _getLocationUrl: string = '/api/location/getall';
-    public _getProjectUrl: string = '/api/project/getall';
+    public _getLocationUrl: string = '/api/location/getAll';
+    public _getProjectUrl: string = '/api/project/getAll';
 
 
     constructor(
@@ -105,7 +105,7 @@ export class DiodeComponent implements OnInit {
     getAll() {
         //debugger
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(
                 response => {
                     this.diodes = response;
@@ -124,7 +124,7 @@ export class DiodeComponent implements OnInit {
         this.getProjects();
         this.getLocations();
         this.loading = true;
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(response => {
                 this.loading = false;
                 this.diode = response;
@@ -195,7 +195,7 @@ export class DiodeComponent implements OnInit {
     getLocations() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(
                 response => {
                     this.locations = response;
@@ -208,7 +208,7 @@ export class DiodeComponent implements OnInit {
     getProjects() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getProjectUrl)
+        this._dataService.getAll(this._getProjectUrl)
             .subscribe(
                 response => {
                     this.projects = response;

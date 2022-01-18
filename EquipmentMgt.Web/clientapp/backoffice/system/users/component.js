@@ -21,12 +21,12 @@ var UsersComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
         this.loading = false;
-        this._getUrl = '/api/users/getall';
-        this._getbyIdUrl = '/api/users/getbyid';
+        this._getUrl = '/api/users/getAll';
+        this._getbyIdUrl = '/api/users/getById';
         this._saveUrl = '/api/users/save';
-        this._deleteUrl = '/api/users/deletebyid';
+        this._deleteUrl = '/api/users/deleteById';
         this._updateUrl = '/api/users/updateStatus';
-        this._getDepartmanUrl = '/api/departman/getall';
+        this._getDepartmanUrl = '/api/departman/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     UsersComponent.prototype.ngOnInit = function () {
@@ -68,7 +68,7 @@ var UsersComponent = /** @class */ (function () {
     UsersComponent.prototype.getAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.users = response;
@@ -79,7 +79,7 @@ var UsersComponent = /** @class */ (function () {
     UsersComponent.prototype.getDepartmanAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getDepartmanUrl)
+        this._dataService.getAll(this._getDepartmanUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.departmans = response;
@@ -93,7 +93,7 @@ var UsersComponent = /** @class */ (function () {
         this.getDepartmanAll();
         this.loading = true;
         e.preventDefault();
-        this._dataService.getbyid(m.userId, this._getbyIdUrl)
+        this._dataService.getById(m.userId, this._getbyIdUrl)
             .subscribe(function (response) {
             _this.loading = false;
             _this.user = response;

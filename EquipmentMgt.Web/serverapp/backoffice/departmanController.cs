@@ -11,25 +11,25 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 {
     [Route("api/[controller]"), Produces("application/json"), EnableCors("AppPolicy")]
     [ApiController]
-    public class departmanController : ControllerBase
+    public class DepartmanController : ControllerBase
     {
-        private Departmans _objdepartman = null;
+        private dbDepartman _objDepartman = null;
         private IHostingEnvironment _hostingEnvironment;
 
-        public departmanController(IHostingEnvironment env)
+        public DepartmanController(IHostingEnvironment env)
         {
             _hostingEnvironment = env;
         }
 
-        // GET: api/departman/getall
+        // GET: api/departman/getAll
         [HttpGet("[action]")]
-        public async Task<List<Departman>> getall()
+        public async Task<List<Departman>> getAll()
         {
             List<Departman> departmans = null;
             try
             {
-                _objdepartman = new Departmans();
-                departmans = await _objdepartman.getall();
+                _objDepartman = new dbDepartman();
+                departmans = await _objDepartman.getAll();
             }
             catch (Exception ex)
             {
@@ -38,15 +38,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return departmans;
         }
 
-        // GET api/departman/getbyid/1
+        // GET api/departman/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<Departman> getbyid(int id)
+        public async Task<Departman> getById(int id)
         {
             Departman departman = null;
             try
             {
-                _objdepartman = new Departmans();
-                departman = await _objdepartman.getbyid(id);
+                _objDepartman = new dbDepartman();
+                departman = await _objDepartman.getById(id);
             }
             catch (Exception ex)
             {
@@ -68,8 +68,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objdepartman = new Departmans();
-                message = await _objdepartman.create(model);
+                _objDepartman = new dbDepartman();
+                message = await _objDepartman.create(model);
             }
             catch (Exception ex)
             {
@@ -96,8 +96,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objdepartman = new Departmans();
-                message = await _objdepartman.updateStatus(model);
+                _objDepartman = new dbDepartman();
+                message = await _objDepartman.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -111,15 +111,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/departman/deletebyid/1
+        // DELETE api/departman/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objdepartman = new Departmans();
-                message = await _objdepartman.deletebyid(id);
+                _objDepartman = new dbDepartman();
+                message = await _objDepartman.deleteById(id);
             }
             catch (Exception ex)
             {

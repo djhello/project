@@ -15,8 +15,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
     [ApiController]
     public class ICregulatorController : ControllerBase
     {
-        private ICregulators _objicregulator = null;
-        private HardwareLogs _objHardwareLogs = null;
+        private dbICregulator _objICregulator = null;
+        private dbHardwareLog _objHardwareLogs = null;
 
         private IHostingEnvironment _hostingEnvironment;
 
@@ -25,15 +25,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             _hostingEnvironment = env;
         }
 
-        // GET: api/icregulator/getall
+        // GET: api/icregulator/getAll
         [HttpGet("[action]")]
         public async Task<List<vmICregulator>> getAll()
         {
             List<vmICregulator> icregulators = null;
             try
             {
-                _objicregulator = new ICregulators();
-                icregulators = await _objicregulator.getall();
+                _objICregulator = new dbICregulator();
+                icregulators = await _objICregulator.getAll();
             }
             catch (Exception ex)
             {
@@ -42,15 +42,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
             return icregulators;
         }
 
-        // GET api/icregulator/getbyid/1
+        // GET api/icregulator/getById/1
         [HttpGet("[action]/{id}")]
-        public async Task<vmICregulator> getbyid(int id)
+        public async Task<vmICregulator> getById(int id)
         {
             vmICregulator icregulator = null;
             try
             {
-                _objicregulator = new ICregulators();
-                icregulator = await _objicregulator.getbyid(id);
+                _objICregulator = new dbICregulator();
+                icregulator = await _objICregulator.getById(id);
             }
             catch (Exception ex)
             {
@@ -72,8 +72,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                     return BadRequest();
                 }
 
-                _objicregulator = new ICregulators();
-                message = await _objicregulator.create(model);
+                _objICregulator = new dbICregulator();
+                message = await _objICregulator.create(model);
             }
             catch (Exception ex)
             {
@@ -100,8 +100,8 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objicregulator = new ICregulators();
-                message = await _objicregulator.updateStatus(model);
+                _objICregulator = new dbICregulator();
+                message = await _objICregulator.updateStatus(model);
             }
             catch (Exception ex)
             {
@@ -128,10 +128,10 @@ namespace EquipmentMgt.Web.serverapp.backoffice
                 }
 
                 //Save
-                _objicregulator = new ICregulators();
-                _objHardwareLogs = new HardwareLogs();
+                _objICregulator = new dbICregulator();
+                _objHardwareLogs = new dbHardwareLog();
 
-                message = await _objicregulator.receive(model);
+                message = await _objICregulator.receive(model);
                 if (message == MessageConstants.Saved)
                 {
                     hardwarelog = new HardwareLog();
@@ -157,15 +157,15 @@ namespace EquipmentMgt.Web.serverapp.backoffice
 
             return result;
         }
-        // DELETE api/icregulator/deletebyid/1
+        // DELETE api/icregulator/deleteById/1
         [HttpDelete("[action]/{id}")]
-        public async Task<object> deletebyid(int id)
+        public async Task<object> deleteById(int id)
         {
             object result = null; string message = string.Empty;
             try
             {
-                _objicregulator = new ICregulators();
-                message = await _objicregulator.deletebyid(id);
+                _objICregulator = new dbICregulator();
+                message = await _objICregulator.deleteById(id);
             }
             catch (Exception ex)
             {

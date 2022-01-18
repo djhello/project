@@ -23,16 +23,16 @@ var EquipmentsComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this._dataService = _dataService;
         this.loading = false;
-        this._getUrl = '/api/equipment/getall';
-        this._getbyIdUrl = '/api/equipment/getbyid';
+        this._getUrl = '/api/equipment/getAll';
+        this._getbyIdUrl = '/api/equipment/getById';
         this._saveUrl = '/api/equipment/save';
-        this._deleteUrl = '/api/equipment/deletebyid';
-        this._getbyEquipmentIdUrl = '/api/equipment/getbytext';
+        this._deleteUrl = '/api/equipment/deleteById';
+        this._getbyEquipmentIdUrl = '/api/equipment/getByText';
         this._updateUrl = '/api/equipment/updateStatus';
-        this._getCalibrationUrl = '/api/calibration/getall';
-        this._getLocationUrl = '/api/location/getall';
-        this._getEquipmentModelUrl = '/api/equipmentmodel/getall';
-        this._getUserUrl = '/api/users/getall';
+        this._getCalibrationUrl = '/api/calibration/getAll';
+        this._getLocationUrl = '/api/location/getAll';
+        this._getEquipmentModelUrl = '/api/equipmentmodel/getAll';
+        this._getUserUrl = '/api/users/getAll';
         this.loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     }
     EquipmentsComponent.prototype.ngOnInit = function () {
@@ -70,7 +70,7 @@ var EquipmentsComponent = /** @class */ (function () {
     EquipmentsComponent.prototype.getAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getUrl)
+        this._dataService.getAll(this._getUrl)
             .subscribe(function (response) {
             _this.equipments = response;
             _this.loading = false;
@@ -88,7 +88,7 @@ var EquipmentsComponent = /** @class */ (function () {
         this.getLocations();
         this.getEquipmentModels();
         this.getUserAll();
-        this._dataService.getbyid(m.id, this._getbyIdUrl)
+        this._dataService.getById(m.id, this._getbyIdUrl)
             .subscribe(function (response) {
             console.log(response);
             _this.equipment = response;
@@ -121,7 +121,7 @@ var EquipmentsComponent = /** @class */ (function () {
     EquipmentsComponent.prototype.getEquipments = function (e, m) {
         var _this = this;
         this.loading = true;
-        this._dataService.getbytext(m, this._getbyEquipmentIdUrl)
+        this._dataService.getByText(m, this._getbyEquipmentIdUrl)
             .subscribe(function (response) {
             _this.equipments = response;
             _this.loading = false;
@@ -200,7 +200,7 @@ var EquipmentsComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getCalibrationUrl)
+        this._dataService.getAll(this._getCalibrationUrl)
             .subscribe(function (response) {
             _this.calibrations = response;
             _this.loading = false;
@@ -212,7 +212,7 @@ var EquipmentsComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getEquipmentModelUrl)
+        this._dataService.getAll(this._getEquipmentModelUrl)
             .subscribe(function (response) {
             _this.equipmentModels = response;
             _this.loading = false;
@@ -224,7 +224,7 @@ var EquipmentsComponent = /** @class */ (function () {
         var _this = this;
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getLocationUrl)
+        this._dataService.getAll(this._getLocationUrl)
             .subscribe(function (response) {
             _this.locations = response;
             _this.loading = false;
@@ -235,7 +235,7 @@ var EquipmentsComponent = /** @class */ (function () {
     EquipmentsComponent.prototype.getUserAll = function () {
         var _this = this;
         this.loading = true;
-        this._dataService.getall(this._getUserUrl)
+        this._dataService.getAll(this._getUserUrl)
             .subscribe(function (response) {
             _this.users = response;
             console.log(_this.users);

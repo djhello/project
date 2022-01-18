@@ -3581,7 +3581,11 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	right: 0;
 	bottom: 0;
 	left: 0;
-	padding: 1.25rem
+	padding: 4.25rem;
+	background-image: url('../images/gallery/tei_logo.png');
+	background-repeat: no-repeat;
+	background-position-x: center;
+	text-align: center;
 }
 .card-img {
 	width: 100%;

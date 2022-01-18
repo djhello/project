@@ -25,9 +25,9 @@ export class EquipmentReportsComponent implements OnInit {
     public equipmentissued: any[] = [];
     public loading: boolean = false; 
 
-    public _getUrl: string = '/api/report/getequipmentchart';
+    public _getUrl: string = '/api/report/getEquipmentChart';
     public _getRUrl: string = '/api/circulation/getreturnall';
-    public _getIUrl: string = '/api/circulation/getissueall';
+    public _getIUrl: string = '/api/circulation/getIssueAll';
 
     constructor(
         private router: Router,
@@ -46,7 +46,7 @@ export class EquipmentReportsComponent implements OnInit {
     getChart() {
         this.loading = true;
         //debugger
-        this._dataService.getall(this._getUrl).subscribe(
+        this._dataService.getAll(this._getUrl).subscribe(
             response => {
                 this.echart = response;
                 let chartData = [];
@@ -108,7 +108,7 @@ export class EquipmentReportsComponent implements OnInit {
     //Issue/Return
     returnedList() {
         this.loading = true;
-        this._dataService.getall(this._getRUrl)
+        this._dataService.getAll(this._getRUrl)
             .subscribe(
                 response => {
                     console.log(response);
@@ -118,7 +118,7 @@ export class EquipmentReportsComponent implements OnInit {
                 }
             );
 
-        this._dataService.getall(this._getIUrl)
+        this._dataService.getAll(this._getIUrl)
             .subscribe(
                 response => {
                     console.log(response);
